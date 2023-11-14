@@ -12,4 +12,4 @@ chmod +x setup.sh
 
 To run the script, execute the following command:
 (bash)
-./setup_linuxmac.sh
+./setup_linux.sh
