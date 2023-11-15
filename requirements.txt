@@ -71,3 +71,4 @@ urllib3==2.1.0
 wcwidth==0.2.10
 xarray==2023.10.1
 zipp==3.17.0
+pytesmo
