@@ -2,5 +2,12 @@ pip install ismn
 
 pytesmo web para cargar los datos de 2017
 
+CIMR L2PAD KOM 21.11.2023 Reunión de 13.00 - 17.00 (Martes)
+
+Mirar el cluster para los datos de windsat
+Hablar con Jordi Muñoz y con Roberto
+
+
+
 
 
