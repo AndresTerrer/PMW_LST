@@ -126,4 +126,7 @@ Scientifically derived colour maps should be easily recognisable, and also be fr
 
 ● Scientific colour maps: The Scientific colour maps30 (available at ref. 41, and permanently archived at ref. 52) are perceptually uniform (based on the underlying methodology of the CET colour maps65), perceptually ordered, colour-vision deficiency and colour-blind friendly, readable in black and white prints, and, if applied properly, also data set specific and parameter intuitive. The Scientific colour maps include sequential, diverging, and cyclic palettes, which are also provided as discrete and categorical palettes, and are available in a multitude of different file formats. They are also available through external routines and as built-in versions in a variety of software programmes. In contrast to others, the Scientific colour map package includes individual colour map diagnostics, and is versioned on a long-term online repository so individual versions can be accurately cited, which allows active developments from the community (e.g., improve their perceptual uniformity to the latest standards), and aids overall scientific reproducibility.
 
+# About proper temporal matching between local time and UTC time using pytesmos:
+
+https://pytesmo.readthedocs.io/en/latest/examples/temporal_collocation.html
 
