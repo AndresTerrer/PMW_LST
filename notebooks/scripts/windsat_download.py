@@ -3,7 +3,8 @@
     https://images.remss.com/~RSS-TB/intercalibration/windsat_TB_maps_daily_025deg/
 
     Data is available from 2017-01-01 to 2019-12-31
-
+    
+    Contact :
     tegoan@uv.es
 """
 import aiohttp
@@ -14,11 +15,25 @@ from argparse import ArgumentParser
 
 params = ArgumentParser(
     description = "Download a set of files from windsat daily data",
-    )
+)
 
-params.add_argument("--save_into", default= "./", help= "Target directory to save the files into")
-params.add_argument("--start_date",default="2017-01-01", help="Date in YYYY-MM-DD format")
-params.add_argument("--end_date",default="2017-01-31", help="Date in YYYY-MM-DD format")
+params.add_argument(
+    "--save_into",
+    default= "./",
+    help= "Target directory to save the files into"
+)
+
+params.add_argument(
+    "--start_date",
+    default="2017-01-01",
+    help="Date in YYYY-MM-DD format"
+)
+
+params.add_argument(
+    "--end_date",
+    default="2017-01-31",
+    help="Date in YYYY-MM-DD format"
+)
 
 
 async def download_file(url, save_path):
@@ -46,9 +61,8 @@ async def concurrent_download(dates, save_dir):
         year = str(date.year).zfill(4)
         month = str(date.month).zfill(2)
         day = str(date.day).zfill(2)
-        end_url = ".nc"
 
-        url = f"{base_url}_{year}_{month}_{day}{end_url}"
+        url = f"{base_url}_{year}_{month}_{day}.nc"
         save_file = url.split("/")[-1]
         save_path = os.path.join(save_dir, save_file)
 
