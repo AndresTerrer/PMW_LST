@@ -14,7 +14,7 @@ from datetime import datetime, timedelta
 from argparse import ArgumentParser
 import logging
 
-logger = logging.getLogger("windsatDonload")
+logger = logging.getLogger("WindsatDownload")
 
 params = ArgumentParser(
     description = "Download a set of files from windsat daily data",
