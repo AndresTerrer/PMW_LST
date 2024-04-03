@@ -12,6 +12,9 @@ import asyncio
 import os
 from datetime import datetime, timedelta
 from argparse import ArgumentParser
+import logging
+
+logger = logging.getLogger("windsatDonload")
 
 params = ArgumentParser(
     description = "Download a set of files from windsat daily data",
@@ -46,11 +49,11 @@ async def download_file(url, save_path):
                     while True:
                         chunk = await response.content.read(8192)
                         if not chunk:
-                            print(f"Downloaded {save_path}")
+                            logger.info(f"Downloaded {save_path}")
                             break
                         f.write(chunk)
     except aiohttp.ClientError as e:
-        print(f"Error downloading {url}: {e}")
+        logger.info(f"Error downloading {url}: {e}")
 
 
 async def concurrent_download(dates, save_dir):
@@ -67,7 +70,7 @@ async def concurrent_download(dates, save_dir):
         save_path = os.path.join(save_dir, save_file)
 
         if not os.path.exists(save_path):
-            print(f"Queuing download for {save_file}")
+            logger.info(f"Queuing download for {save_file}")
             tasks.append(download_file(url, save_path))
 
     await asyncio.gather(*tasks)
@@ -85,4 +88,4 @@ if __name__ == '__main__':
     ]
 
     asyncio.run(concurrent_download(dates, save_dir))
-    print("DONE")
+    logger.info("DONE")
