@@ -22,7 +22,7 @@ params = ArgumentParser(
 
 params.add_argument(
     "--save_into",
-    default= "./",
+    default= "C:/Users/andre/Desktop/VS_Code/PMW_LST/data/raw/daily_Windsat/",
     help= "Target directory to save the files into"
 )
 
