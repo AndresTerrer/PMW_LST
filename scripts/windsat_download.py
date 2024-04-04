@@ -7,6 +7,7 @@
     Contact :
     tegoan@uv.es
 """
+
 import aiohttp
 import asyncio
 import os
@@ -17,25 +18,21 @@ import logging
 logger = logging.getLogger("WindsatDownload")
 
 params = ArgumentParser(
-    description = "Download a set of files from windsat daily data",
+    description="Download a set of files from windsat daily data",
 )
 
 params.add_argument(
     "--save_into",
-    default= "C:/Users/andre/Desktop/VS_Code/PMW_LST/data/raw/daily_Windsat/",
-    help= "Target directory to save the files into"
+    default="C:/Users/andre/Desktop/VS_Code/PMW_LST/data/raw/daily_Windsat/",
+    help="Target directory to save the files into",
 )
 
 params.add_argument(
-    "--start_date",
-    default="2017-01-01",
-    help="Date in YYYY-MM-DD format"
+    "--start_date", default="2017-01-01", help="Date in YYYY-MM-DD format"
 )
 
 params.add_argument(
-    "--end_date",
-    default="2017-01-31",
-    help="Date in YYYY-MM-DD format"
+    "--end_date", default="2017-03-02", help="Date in YYYY-MM-DD format"
 )
 
 
@@ -50,6 +47,7 @@ async def download_file(url, save_path):
                         chunk = await response.content.read(8192)
                         if not chunk:
                             logger.info(f"Downloaded {save_path}")
+                            print(f"Downloaded {save_path}")
                             break
                         f.write(chunk)
     except aiohttp.ClientError as e:
@@ -71,12 +69,13 @@ async def concurrent_download(dates, save_dir):
 
         if not os.path.exists(save_path):
             logger.info(f"Queuing download for {save_file}")
+            print(f"Queuing download for {save_file}")
             tasks.append(download_file(url, save_path))
 
     await asyncio.gather(*tasks)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     args = params.parse_args()
 
     start_date = datetime.strptime(args.start_date, "%Y-%m-%d")
@@ -84,8 +83,9 @@ if __name__ == '__main__':
     save_dir = args.save_into
 
     dates = [
-    start_date + timedelta(days=i) for i in range((end_date - start_date).days + 1)
+        start_date + timedelta(days=i) for i in range((end_date - start_date).days + 1)
     ]
 
     asyncio.run(concurrent_download(dates, save_dir))
     logger.info("DONE")
+    print("DONE")
