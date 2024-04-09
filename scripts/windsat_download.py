@@ -16,6 +16,7 @@ from argparse import ArgumentParser
 import logging
 
 logger = logging.getLogger("WindsatDownload")
+logger.setLevel(logging.INFO)  # Set the logging level to INFO
 
 params = ArgumentParser(
     description="Download a set of files from windsat daily data",
