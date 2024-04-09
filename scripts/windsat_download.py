@@ -22,17 +22,17 @@ params = ArgumentParser(
 )
 
 params.add_argument(
-    "--save_into",
+    "--save-into",
     default="C:/Users/andre/Desktop/VS_Code/PMW_LST/data/raw/daily_Windsat/",
     help="Target directory to save the files into",
 )
 
 params.add_argument(
-    "--start_date", default="2017-01-01", help="Date in YYYY-MM-DD format"
+    "--start-date", default="2017-01-01", help="Date in YYYY-MM-DD format"
 )
 
 params.add_argument(
-    "--end_date", default="2017-03-02", help="Date in YYYY-MM-DD format"
+    "--end-date", default="2017-03-02", help="Date in YYYY-MM-DD format"
 )
 
 
