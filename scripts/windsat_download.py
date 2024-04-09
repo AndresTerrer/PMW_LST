@@ -3,6 +3,8 @@
     https://images.remss.com/~RSS-TB/intercalibration/windsat_TB_maps_daily_025deg/
 
     Data is available from 2017-01-01 to 2019-12-31
+
+    days 9th, 10th and 11th from 2017-08 are missing
     
     Contact :
     tegoan@uv.es
