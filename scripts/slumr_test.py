@@ -1,11 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Generar matriz aleatoria
+# Generate random matrix
 matriz = np.random.rand(30, 30)
 
-# Guardar matriz como imagen
+# Save and display the matrix as an image
 plt.imshow(matriz, cmap="viridis", interpolation="nearest")
 plt.colorbar()
-plt.savefig("matriz_aleatoria.png")
+plt.savefig("random_matrix.png")
 plt.show()
