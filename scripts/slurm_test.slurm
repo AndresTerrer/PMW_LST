@@ -6,6 +6,6 @@
 #SBATCH --exclude=nodo17
  
 module load Anaconda3
-source activate PWM_LST
+conda activate PWM_LST
  
 python -u slurm_test.py
