@@ -154,15 +154,18 @@ def create_landmask(
 
     return landmask
 
-def recover_dates(folder_path: str)-> list[date]:
+
+def recover_dates(folder_path: str) -> list[date]:
     """Helper, returns a list of dates parsing the files within the folder"""
 
-    dates = []	
+    dates = []
     ymd_regex = r"_(\d{4})_(\d{2})_(\d{2})"
     for file in os.listdir(folder_path):
         if os.path.isfile(os.path.join(folder_path, file)):
 
-            year, month, day = [int(number) for number in re.findall(ymd_regex, file)[0]]
+            year, month, day = [
+                int(number) for number in re.findall(ymd_regex, file)[0]
+            ]
             dates.append(date(year, month, day))
 
     return dates
@@ -172,7 +175,7 @@ def get_day_of_the_year(dates: list[date]) -> list[int]:
     """Get the day of the year"""
     days = [d.timetuple().tm_yday for d in dates]
 
-    return days 
+    return days
 
 
 def select_datavars(dataset: xr.Dataset) -> xr.Dataset:
@@ -184,7 +187,7 @@ def select_datavars(dataset: xr.Dataset) -> xr.Dataset:
     selected_dvars = [
         "longitude",
         "latitude",
-        "node",  # node of swath
+        "node",  # node of swath, [ascending, descending]
         # "look", # look direction. we will select only look = 0 (forward)
         "frequency_vpol",  # center frequency of V-pol channel in each band
         "frequency_hpol",  # center frequency of H-pol channel in each band
@@ -282,18 +285,18 @@ _preprocess_dataset = partial(preporcess_dataset)
 
 
 def windsat_datacube(folder_path: str) -> xr.Dataset:
-    """ 
-        Wrapper for creating a dataset with the combined data inside a folder
-        param folder_path: must contain the files in .nc format
+    """
+    Wrapper for creating a dataset with the combined data inside a folder
+    param folder_path: must contain the files in .nc format
     """
 
     dates = recover_dates(folder_path)
     day_numbers = get_day_of_the_year(dates)
 
     ds = xr.open_mfdataset(
-        paths= folder_path + "\\*.nc",
+        paths=folder_path + "\\*.nc",
         preprocess=_preprocess_dataset,
-        decode_times=False, # "time" is a datavar (time of observation for each pixel)
+        decode_times=False,  # "time" is a datavar (time of observation for each pixel)
         concat_dim="day_number",
         combine="nested",
     )
