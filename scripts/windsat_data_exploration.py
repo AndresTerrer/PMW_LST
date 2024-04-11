@@ -23,8 +23,9 @@ params.add_argument(
 )
 
 params.add_argument(
-    "--target-folder", default="./", help="Aggregated data will be saved here"
+    "--save-folder", default="./", help="Aggregated data will be saved here"
 )
+
 
 # TODO: For now this is OK, but I need to get the repo into the ERC server and
 # Import custom functions instead of defining them here.
@@ -168,7 +169,7 @@ def windsat_datacube(folder_path: str) -> xr.Dataset:
     day_numbers = get_day_of_the_year(dates)
 
     ds = xr.open_mfdataset(
-        paths=folder_path + "\\*.nc",
+        paths= os.path.join(folder_path,"*.nc"),
         preprocess=_preprocess_dataset,
         decode_times=False,  # "time" is a datavar (time of observation for each pixel)
         concat_dim="day_number",
@@ -255,7 +256,7 @@ if __name__ == "__main__":
 
     ds = windsat_datacube(source_path)
 
-    # Get the number of measurements per pixel
+    # Get the number of measurements per pixel.
     tbtoa_count = ds.tbtoa.count(dim="day_number")
     tbtoa_count.attrs = {
         "Description": "Total count of measurements in the whole datset",
@@ -264,7 +265,7 @@ if __name__ == "__main__":
     tbtoa_count.to_netcdf(save_into)
     print(f"TBToA count saved in {save_into}")
 
-    # Get the number of measurements per pixel
+    # Get the average TBToA per pixel.
     tbtoa_mean = ds.tbtoa.mean(dim="day_number")
     tbtoa_mean.attrs = {
         "Description": "Yearly average TbToA ",
