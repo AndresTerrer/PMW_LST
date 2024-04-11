@@ -178,6 +178,7 @@ def get_day_of_the_year(dates: list[date]) -> list[int]:
 def select_datavars(dataset: xr.Dataset) -> xr.Dataset:
     """
     Select only relevant variables (for Brightness temperature)
+    Learn more: https://www.remss.com/missions/windsat/
     """
 
     selected_dvars = [
@@ -292,7 +293,7 @@ def windsat_datacube(folder_path: str) -> xr.Dataset:
     ds = xr.open_mfdataset(
         paths= folder_path + "\\*.nc",
         preprocess=_preprocess_dataset,
-        decode_times=False,
+        decode_times=False, # "time" is a datavar (time of observation for each pixel)
         concat_dim="day_number",
         combine="nested",
     )
