@@ -26,6 +26,9 @@ params.add_argument(
     "--save-folder", default="./", help="Aggregated data will be saved here"
 )
 
+params.add_argument(
+    "--plots", default=False, help="Python Boolean [True|False], whether or not to compute and save plots"
+)
 
 # TODO: For now this is OK, but I need to get the repo into the ERC server and
 # Import custom functions instead of defining them here.
@@ -253,6 +256,7 @@ if __name__ == "__main__":
     args = params.parse_args()
     source_path = args.source_folder
     save_path = args.save_folder
+    plots = args.plots
 
     ds = windsat_datacube(source_path)
 
@@ -274,16 +278,17 @@ if __name__ == "__main__":
     tbtoa_mean.to_netcdf(save_into)
     print(f"TBToA count saved in {save_into}")
 
-    # Generate and save the plots
-    dimensional_plot(
-        tbtoa_count,
-        save_path=os.path.join(save_path, "TBToA_count.png"),
-        cbar_label="TBToA Count",
-    )
-    dimensional_plot(
-        tbtoa_mean,
-        save_path=os.path.join(save_path, "TBToA_mean.png"),
-        cbar_label="Mean TBToA",
-    )
+    if plots:
+        # Generate and save the plots
+        dimensional_plot(
+            tbtoa_count,
+            save_path=os.path.join(save_path, "TBToA_count.png"),
+            cbar_label="TBToA Count",
+        )
+        dimensional_plot(
+            tbtoa_mean,
+            save_path=os.path.join(save_path, "TBToA_mean.png"),
+            cbar_label="Mean TBToA",
+        )
 
     print("DONE")
