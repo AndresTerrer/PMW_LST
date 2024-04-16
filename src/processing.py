@@ -191,10 +191,13 @@ def select_datavars(dataset: xr.Dataset) -> xr.Dataset:
     """
 
     selected_dvars = [
+        # Datavars coding for Dimensions
         "longitude",
         "latitude",
         "node",  # node of swath, [ascending, descending]
         # "look", # look direction. we will select only look = 0 (forward)
+
+        # Actual data
         "frequency_vpol",  # center frequency of V-pol channel in each band
         "frequency_hpol",  # center frequency of H-pol channel in each band
         "eia_nominal",  # nominal Earth indidence angle of each band
@@ -208,15 +211,18 @@ def select_datavars(dataset: xr.Dataset) -> xr.Dataset:
         # # Land fractions
         # "fland_06", # for 6GHz
         # "fland_10", # For 10 GHz
+
         # # Windsat V8 products
         # "surtep_WSAT", # skin temperature
         # "colvap_WSAT", # atmosphere_mass_content_of_water_vapor
         # "colcld_WSAT", # atmosphere_mass_content_of_cloud_liquid_water
         # "winspd_WSAT", # sea surface wind speed
         # "rain_WSAT", # surface rain rate
+
         # # Cross-Calibrated Multi-Platform
         # "winspd_CCMP", # Wind speed
         # "windir_CCMP", # Cross-Calibrated Multi-Platform Wind direction
+
         # # ERA 5 products
         # "surtep_ERA5", # skin temperature
         # "airtep_ERA5", # Air temperature at 2m above surface
@@ -226,6 +232,7 @@ def select_datavars(dataset: xr.Dataset) -> xr.Dataset:
         # "windir_ERA5", # Wind direction
         # "surtep_CMC", # CMC Sea surface temperature
         # "rain_IMERG", # IMERG V6 surface rain rate
+
         # # RSS 2022 absorption model
         # "tran", # Total atmospheric transmittance computed from ERA atmospheric profiles and WSAT columnar vapor and cloud water
         # "tbdw", # Atmospheric downwelling brightness temperature computed from ERA atmospheric profiles and WSAT columnar vapor and cloud water
@@ -248,7 +255,7 @@ def select_dims(dataset: xr.Dataset) -> xr.Dataset:
     Polarizations:
     0 -- V
     1 -- H
-    (except for 6.8 and 23.8 GHz):
+    (except for 6.8 and 23.8 GHz we also have):
     2 -- P (+45º)
     3 -- M (-45º)
     4 -- L (Circular Left)
@@ -286,7 +293,7 @@ def preporcess_dataset(dataset: xr.Dataset) -> xr.Dataset:
     dataset = transform_dataset(dataset)
     return dataset
 
-
+# Partial function definition
 _preprocess_dataset = partial(preporcess_dataset)
 
 
