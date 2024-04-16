@@ -24,25 +24,22 @@ def holmes(brightness_temp: xr.Dataset) -> xr.Dataset:
     return a * brightness_temp + b
 
 
-def apply_scaling(xarray_dataset: xr.Dataset) -> xr.Dataset:
+def apply_scaling(ds: xr.Dataset) -> xr.Dataset:
     """
     Apply scaling factors to data variables in an Xarray Dataset based on the "SCALE FACTOR" attribute.
 
     :param xarray_dataset: The input Xarray Dataset.
     :return: A new Xarray Dataset with scaled variables.
     """
-    scaled_dataset = (
-        xarray_dataset.copy()
-    )  # Create a copy to avoid modifying the original dataset
-    print("Applying scaling")
-    for dvar in tqdm(scaled_dataset.data_vars):
-        if "SCALE FACTOR" in scaled_dataset[dvar].attrs.keys():
-            scale_factor = scaled_dataset[dvar].attrs["SCALE FACTOR"]
-            if scale_factor != 1:
-                scaled_dataset[dvar] *= scale_factor
-                scaled_dataset[dvar].attrs["SCALE FACTOR"] = 1  # Update the attribute
 
-    return scaled_dataset
+    for dvar in ds.data_vars:
+        if "SCALE FACTOR" in ds[dvar].attrs.keys():
+            scale_factor = ds[dvar].attrs["SCALE FACTOR"]
+            if scale_factor != 1:
+                ds[dvar] *= scale_factor
+                ds[dvar].attrs["SCALE FACTOR"] = 1  # Update the attribute
+
+    return ds
 
 
 def load_zip(path) -> xr.Dataset:
