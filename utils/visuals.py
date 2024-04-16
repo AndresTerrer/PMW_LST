@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import xarray as xr
 
+
 def show_map(image: np.array, title=None, save_path=None):
     """
     This function will show a map of the image
@@ -70,6 +71,7 @@ def column_plot(xarray_dataset, save_path=None):
 
     if save_path is not None:
         plt.savefig(save_path)
+
 
 # Custom function for windsat data
 def dimensional_plot(
