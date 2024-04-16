@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-
+import xarray as xr
 
 def show_map(image: np.array, title=None, save_path=None):
     """
@@ -70,3 +70,67 @@ def column_plot(xarray_dataset, save_path=None):
 
     if save_path is not None:
         plt.savefig(save_path)
+
+# Custom function for windsat data
+def dimensional_plot(
+    ds: xr.DataArray, save_path: str = None, cbar_label: str = None
+) -> None:
+    """
+    Given a data_array, plot each combination of:
+        polarization : [0,1]
+        frequency: [0,1]
+        swath_sector : [0,1]
+
+    param save_path: if not None, atempt to save the plot with the given path
+    param cbar_label: if not None, swap the default xarray.plot label for it
+    """
+
+    dimension_dict = {
+        "polarization": {0: "V", 1: "H"},
+        "frequency": {0: "18.7GHz", 1: "37.0GHz"},
+        "sector": {0: "Asc", 1: "Des"},
+    }
+
+    fig, axs = plt.subplots(4, 2, figsize=(8, 12))
+
+    plot_number = 0
+    for sector in range(0, 2, 1):
+        for freq in range(0, 2, 1):
+            for pol in range(0, 2, 1):
+                nrow = plot_number // 2
+                ncol = plot_number % 2
+                ax = axs[nrow, ncol]
+
+                # Plot data
+                plot = ds.sel(
+                    polarization=pol, frequency_band=freq, swath_sector=sector
+                ).plot(ax=ax)
+
+                # TODO: Add coastline
+                """ 
+                Data is in 1/4º grid, cartopy uses latitude and longitude.
+                    - Change the grid
+                    OR
+                    - Change the coastline feature somehow.
+                """
+                # ax.coastlines(resolution="110m", color = "white", linewidth=1)
+
+                ax.set_title(
+                    f"Freq: {dimension_dict['frequency'][freq]}, "
+                    f"Pol: {dimension_dict['polarization'][pol]}, "
+                    f"Swath: {dimension_dict['sector'][sector]}"
+                )
+                if cbar_label:
+                    colorbar = plot.colorbar
+                    colorbar.set_label(cbar_label)
+
+                plot_number += 1
+
+    fig.tight_layout()
+    if save_path:
+        try:
+            fig.savefig(save_path)
+        except Exception as e:
+            print(f"Unable to save plot: {e}")
+
+    return
