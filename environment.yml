@@ -1,6 +1,6 @@
 name: .conda
 channels:
-  - conda-forge
+  - default
 dependencies:
   - bzip2=1.0.8=h2bbff1b_5
   - ca-certificates=2024.3.11=haa95532_0
