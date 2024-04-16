@@ -27,8 +27,11 @@ params.add_argument(
 )
 
 params.add_argument(
-    "--plots", default=False, help="Python Boolean [True|False], whether or not to compute and save plots"
+    "--plots",
+    default=False,
+    help="Python Boolean [True|False], whether or not to compute and save plots",
 )
+
 
 # TODO: For now this is OK, but I need to get the repo into the ERC server and
 # Import custom functions instead of defining them here.
@@ -172,7 +175,7 @@ def windsat_datacube(folder_path: str) -> xr.Dataset:
     day_numbers = get_day_of_the_year(dates)
 
     ds = xr.open_mfdataset(
-        paths= os.path.join(folder_path,"*.nc"),
+        paths=os.path.join(folder_path, "*.nc"),
         preprocess=_preprocess_dataset,
         decode_times=False,  # "time" is a datavar (time of observation for each pixel)
         concat_dim="day_number",

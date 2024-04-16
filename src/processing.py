@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 from datetime import datetime, date
 from functools import partial
 from tqdm import tqdm
+import warnings
 
 
 def holmes(brightness_temp: xr.Dataset) -> xr.Dataset:
@@ -120,7 +121,7 @@ def extract_timeseries(xarray_dataset, lat, lon) -> xr.DataArray:
     :param lon: float
     :return: np.array 1D
     """
-
+    warnings.warn("DEPRECATED: Please use xarray.sel(lat=lat, lon=lon) instead. ")
     timeseries = np.zeros(shape=(len(xarray_dataset.time),))
 
     for i in range(len(xarray_dataset.time)):
@@ -155,11 +156,17 @@ def create_landmask(
     return landmask
 
 
-def recover_dates(folder_path: str) -> list[date]:
-    """Helper, returns a list of dates parsing the files within the folder"""
+def recover_dates(folder_path: str, ymd_regex: str = r"_(\d{4})_(\d{2})_(\d{2})" ) -> list[date]:
+    """
+    Returns a list of dates parsing the file names within the folder path
+    using the given year-month-day regex pattern. 
+
+    param folder_path:
+    param ymd_regex: must return year, month and day using caputing groups. 
+    Default works for Windsat datafiles "RSS_WINDSAT_DAILY_TBTOA_MAPS_2017_01_01.nc"
+    """
 
     dates = []
-    ymd_regex = r"_(\d{4})_(\d{2})_(\d{2})"
     for file in os.listdir(folder_path):
         if os.path.isfile(os.path.join(folder_path, file)):
 
@@ -172,10 +179,9 @@ def recover_dates(folder_path: str) -> list[date]:
 
 
 def get_day_of_the_year(dates: list[date]) -> list[int]:
-    """Get the day of the year"""
-    days = [d.timetuple().tm_yday for d in dates]
+    """Return the day of the year from a list of datetime objects"""
+    return [d.timetuple().tm_yday for d in dates]
 
-    return days
 
 
 def select_datavars(dataset: xr.Dataset) -> xr.Dataset:
