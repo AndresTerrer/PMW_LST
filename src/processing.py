@@ -279,6 +279,7 @@ def transform_dataset(dataset: xr.Dataset) -> xr.Dataset:
 
     return dataset
 
+
 def preporcess_dataset(dataset: xr.Dataset) -> xr.Dataset:
     """Wrapper"""
     dataset = select_datavars(dataset)
@@ -314,9 +315,11 @@ def windsat_datacube(folder_path: str) -> xr.Dataset:
 
     return ds
 
+
 # TODO: Add a function to load a ladmask datavariable
 
-def read_coordinates(ds: xr.Dataset)-> tuple[np.array, np.array]:
+
+def read_coordinates(ds: xr.Dataset) -> tuple[np.array, np.array]:
     """
     helper
 
@@ -340,24 +343,27 @@ def read_coordinates(ds: xr.Dataset)-> tuple[np.array, np.array]:
     return lat, lon
 
 
-def add_landmask(ds:xr.Dataset, xgrid_name: str= "latitude_grid", ygrid_name:str = "longitude_grid")->xr.Dataset:
-    """ 
-        Read latitude and longitude and atempt to create a landmask datavar
-        param *grid_name: origial values for the latitude and longitude grid dimensions
-
-        return the same dataset with a new variable, enconding 0 for land 
-        and NaN for ocean.
+def add_landmask(
+    ds: xr.Dataset,
+    xgrid_name: str = "latitude_grid",
+    ygrid_name: str = "longitude_grid",
+) -> xr.Dataset:
     """
-    
+    Read latitude and longitude and atempt to create a landmask datavar
+    param *grid_name: origial values for the latitude and longitude grid dimensions
+
+    return the same dataset with a new variable, enconding 0 for land
+    and NaN for ocean.
+    """
+
     lat, lon = read_coordinates(ds)
 
     # Load Regionmask features
     land = regionmask.defined_regions.natural_earth_v5_1_2.land_10
 
-    landmask = land.mask(lon,lat)
+    landmask = land.mask(lon, lat)
 
     # Add the mask as a data variable:
-    ds["landmask"] = (("latitude_grid","longitude_grid"), landmask.values)
+    ds["landmask"] = (("latitude_grid", "longitude_grid"), landmask.values)
 
     return ds
-
