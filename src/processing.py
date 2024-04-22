@@ -329,7 +329,8 @@ def read_coordinates(ds: xr.Dataset) -> tuple[np.array, np.array]:
 
     latnames = ["lat", "latidude"]
     lonnames = ["lon", "lonidude"]
-
+    lat, lon = None, None
+    
     for latn in latnames:
         if latn in ds.data_vars.keys() or latn in ds.coords.keys():
             lat = ds[latn].values
@@ -340,6 +341,8 @@ def read_coordinates(ds: xr.Dataset) -> tuple[np.array, np.array]:
             lon = ds[lonn].values
             break
 
+    if any([lat == None ,lon == None ]):
+        raise NameError("The original dataset must contain lattitude and longitude variables")
     return lat, lon
 
 
