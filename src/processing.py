@@ -340,7 +340,7 @@ def read_coordinates(ds: xr.Dataset)-> tuple[np.array, np.array]:
     return lat, lon
 
 
-def add_lanmask(ds:xr.Dataset, xgrid_name: str= "latitude_grid", ygrid_name:str = "longitude_grid")->xr.Dataset:
+def add_landmask(ds:xr.Dataset, xgrid_name: str= "latitude_grid", ygrid_name:str = "longitude_grid")->xr.Dataset:
     """ 
         Read latitude and longitude and atempt to create a landmask datavar
         param *grid_name: origial values for the latitude and longitude grid dimensions
@@ -357,7 +357,7 @@ def add_lanmask(ds:xr.Dataset, xgrid_name: str= "latitude_grid", ygrid_name:str 
     landmask = land.mask(lon,lat)
 
     # Add the mask as a data variable:
-    ds["mask"] = (("latitude_grid","longitude_grid"), landmask.values)
+    ds["landmask"] = (("latitude_grid","longitude_grid"), landmask.values)
 
     return ds
 
