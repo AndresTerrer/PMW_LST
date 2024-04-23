@@ -1,11 +1,13 @@
 """ 
 Housing the port of TELSEM smissivity atlas into python
 """
+
 import numpy as np
 import os
 
 # Error checking
 errorstatus_fatal = -1
+
 
 # Atlas TYPE conversion into Python class
 class Telsem2AtlasData:
@@ -44,9 +46,10 @@ class Telsem2AtlasData:
         self.correspondance = None  # correspondance(660066)
 
 
-# Some fucntions to read the atlas and compute the lattitude
+# Some fucntions to read the atlas and compute the coordinates
 
 # Equal area computations
+
 
 def equare(dlat, ncells, firstcell):
     # EQUAL-AREA COMPUTATIONS
@@ -56,7 +59,7 @@ def equare(dlat, ncells, firstcell):
     tocell = np.zeros((maxlon, maxlat), dtype=np.int32)
 
     REARTH = 6371.2
-    PI = 2.0 * np.arcsin(1.0)
+    PI = np.pi
     RCELAT = (dlat * PI) / 180.0
     TOTCEL = 0
 
@@ -100,7 +103,16 @@ def equare(dlat, ncells, firstcell):
             firstcell[i - 1] = firstcell[i - 2] + ncells[i - 2]
 
 
-def rttov_readmw_atlas(dir, month, atlas: Telsem2AtlasData, verbose=False, lat1=None, lat2=None, lon1=None, lon2=None):
+def rttov_readmw_atlas(
+    dir,
+    month,
+    atlas: Telsem2AtlasData,
+    verbose=False,
+    lat1=None,
+    lat2=None,
+    lon1=None,
+    lon2=None,
+):
     # Read a monthly atlas
 
     # TRANSITORY VARIABLES
@@ -139,7 +151,7 @@ def rttov_readmw_atlas(dir, month, atlas: Telsem2AtlasData, verbose=False, lat1=
 
     # ALLOCATION SPECIFIC TO SSMI ATLAS
     atlas.nchan = 7
-    atlas.name = 'ssmi_mean_emis_climato'
+    atlas.name = "ssmi_mean_emis_climato"
     atlas.dlat = 0.25
     atlas.ncells = np.zeros(int(180.0 / atlas.dlat), dtype=np.int32)
     atlas.firstcell = np.zeros(int(180.0 / atlas.dlat), dtype=np.int32)
@@ -150,7 +162,9 @@ def rttov_readmw_atlas(dir, month, atlas: Telsem2AtlasData, verbose=False, lat1=
         print("Reading number of data in atlas...")
 
     try:
-        iiin_file = open(os.path.join(dir, atlas.name + '_' + month2 + '_cov_interpol_M2'), 'r')
+        iiin_file = open(
+            os.path.join(dir, atlas.name + "_" + month2 + "_cov_interpol_M2"), "r"
+        )
         j = int(iiin_file.readline().strip())
         atlas.ndat = j
         if verbose:
@@ -171,7 +185,12 @@ def rttov_readmw_atlas(dir, month, atlas: Telsem2AtlasData, verbose=False, lat1=
     ipos = 0
     for line in iiin_file:
         parts = line.strip().split()
-        cellnum, ssmi_values, cur_class1, cur_class2 = int(parts[0]), list(map(float, parts[1:15])), int(parts[15]), int(parts[16])
+        cellnum, ssmi_values, cur_class1, cur_class2 = (
+            int(parts[0]),
+            list(map(float, parts[1:15])),
+            int(parts[15]),
+            int(parts[16]),
+        )
 
         take = 1
         if lat1 is not None:
@@ -198,11 +217,13 @@ def rttov_readmw_atlas(dir, month, atlas: Telsem2AtlasData, verbose=False, lat1=
         print("Reading classes...")
 
     try:
-        iiin_file = open(os.path.join(dir, 'correlations'), 'r')
+        iiin_file = open(os.path.join(dir, "correlations"), "r")
         for i in range(10):
             iiin_file.readline()  # skip lines
             for j in range(7):
-                atlas.correl[i, j, :] = np.array(list(map(float, iiin_file.readline().strip().split())))
+                atlas.correl[i, j, :] = np.array(
+                    list(map(float, iiin_file.readline().strip().split()))
+                )
     except IOError as e:
         print(f"Error opening the correlations input file: {e}")
         err = errorstatus_fatal
@@ -213,26 +234,24 @@ def rttov_readmw_atlas(dir, month, atlas: Telsem2AtlasData, verbose=False, lat1=
     return err
 
 
-def get_coordinates(cellnum:int, atlas: Telsem2AtlasData):
+def get_coordinates(cellnum: int, atlas: Telsem2AtlasData):
 
     res_lat = atlas.dlat
 
-    index_lat_max = int(180/res_lat) - 1
+    index_lat_max = int(180 / res_lat) - 1
 
     if cellnum >= atlas.firstcell[index_lat_max]:
         index_lat = index_lat_max
-        lat = (index_lat - 0.5)*res_lat - 90
+        lat = (index_lat - 0.5) * res_lat - 90
         index_lon = cellnum - atlas.firstcell[index_lat_max] + 1
-        lon = (index_lon - 0.5)*(360.0/atlas.ncells[index_lat])
+        lon = (index_lon - 0.5) * (360.0 / atlas.ncells[index_lat])
 
     else:
-        for i in range(1,index_lat_max-1):
-            if cellnum >=atlas.firstcell[i] and cellnum <atlas.firstcell[i+1]:
+        for i in range(1, index_lat_max - 1):
+            if cellnum >= atlas.firstcell[i] and cellnum < atlas.firstcell[i + 1]:
                 index_lat = i
-                lat = (index_lat -0.5)*res_lat - 90
+                lat = (index_lat - 0.5) * res_lat - 90
                 index_lon = cellnum - atlas.firstcell[i] + 1
-                lon = (index_lon - 0.5)*(360.0/atlas.ncells[index_lat])
+                lon = (index_lon - 0.5) * (360.0 / atlas.ncells[index_lat])
 
     return lat, lon
-
-
