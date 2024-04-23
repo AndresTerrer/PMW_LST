@@ -255,3 +255,22 @@ def get_coordinates(cellnum: int, atlas: Telsem2AtlasData):
                 lon = (index_lon - 0.5) * (360.0 / atlas.ncells[index_lat])
 
     return lat, lon
+
+# Other Subroutines ported into functions ----------------------------------------------------------------
+# TODO: maybe implement the rest if needeed
+def calc_cellnum(lat: float, lon: float, atlas: Telsem2AtlasData)-> int:
+    """ 
+    NOT TESTED!
+        Inverse to get_coordinates.
+        returns the cell number given a pair of latitude and longitude values
+    """
+    cellnum =0
+
+    ilat = min(int((lat+90.0)/atlas.dlat)+1, len(atlas.ncells))
+    ilon = int(lon/(360.0/atlas.ncells[ilat])) + 1
+    for i in range(1,ilat-1):
+        cellnum =atlas.ncells[i] + cellnum
+
+    cellnum = cellnum + ilon
+
+    return cellnum
