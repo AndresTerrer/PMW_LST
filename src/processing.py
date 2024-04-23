@@ -371,3 +371,15 @@ def add_landmask(
     ds["landmask"] = (("latitude_grid", "longitude_grid"), landmask.values)
 
     return ds
+
+
+def create_landmask(lat:np.array, lon:np.array)-> xr.DataArray:
+    """ 
+    The same function as add_landmask without the inconvenient naming
+    returns a DataArray with the 0 flag for land, NaN for ocean
+    """
+
+    land = regionmask.defined_regions.natural_earth_v5_1_2.land_10
+    landmask = land.mask(lon,lat)
+
+    return landmask 
