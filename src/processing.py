@@ -316,9 +316,6 @@ def windsat_datacube(folder_path: str) -> xr.Dataset:
     return ds
 
 
-# TODO: Add a function to load a ladmask datavariable
-
-
 def read_coordinates(ds: xr.Dataset) -> tuple[np.array, np.array]:
     """
     helper
