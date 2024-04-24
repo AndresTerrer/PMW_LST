@@ -1,1 +1,1 @@
-Miscelaneous dir to have both notebboks and scrpts for testing
+This foldes will eventually house the testing for the functions in the repo

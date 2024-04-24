@@ -161,7 +161,13 @@ cython_debug/
 #.idea/
 
 # data is too heavy for git
-data/
+data/raw/*
+data/processed/*
+data/figures/*
+
+!data/raw/README.md
+!data/processed/README.md
+!data/figures/README.md
 
 # DS_Store file (MacOS)
 .DS_Store
