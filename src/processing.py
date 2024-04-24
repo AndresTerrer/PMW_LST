@@ -329,7 +329,6 @@ def read_coordinates(ds: xr.Dataset) -> tuple[np.array, np.array]:
 
     latnames = ["lat", "latidude"]
     lonnames = ["lon", "longidude"]
-    lat, lon = None, None
     for latn in latnames:
         if latn in ds.data_vars.keys() or latn in ds.coords.keys():
             lat = ds[latn].values
@@ -340,10 +339,6 @@ def read_coordinates(ds: xr.Dataset) -> tuple[np.array, np.array]:
             lon = ds[lonn].values
             break
 
-    if any([lat == None, lon == None]):
-        raise NameError(
-            "The original dataset must contain lattitude and longitude variables"
-        )
     return lat, lon
 
 
@@ -373,13 +368,13 @@ def add_landmask(
     return ds
 
 
-def create_landmask(lat:np.array, lon:np.array)-> xr.DataArray:
-    """ 
+def create_landmask(lat: np.array, lon: np.array) -> xr.DataArray:
+    """
     The same function as add_landmask without the inconvenient naming
     returns a DataArray with the 0 flag for land, NaN for ocean
     """
 
     land = regionmask.defined_regions.natural_earth_v5_1_2.land_10
-    landmask = land.mask(lon,lat)
+    landmask = land.mask(lon_or_obj=lon, lat=lat)
 
-    return landmask 
+    return landmask
