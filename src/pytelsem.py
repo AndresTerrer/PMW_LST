@@ -26,6 +26,15 @@ class Telsem2AtlasData:
         
         # resolution of the atlas (equal-area)
         self.dlat = 0.25
+
+        # ALLOCATE VARIABLES
+        self.emis = np.zeros((self.ndat, self.nchan), dtype=np.float64)
+        self.emis_err = np.zeros((self.ndat, self.nchan), dtype=np.float64)
+        self.class1 = np.zeros(self.ndat, dtype=np.int32)
+        self.class2 = np.zeros(self.ndat, dtype=np.int32)
+        self.cellnum = np.zeros(self.ndat, dtype=np.int32)
+        self.correspondance = np.full(660066, -777, dtype=np.int32)
+
         # number of cells per lat band
         self.ncells = None
         # the first cellnumber of lat band
@@ -153,10 +162,11 @@ class Telsem2AtlasData:
 
         # ALLOCATION SPECIFIC TO SSMI ATLAS
         self.nchan = 7
-        self.name = "ssmi_mean_emis_climato"
         self.dlat = 0.25
         self.ncells = np.zeros(int(180.0 / self.dlat), dtype=np.int32)
         self.firstcell = np.zeros(int(180.0 / self.dlat), dtype=np.int32)
+
+        # Call the method to produce all the equal area calculations
         self.equare()
 
         # DEFINING NUMBER OF DATA
@@ -176,14 +186,6 @@ class Telsem2AtlasData:
             err = errorstatus_fatal
             return err
 
-        # ALLOCATE VARIABLES
-        self.emis = np.zeros((self.ndat, self.nchan), dtype=np.float64)
-        self.emis_err = np.zeros((self.ndat, self.nchan), dtype=np.float64)
-        self.class1 = np.zeros(self.ndat, dtype=np.int32)
-        self.class2 = np.zeros(self.ndat, dtype=np.int32)
-        self.cellnum = np.zeros(self.ndat, dtype=np.int32)
-        self.correspondance = np.full(660066, -777, dtype=np.int32)
-
         ipos = 0
         for line in iiin_file:
             parts = line.strip().split()
@@ -195,8 +197,7 @@ class Telsem2AtlasData:
             )
 
             take = 1
-            if lat1 is not None:
-                # get_coordinates(cellnum, atlas, lat, lon)
+            if lat1 is not -777:
                 if not (lat1 <= lat <= lat2 and lon1 <= lon <= lon2):
                     take = 0
 
