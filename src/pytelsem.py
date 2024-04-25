@@ -53,6 +53,14 @@ class Telsem2AtlasData:
         # Added:
         self.coordinates = None
 
+    def __str__(self):
+        message = f"Telsem Atlas at \n {self.path} \n"
+        message += f"Atlas name: {os.path.basename(self.path)} \n"
+        if self.coordinates:
+            message += "Coordinates loaded \n"
+
+        return message
+
     def equare(self):
         """ 
         Equal area computations
