@@ -247,7 +247,7 @@ def get_coordinates(cellnum: int, atlas: Telsem2AtlasData):
         lon = (index_lon - 0.5) * (360.0 / atlas.ncells[index_lat])
 
     else:
-        for i in range(1, index_lat_max - 1):
+        for i in range(1, index_lat_max + 1):
             if cellnum >= atlas.firstcell[i] and cellnum < atlas.firstcell[i + 1]:
                 index_lat = i
                 lat = (index_lat - 0.5) * res_lat - 90
