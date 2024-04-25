@@ -245,12 +245,7 @@ class Telsem2AtlasData:
 
     def get_coordinates(self, cellnum: int) ->tuple[float, float]:
         """ 
-        Create an equivalent geodataframe from the atlas data
-        Columns: 
-            Geometry (points with the lon-lat coordinates)
-            7 emmisivity bands
-            7 error estimation, one for each of the bands.
-            2 surface classification flags for each point.
+        Translate the cell number to the latitude and longitude coordinates.
         """
 
         res_lat = self.dlat
@@ -275,7 +270,12 @@ class Telsem2AtlasData:
     
     def to_geopandas(self) -> geopandas.GeoDataFrame:
         """ 
-        Export the atlas data
+        Create an equivalent geodataframe from the atlas data
+        Columns: 
+            Geometry (points with the lon-lat coordinates)
+            7 emmisivity bands
+            7 error estimation, one for each of the bands.
+            2 surface classification flags for each point.
         """
         if self.coordinates == None:
             print("Calculating coordinates as points")
