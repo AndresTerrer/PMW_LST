@@ -27,14 +27,6 @@ class Telsem2AtlasData:
         # resolution of the atlas (equal-area)
         self.dlat = 0.25
 
-        # ALLOCATE VARIABLES
-        self.emis = np.zeros((self.ndat, self.nchan), dtype=np.float64)
-        self.emis_err = np.zeros((self.ndat, self.nchan), dtype=np.float64)
-        self.class1 = np.zeros(self.ndat, dtype=np.int32)
-        self.class2 = np.zeros(self.ndat, dtype=np.int32)
-        self.cellnum = np.zeros(self.ndat, dtype=np.int32)
-        self.correspondance = np.full(660066, -777, dtype=np.int32)
-
         # number of cells per lat band
         self.ncells = None
         # the first cellnumber of lat band
@@ -44,21 +36,21 @@ class Telsem2AtlasData:
         self.lat2 = None
         self.lon1 = None
         self.lon2 = None
+        # ALLOCATE VARIABLES ---------------
         # Emissivities
-        self.emis = None  # emis(ndat,nchan)
-        # Correlations
-        self.correl = None  # correl(10,nchan,nchan)
+        self.emis = np.zeros((self.ndat, self.nchan), dtype=np.float64) 
         # Emissivity uncertainties (std)
-        self.emis_err = None  # emis_err(ndat,nchan)
+        self.emis_err = np.zeros((self.ndat, self.nchan), dtype=np.float64)
         # Surface class
-        self.class1 = None
-        self.class2 = None
+        self.class1 = np.zeros(self.ndat, dtype=np.int32)
+        self.class2 = np.zeros(self.ndat, dtype=np.int32)
         # cellnumber of each of the pixels in the atlas
-        self.cellnum = None
+        self.cellnum = np.zeros(self.ndat, dtype=np.int32)
         # "Correspondance" vector indicating that for the ith element, the j so that EMIS(j,...) is the emissivity of cellnumber i.
-        self.correspondance = None  # correspondance(660066)
-        errorstatus_fatal = -1
+        self.correspondance = np.full(660066, -777, dtype=np.int32)
 
+        # Correlations, to read from the coorelations file
+        self.correl = None  # correl(10,nchan,nchan)
         # Added:
         self.coordinates = None
 
