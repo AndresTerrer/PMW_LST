@@ -122,10 +122,10 @@ class Telsem2AtlasData:
     def rttov_readmw_atlas(
         self,
         verbose=False,
-        lat1=None,
-        lat2=None,
-        lon1=None,
-        lon2=None,
+        lat1=-777,
+        lat2=-777,
+        lon1=-777,
+        lon2=-777,
     ):
 
 
@@ -146,19 +146,10 @@ class Telsem2AtlasData:
             print("TELSEM2 atlas data structure already allocated")
             return err
 
-        self.lat1 = -777
-        self.lat2 = -777
-        self.lon1 = -777
-        self.lon2 = -777
-
-        if lat1 is not None:
-            self.lat1 = lat1
-        if lat2 is not None:
-            self.lat2 = lat2
-        if lon1 is not None:
-            self.lon1 = lon1 % 360.0
-        if lon2 is not None:
-            self.lon2 = lon2 % 360.0
+        self.lat1 = lat1
+        self.lat2 = lat2
+        self.lon1 = lon1 % 360.0
+        self.lon2 = lon2 % 360.0
 
         # ALLOCATION SPECIFIC TO SSMI ATLAS
         self.nchan = 7
