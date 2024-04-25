@@ -26,7 +26,6 @@ class Telsem2AtlasData:
         
         # resolution of the atlas (equal-area)
         self.dlat = 0.25
-
         # number of cells per lat band
         self.ncells = None
         # the first cellnumber of lat band
