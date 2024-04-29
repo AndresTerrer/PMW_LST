@@ -127,31 +127,31 @@ def extract_timeseries(xarray_dataset, lat, lon) -> xr.DataArray:
 
     return np.array(timeseries)
 
+# TODO: deprecated and renamed
+# def create_landmask(
+#     xarray_dataset, threshold=273, show=False, file_path=None, figure_path=None
+# ) -> xr.DataArray:
+#     """
+#     Creates a mask for latitude and longitude given a threshold and a base array.
+#     Save the resulting xr.DataArray as a file if a path is provided.
 
-def create_landmask(
-    xarray_dataset, threshold=273, show=False, file_path=None, figure_path=None
-) -> xr.DataArray:
-    """
-    Creates a mask for latitude and longitude given a threshold and a base array.
-    Save the resulting xr.DataArray as a file if a path is provided.
+#     :param xarray_dataset: xr.DataSet with latitude and longitude dimensions
+#     :param threshold: float
+#     :return: xr.DataArray with latitude and longitude
+#     """
+#     landmask = xarray_dataset.where(xarray_dataset > threshold, other=0)
+#     landmask = landmask.where(landmask == 0, other=1)
 
-    :param xarray_dataset: xr.DataSet with latitude and longitude dimensions
-    :param threshold: float
-    :return: xr.DataArray with latitude and longitude
-    """
-    landmask = xarray_dataset.where(xarray_dataset > threshold, other=0)
-    landmask = landmask.where(landmask == 0, other=1)
+#     # Save the mask into a file option
+#     if file_path is not None:
+#         landmask.to_netcdf(file_path)
+#     if show:
+#         landmask.plot(cmap="jet")
+#         # Save an image of the mask option
+#         if figure_path is not None:
+#             plt.savefig(figure_path)
 
-    # Save the mask into a file option
-    if file_path is not None:
-        landmask.to_netcdf(file_path)
-    if show:
-        landmask.plot(cmap="jet")
-        # Save an image of the mask option
-        if figure_path is not None:
-            plt.savefig(figure_path)
-
-    return landmask
+#     return landmask
 
 
 def recover_dates(
