@@ -360,7 +360,7 @@ def add_landmask(
     landmask = land.mask(lon, lat)
 
     # Add the mask as a data variable:
-    ds["landmask"] = (("latitude_grid", "longitude_grid"), landmask.values)
+    ds["landmask"] = ((xgrid_name, ygrid_name), landmask.values)
 
     return ds
 
