@@ -27,6 +27,8 @@ class Telsem2AtlasData:
 
         # resolution of the atlas (equal-area)
         self.dlat = 0.25
+        # number of channels
+        self.nchan = 7
         # number of cells per lat band
         self.ncells = None
         # the first cellnumber of lat band
@@ -38,14 +40,14 @@ class Telsem2AtlasData:
         self.lon2 = None
         # ALLOCATE VARIABLES ---------------
         # Emissivities
-        self.emis = np.zeros((self.ndat, self.nchan), dtype=np.float64)
+        self.emis = None
         # Emissivity uncertainties (std)
-        self.emis_err = np.zeros((self.ndat, self.nchan), dtype=np.float64)
+        self.emis_err = None
         # Surface class
-        self.class1 = np.zeros(self.ndat, dtype=np.int32)
-        self.class2 = np.zeros(self.ndat, dtype=np.int32)
+        self.class1 = None
+        self.class2 = None
         # cellnumber of each of the pixels in the atlas
-        self.cellnum = np.zeros(self.ndat, dtype=np.int32)
+        self.cellnum = None
         # "Correspondance" vector indicating that for the ith element, the j so that EMIS(j,...) is the emissivity of cellnumber i.
         self.correspondance = np.full(660066, -777, dtype=np.int32)
 
@@ -175,6 +177,20 @@ class Telsem2AtlasData:
             return err
 
         ipos = 0
+        
+        # Correlation of uncertainties
+        self.correl = np.zeros((10, self.nchan, self.nchan), dtype=np.float64)
+        # ALLOCATE VARIABLES ---------------
+        # Emissivities
+        self.emis = np.zeros((self.ndat, self.nchan), dtype=np.float64)
+        # Emissivity uncertainties (std)
+        self.emis_err = np.zeros((self.ndat, self.nchan), dtype=np.float64)
+        # Surface class
+        self.class1 = np.zeros(self.ndat, dtype=np.int32)
+        self.class2 = np.zeros(self.ndat, dtype=np.int32)
+        # cellnumber of each of the pixels in the atlas
+        self.cellnum = np.zeros(self.ndat, dtype=np.int32)
+
         for line in iiin_file:
             parts = line.strip().split()
             cellnum, ssmi_values, cur_class1, cur_class2 = (
@@ -185,7 +201,7 @@ class Telsem2AtlasData:
             )
 
             take = 1
-            if lat1 is not -777:
+            if lat1 != -777:
                 if not (lat1 <= lat <= lat2 and lon1 <= lon <= lon2):
                     take = 0
 
@@ -200,9 +216,6 @@ class Telsem2AtlasData:
 
         self.ndat = ipos
         iiin_file.close()
-
-        # Correlation of uncertainties
-        self.correl = np.zeros((10, self.nchan, self.nchan), dtype=np.float64)
 
         if verbose:
             print("Reading classes...")
