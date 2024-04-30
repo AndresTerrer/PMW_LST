@@ -127,6 +127,7 @@ def extract_timeseries(xarray_dataset, lat, lon) -> xr.DataArray:
 
     return np.array(timeseries)
 
+
 # TODO: deprecated and renamed
 # def create_landmask(
 #     xarray_dataset, threshold=273, show=False, file_path=None, figure_path=None

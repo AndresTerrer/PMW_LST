@@ -11,8 +11,9 @@ from shapely.geometry import Point
 # Error checking
 errorstatus_fatal = -1
 
+
 class Telsem2AtlasData:
-    def __init__(self, path:str):
+    def __init__(self, path: str):
         # number of lines in the atlas
         self.ndat = None
         # number of channels in the atlas
@@ -23,7 +24,7 @@ class Telsem2AtlasData:
         # Directory where the atlas data is stored
         self.dir = os.path.dirname(self.path)
         self.name = os.path.basename(self.path)
-        
+
         # resolution of the atlas (equal-area)
         self.dlat = 0.25
         # number of cells per lat band
@@ -37,7 +38,7 @@ class Telsem2AtlasData:
         self.lon2 = None
         # ALLOCATE VARIABLES ---------------
         # Emissivities
-        self.emis = np.zeros((self.ndat, self.nchan), dtype=np.float64) 
+        self.emis = np.zeros((self.ndat, self.nchan), dtype=np.float64)
         # Emissivity uncertainties (std)
         self.emis_err = np.zeros((self.ndat, self.nchan), dtype=np.float64)
         # Surface class
@@ -62,7 +63,7 @@ class Telsem2AtlasData:
         return message
 
     def equare(self):
-        """ 
+        """
         Equal area computations
         """
         dlat = self.dlat
@@ -118,7 +119,6 @@ class Telsem2AtlasData:
             else:
                 firstcell[i - 1] = firstcell[i - 2] + ncells[i - 2]
 
-
     def rttov_readmw_atlas(
         self,
         verbose=False,
@@ -127,7 +127,6 @@ class Telsem2AtlasData:
         lon1=-777,
         lon2=-777,
     ):
-
 
         # TRANSITORY VARIABLES
         iiin = 21  # unit for input
@@ -165,9 +164,7 @@ class Telsem2AtlasData:
             print("Reading number of data in atlas...")
 
         try:
-            iiin_file = open(
-                self.path, "r"
-            )
+            iiin_file = open(self.path, "r")
             j = int(iiin_file.readline().strip())
             self.ndat = j
             if verbose:
@@ -225,17 +222,17 @@ class Telsem2AtlasData:
         finally:
             iiin_file.close()
         return err
-    
+
     def get_all_coordinates(self):
-        """ 
+        """
         Populate the coordinates field, giving pais of lat-lon points in a list.
         1 to 1 correspondence to self.cellnum
         """
         self.coordinates = [self.get_coordinates(c) for c in self.cellnum]
         pass
 
-    def get_coordinates(self, cellnum: int) ->tuple[float, float]:
-        """ 
+    def get_coordinates(self, cellnum: int) -> tuple[float, float]:
+        """
         Translate the cell number to the latitude and longitude coordinates.
         """
 
@@ -258,11 +255,11 @@ class Telsem2AtlasData:
                     lon = (index_lon - 0.5) * (360.0 / self.ncells[index_lat])
 
         return lat, lon
-    
+
     def to_geopandas(self) -> geopandas.GeoDataFrame:
-        """ 
+        """
         Create an equivalent geodataframe from the atlas data
-        Columns: 
+        Columns:
             Geometry (points with the lon-lat coordinates)
             7 emmisivity bands
             7 error estimation, one for each of the bands.
@@ -274,7 +271,7 @@ class Telsem2AtlasData:
 
         lats = [c[0] for c in self.coordinates]
         lons = [(c[1] - 180) % 360 for c in self.coordinates]
-        geometry = [Point(lon,lat) for lat,lon in zip(lats,lons)]
+        geometry = [Point(lon, lat) for lat, lon in zip(lats, lons)]
 
         gdf = geopandas.GeoDataFrame(geometry=geometry)
 
@@ -309,10 +306,12 @@ class Telsem2AtlasData:
         sc2df = pd.DataFrame(self.class2, columns=["Surface_class2"])
 
         return pd.concat([gdf, emisdf, errdf, sc1df, sc2df], axis=1)
-    
+
     # TODO: implement/port the spacial interpolation algorithm.
-    def spacial_interpolation(self,lon:float, lat:float, variable:str=None) -> tuple[float, float]:
-        """ 
+    def spacial_interpolation(
+        self, lon: float, lat: float, variable: str = None
+    ) -> tuple[float, float]:
+        """
         Using data from the atlas, interpolate for an arbitrary coordinate
         param variable: if it exists in the atlas, calculate the value only
             for that emissivity value and its error
@@ -320,7 +319,5 @@ class Telsem2AtlasData:
         return: emissivity value, propagatet error
         """
         emiss, emiss_err = None, None
-
-        
 
         return emiss, emiss_err
