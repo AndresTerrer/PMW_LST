@@ -95,6 +95,7 @@ def download_many(dates:list[datetime], save_dir:str) -> None:
     for i,date in enumerate(dates):
         print(f"Downloading atempt {i}/{len(dates)}.")
         single_download(cds, date, save_dir)
+        print("NEXT")
 
     print("DONE")
 
