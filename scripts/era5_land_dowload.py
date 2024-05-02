@@ -85,9 +85,10 @@ def single_download(cds:cdsapi.Client, date:datetime, folder_path:str) -> None:
                 request=request,
                 target=target,
             )
-        except:
+        except Exception as e:
             os.remove(target)
             print(f"Removed compromised file {target}.")
+            print(e)
 
     else:
         print(f"Data file {target} allready exists, donwload skipped.")
