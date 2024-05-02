@@ -79,11 +79,16 @@ def single_download(cds:cdsapi.Client, date:datetime, folder_path:str) -> None:
 
     # Process only unexisting, full downloads
     if  not os.path.exists(target):
-        cds.retrieve(
-            name=dataset_name,
-            request=request,
-            target=target,
-        )
+        try:
+            cds.retrieve(
+                name=dataset_name,
+                request=request,
+                target=target,
+            )
+        except:
+            os.remove(target)
+            print(f"Removed compromised file {target}.")
+
     else:
         print(f"Data file {target} allready exists, donwload skipped.")
 
