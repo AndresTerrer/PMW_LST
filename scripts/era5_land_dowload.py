@@ -50,9 +50,7 @@ def get_base_request() -> dict:
     base_request = {
         "variable":
         [
-            "skin_temperature",
-            "soil_temperature_level_1",
-            "temperature_of_snow_layer",
+            '2m_temperature', 'skin_temperature', 'soil_temperature_level_1',
         ],
         "year": None,
         "month": None,
