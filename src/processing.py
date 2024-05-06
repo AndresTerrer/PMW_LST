@@ -220,8 +220,8 @@ def select_datavars(dataset: xr.Dataset) -> xr.Dataset:
         # "winspd_CCMP", # Wind speed
         # "windir_CCMP", # Cross-Calibrated Multi-Platform Wind direction
         # # ERA 5 products
-        # "surtep_ERA5", # skin temperature
-        # "airtep_ERA5", # Air temperature at 2m above surface
+        "surtep_ERA5", # skin temperature
+        "airtep_ERA5", # Air temperature at 2m above surface
         # "colvap_ERA5", # Columnar liquid cloud water
         # "colcld_ERA5", # atmosphere_mass_content_of_cloud_liquid_water
         # "winspd_ERA5", # 10-m NS wind speed
