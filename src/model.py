@@ -56,9 +56,14 @@ def get_training_batch(index_list: list, ds: xr.Dataset) -> tuple[pd.DataFrame, 
     batch_df["time_18ghz"] += - global_bias - (batch_df["day_number"] - 1)* 24 * 60 * 60
     batch_df["time_37ghz"] += - global_bias - (batch_df["day_number"] - 1)* 24 * 60 * 60
 
-    # Normalise the values to be between 0 and 1 (0.5 = mid day) 
-    batch_df["time_18ghz"] = batch_df["time_18ghz"] / (24*60*60)
-    batch_df["time_37ghz"] = batch_df["time_37ghz"] / (24*60*60)
+    # Normalise the values to be between 0 and 1 using a periodic function
+    batch_df["time_37ghz"] = batch_df["time_37ghz"].apply(
+        lambda x: np.sin(2 * np.pi * x / 86400)
+        )
+    
+    batch_df["time_18ghz"] = batch_df["time_18ghz"].apply(
+        lambda x: np.sin(2 * np.pi * x / 86400)
+        )
 
     # Loop longitude so 0 and 360 are close.
     batch_df["lon"] = batch_df["lon"].apply(lambda x: np.sin(np.deg2rad(x)))
