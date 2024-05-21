@@ -121,16 +121,16 @@ def plot_history(history: History):
     ax[0].plot(history.history["loss"][2:], alpha=0.8, label = "training")
     ax[0].plot(history.history["val_loss"][2:],  alpha=0.8, label = "validation")
     ax[0].legend()
-    ax[0].ylabel("mse [K]")
-    ax[0].xlabel("Epoch")
+    ax[0].set_ylabel("mse [K]")
+    ax[0].set_xlabel("Epoch")
     ax[0].grid(axis="y")
 
     ax[1].plot(history.history["loss"], alpha=0.8, label = "training")
     ax[1].plot(history.history["val_loss"],  alpha=0.8, label = "test")
     ax[1].legend()
-    ax[1].yscale("log")
-    ax[1].ylabel("log_10(mse [K])")
-    ax[1].xlabel("Epoch")
+    ax[1].set_yscale("log")
+    ax[1].set_ylabel("log_10(mse [K])")
+    ax[1].set_xlabel("Epoch")
     ax[1].grid(axis="y")
 
     return fig, ax
