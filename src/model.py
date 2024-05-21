@@ -16,8 +16,7 @@ import numpy as np
 def transform_batch(batch: pd.DataFrame):
 
     # Select desired dvars:
-    dvars = ["tbtoa","surtep_ERA5","lat","lon","time"]
-    batch = batch[dvars]
+    batch = batch.drop(columns=["latitude_grid","longitude_grid"])
 
     # Remove missing data
     batch = batch.dropna()
@@ -27,56 +26,22 @@ def transform_batch(batch: pd.DataFrame):
 
     # Transform the variables time, lon and day
     global_bias = (datetime(2017, 1, 1, 0, 0, 0) - datetime(2000, 1, 1, 0, 0)).total_seconds()
-    batch["time"] += - global_bias - (batch["day_number"] - 1)* 24 * 60 * 60
+    batch["time_18Ghz"] += - global_bias - (batch["day_number"] - 1)* 24 * 60 * 60
 
-    batch["time"] = batch["time"].apply(
+    batch["time_18Ghz"] = batch["time_18Ghz"].apply(
+        lambda x: np.sin(2 * np.pi * x / (24 * 60 * 60))
+    )
+
+    global_bias = (datetime(2017, 1, 1, 0, 0, 0) - datetime(2000, 1, 1, 0, 0)).total_seconds()
+    batch["time_37Ghz"] += - global_bias - (batch["day_number"] - 1)* 24 * 60 * 60
+
+    batch["time_37Ghz"] = batch["time_37Ghz"].apply(
         lambda x: np.sin(2 * np.pi * x / (24 * 60 * 60))
     )
     
     # Lon and lat transformations, to have a number between -1 and 1
     batch["lon"] = batch["lon"].apply(lambda x: np.sin(np.deg2rad(x)))
-    batch["lat"] = batch["lat"].apply(lambda x: np.cos(np.deg2rad(x)))
-
-    # pivot the tbtoa and time columns into 4 and 2 respectivelly
-    #TODO: Can this be done within the xr.Dataset itself ??
-    
-    # Create new tbtoa columns based on frequency_band and polarization
-    batch['tbtoa_18Ghz_V'] = batch.apply(lambda row: row['tbtoa'] if row['frequency_band'] == 0 and row['polarization'] == 0 else None, axis=1)
-    batch['tbtoa_18Ghz_H'] = batch.apply(lambda row: row['tbtoa'] if row['frequency_band'] == 0 and row['polarization'] == 1 else None, axis=1)
-    batch['tbtoa_37Ghz_V'] = batch.apply(lambda row: row['tbtoa'] if row['frequency_band'] == 1 and row['polarization'] == 0 else None, axis=1)
-    batch['tbtoa_37Ghz_H'] = batch.apply(lambda row: row['tbtoa'] if row['frequency_band'] == 1 and row['polarization'] == 1 else None, axis=1)
-
-    # Create new time columns based on frequency_band
-    batch['time_18Ghz'] = batch.apply(lambda row: row['time'] if row['frequency_band'] == 0 else None, axis=1)
-    batch['time_37Ghz'] = batch.apply(lambda row: row['time'] if row['frequency_band'] == 1 else None, axis=1)
-
-    # Forward fill the new columns to fill None values
-    batch[
-        [
-            'tbtoa_18Ghz_V',
-            'tbtoa_18Ghz_H',
-            'tbtoa_37Ghz_V',
-            'tbtoa_37Ghz_H',
-            'time_18Ghz',
-            'time_37Ghz'
-        ]
-    ] = batch[
-        [
-            'tbtoa_18Ghz_V',
-            'tbtoa_18Ghz_H',
-            'tbtoa_37Ghz_V',
-            'tbtoa_37Ghz_H',
-            'time_18Ghz',
-            'time_37Ghz'
-        ]
-    ].ffill()
-
-    # Drop duplicate rows if necessary
-    batch = batch.drop_duplicates(subset=['day_number', 'longitude_grid', 'latitude_grid', 'frequency_band', 'polarization'])
-    batch.dropna(inplace=True)
-
-    # Remove unwanted columns
-    batch.drop(columns=['tbtoa', 'time',"latitude_grid","longitude_grid","polarization","frequency_band"], inplace=True)
+    batch["lat"] = batch["lat"].apply(lambda x: np.sin(np.deg2rad(x)))
 
     return batch
 
