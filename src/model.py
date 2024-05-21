@@ -35,10 +35,11 @@ def transform_batch(batch: pd.DataFrame):
     
     # Lon and lat transformations, to have a number between -1 and 1
     batch["lon"] = batch["lon"].apply(lambda x: np.sin(np.deg2rad(x)))
-    batch["lat"] = batch["lat"].apply(lambda x: np.sin(np.deg2rad(x)))
+    batch["lat"] = batch["lat"].apply(lambda x: np.cos(np.deg2rad(x)))
 
     # pivot the tbtoa and time columns into 4 and 2 respectivelly
-
+    #TODO: Can this be done within the xr.Dataset itself ??
+    
     # Create new tbtoa columns based on frequency_band and polarization
     batch['tbtoa_18Ghz_V'] = batch.apply(lambda row: row['tbtoa'] if row['frequency_band'] == 0 and row['polarization'] == 0 else None, axis=1)
     batch['tbtoa_18Ghz_H'] = batch.apply(lambda row: row['tbtoa'] if row['frequency_band'] == 0 and row['polarization'] == 1 else None, axis=1)
