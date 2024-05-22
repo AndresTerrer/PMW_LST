@@ -57,7 +57,6 @@ def default_model() -> Sequential:
     """ 
     Create a keras.model object with this architecture
     """
-
     n_vars = 9
 
     model = Sequential([
