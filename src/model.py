@@ -13,16 +13,8 @@ import xarray as xr
 import pandas as pd
 import numpy as np
 
+# TODO: harmonize this transformations with the new random indexing method
 def transform_batch(batch: pd.DataFrame):
-
-    # Select desired dvars:
-    batch = batch.drop(columns=["latitude_grid","longitude_grid"])
-
-    # Remove missing data
-    batch = batch.dropna()
-
-    # We want the day_number value as an input
-    batch.reset_index(inplace=True)
 
     # Transform the variables time, lon and day
     global_bias = (datetime(2017, 1, 1, 0, 0, 0) - datetime(2000, 1, 1, 0, 0)).total_seconds()
@@ -107,7 +99,7 @@ def training_step(model: Sequential, training_batch: pd.DataFrame, history: Hist
     """
     X, y = xy_split(training_batch)
     x_train, x_test, y_train, y_test = train_test_split(X,y, test_size = 0.1, random_state = 13)
-    batch_history = model.fit(x_train, y_train, epochs=1, validation_data=(x_test,y_test))
+    batch_history = model.fit(x_train, y_train, epochs=10, validation_data=(x_test,y_test))
 
     # Manage the history of each training run
     if history is None:
