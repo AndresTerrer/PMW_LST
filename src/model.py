@@ -75,8 +75,8 @@ def plot_history(history: History):
 
     fig, ax = plt.subplots(2,1, figsize = (24,10))
 
-    ax[0].plot(history.history["loss"][2:], alpha=0.8, label = "training")
-    ax[0].plot(history.history["val_loss"][2:],  alpha=0.8, label = "validation")
+    ax[0].plot(history.history["loss"], alpha=0.8, label = "training")
+    ax[0].plot(history.history["val_loss"],  alpha=0.8, label = "validation")
     ax[0].legend()
     ax[0].set_ylabel("mse [K]")
     ax[0].set_xlabel("Epoch")
@@ -99,7 +99,7 @@ def training_step(model: Sequential, training_batch: pd.DataFrame, history: Hist
     """
     X, y = xy_split(training_batch)
     x_train, x_test, y_train, y_test = train_test_split(X,y, test_size = 0.1, random_state = 13)
-    batch_history = model.fit(x_train, y_train, epochs=10, validation_data=(x_test,y_test))
+    batch_history = model.fit(x_train, y_train, epochs=100, validation_data=(x_test,y_test))
 
     # Manage the history of each training run
     if history is None:
