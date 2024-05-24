@@ -13,7 +13,7 @@ import xarray as xr
 import pandas as pd
 import numpy as np
 
-# TODO: harmonize this transformations with the new random indexing method
+
 def transform_batch(batch: pd.DataFrame):
 
     # Transform the variables time, lon and day
@@ -45,6 +45,8 @@ def xy_split(batch:pd.DataFrame):
     y = batch[y_column]
 
     return X ,y
+
+# TODO: move this into its own thing. Random search of the architecture
 def default_model() -> Sequential:
     """ 
     Create a keras.model object with this architecture
@@ -73,7 +75,7 @@ def plot_history(history: History):
     Standard plot of training and validation loss
     """
 
-    fig, ax = plt.subplots(2,1, figsize = (48,20))
+    fig, ax = plt.subplots(1,2, figsize = (24,10))
 
     ax[0].plot(history.history["loss"], alpha=0.8, label = "training")
     ax[0].plot(history.history["val_loss"],  alpha=0.8, label = "validation")
@@ -96,6 +98,7 @@ def plot_history(history: History):
 #TODO: implement this in a smarter way so I dont need to pass the model.
 def training_step(model: Sequential, training_batch: pd.DataFrame, history: History=None, ) -> History :
     """ 
+    UNUSED
     Single training step with a dataframe 2000 samples long. returned expanded history
     """
     X, y = xy_split(training_batch)
@@ -114,6 +117,7 @@ def training_step(model: Sequential, training_batch: pd.DataFrame, history: Hist
 
 def append_training_history(full_history: History, new_history:History) -> History:
     """ 
+    UNUSED
     Extend all the keys in a model training history object.
     """
     if full_history is None:
