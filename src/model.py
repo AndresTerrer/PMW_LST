@@ -82,13 +82,14 @@ def plot_history(history: History):
     ax[0].set_xlabel("Epoch")
     ax[0].grid(axis="y")
 
-    ax[1].plot(history.history["loss"][-6:], alpha=0.8, label = "training")
-    ax[1].plot(history.history["val_loss"][-6:],  alpha=0.8, label = "validation")
+    last_epochs = len(history.history["loss"])//3
+    ax[1].plot(history.history["loss"][-last_epochs:], alpha=0.8, label = "training")
+    ax[1].plot(history.history["val_loss"][-last_epochs:],  alpha=0.8, label = "validation")
     ax[1].legend()
     ax[1].set_ylabel("mse [K]")
     ax[1].set_xlabel("Epoch")
     ax[1].grid(axis="y")
-    ax[1].set_title("Last 10 epochs")
+    ax[1].set_title(f"Last {last_epochs} epochs")
 
     return fig, ax
 
