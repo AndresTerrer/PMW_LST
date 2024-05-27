@@ -86,7 +86,7 @@ if __name__ == "__main__":
         monitor = "loss",
         patience = 5,
         min_delta = 0.1,
-        verbose=1,
+        verbose=2,
         restore_best_weights = True
     )
 
