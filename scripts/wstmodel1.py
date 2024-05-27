@@ -100,7 +100,7 @@ if __name__ == "__main__":
         y_train,
         epochs=20,
         validation_data=(x_test,y_test),
-        callbacks=[callback],
+        callbacks=[callback, checkpoints],
         verbose = 2
     )
 
