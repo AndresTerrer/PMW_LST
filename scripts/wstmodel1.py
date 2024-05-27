@@ -24,11 +24,11 @@ from src.model import transform_batch, xy_split
 # OS Params
 params = ArgumentParser()
 params.add_argument(
-    "--source_folder", default="../data/raw/Daily_Windsat/", help= "Folder with Windsat dataset."
+    "--source_folder", default="./data/raw/Daily_Windsat/", help= "Folder with Windsat dataset."
 )
 
 params.add_argument(
-    "--output_folder", default= "../models/", help= "Folder to store final weights and trining history."
+    "--output_folder", default= "./models/", help= "Folder to store final weights and trining history."
 )
 
 def build_model(info:bool = False):
@@ -85,7 +85,7 @@ if __name__ == "__main__":
     callback = EarlyStopping(
         monitor = "loss",
         patience = 2,
-        min_delta = 1,
+        min_delta = 0.05,
         verbose=2,
         restore_best_weights = True
     )
@@ -93,10 +93,10 @@ if __name__ == "__main__":
     history = model.fit(
         x_train,
         y_train,
-        epochs=100,
+        epochs=20,
         validation_data=(x_test,y_test),
         callbacks=[callback],
-        verbose = 1
+        verbose = 2
     )
 
     # Save model weights and history data.
