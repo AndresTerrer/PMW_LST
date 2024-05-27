@@ -35,6 +35,9 @@ def transform_batch(batch: pd.DataFrame):
     batch["lon"] = batch["lon"].apply(lambda x: np.sin(np.deg2rad(x)))
     batch["lat"] = batch["lat"].apply(lambda x: np.sin(np.deg2rad(x)))
 
+    # Day of the year is also a periodic qualifyer
+    batch["day_number"] = batch["day_number"].apply(lambda x: np.sin(2 * np.pi * x / 366))
+
     return batch
 
 

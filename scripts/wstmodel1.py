@@ -12,11 +12,11 @@ from sklearn.model_selection import train_test_split
 from tensorflow.keras.layers import Dense, Input, BatchNormalization
 from tensorflow.keras import Sequential
 from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.optimizers import Adam
 
 import sys
 sys.path.append("../")
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 
 from src.processing import windsat_datacube, model_preprocess
 from src.model import transform_batch, xy_split
@@ -42,7 +42,7 @@ def build_model(info:bool = False):
         Dense(1,activation="relu", name = "outputLayer")
     ])
     model.compile(
-        optimizer = "adam",
+        optimizer = Adam(learning_rate=5e-4),
         loss ="mse",
         metrics = ["mse"]
     )
@@ -84,8 +84,8 @@ if __name__ == "__main__":
     # Fit the model
     callback = EarlyStopping(
         monitor = "loss",
-        patience = 5,
-        min_delta = 0.1,
+        patience = 2,
+        min_delta = 1,
         verbose=2,
         restore_best_weights = True
     )
@@ -99,7 +99,7 @@ if __name__ == "__main__":
         verbose = 1
     )
 
-    # Save FINAL model weights and history data.
+    # Save model weights and history data.
     now = datetime.now().strftime(r"%Y_%m_%dT%H%M%S")
 
     weights_path = os.path.join(output_folder,f"{now}.weights.h5")
