@@ -11,7 +11,7 @@ from sklearn.model_selection import train_test_split
 
 from tensorflow.keras.layers import Dense, Input, BatchNormalization
 from tensorflow.keras import Sequential
-from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.optimizers import Adam
 
 import sys
@@ -81,13 +81,18 @@ if __name__ == "__main__":
     X, y = xy_split(ascds_df)
     x_train, x_test, y_train, y_test = train_test_split(X,y, test_size = 0.3, random_state = 13)
 
-    # Fit the model
+    # Callbacks
     callback = EarlyStopping(
         monitor = "loss",
         patience = 2,
         min_delta = 0.05,
         verbose=2,
         restore_best_weights = True
+    )
+    checkpoints = ModelCheckpoint(
+        filepath = os.path.join(output_folder, "checkpoint.weights.h5"),
+        save_weights_only = True,
+        verbose = 1
     )
 
     history = model.fit(
