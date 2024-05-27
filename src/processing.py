@@ -303,7 +303,7 @@ def windsat_datacube(folder_path: str) -> xr.Dataset:
     day_numbers = get_day_of_the_year(dates)
 
     ds = xr.open_mfdataset(
-        paths=folder_path + "\\*.nc",
+        paths=os.path.join(folder_path + "/*.nc"),
         preprocess=_preprocess_dataset,
         decode_times=False,  # "time" is a datavar (time of observation for each pixel)
         concat_dim="day_number",

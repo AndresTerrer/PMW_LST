@@ -8,4 +8,4 @@
 module load Anaconda3
 source activate PMW_LST
  
-python -u /home/antego/PMW_LST/scripts/wstmodel1.py --source_folder /data/databases/Windsat/Daily_TBToA/ --output_folder /home/antego/PMW_LST/models/
+python -u /home/antego/PMW_LST/scripts/wstmodel1.py --source_folder /data/databases/Windsat/Daily_TBToA --output_folder /home/antego/PMW_LST/models/
