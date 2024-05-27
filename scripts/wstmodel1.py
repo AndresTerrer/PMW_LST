@@ -15,12 +15,13 @@ from tensorflow.keras.callbacks import EarlyStopping
 
 import sys
 sys.path.append("../")
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 
 from src.processing import windsat_datacube, model_preprocess
 from src.model import transform_batch, xy_split
 
 # OS Params
-
 params = ArgumentParser()
 params.add_argument(
     "--source_folder", default="../data/raw/Daily_Windsat/", help= "Folder with Windsat dataset."
@@ -52,7 +53,6 @@ def build_model(info:bool = False):
     return model
 
 
-
 if __name__ == "__main__":
 
     args = params.parse_args()
@@ -60,7 +60,7 @@ if __name__ == "__main__":
     folder_path = args.source_folder
     output_folder = args.output_folder
 
-    print("Windsat datacube model training")
+    print("--- Windsat datacube model training --- ")
 
     #Load the dataset from the folder
     print(f"Loading windsat Datacube from {folder_path}")
@@ -102,7 +102,7 @@ if __name__ == "__main__":
     # Save FINAL model weights and history data.
     now = datetime.now().strftime(r"%Y_%m_%dT%H%M%S")
 
-    weights_path = os.path.join(output_folder,f"/{now}.weights.h5")
+    weights_path = os.path.join(output_folder,f"{now}.weights.h5")
     model.save_weights(weights_path)
 
     history_path = os.path.join(output_folder,f"{now}_history.json")
