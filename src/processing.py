@@ -376,3 +376,41 @@ def create_landmask(lat: np.array, lon: np.array) -> xr.DataArray:
     landmask = land.mask(lon_or_obj=lon, lat=lat)
 
     return landmask
+
+def model_preprocess(ds: xr.Dataset) -> xr.Dataset:
+    # Preprocess and select the dataset
+    landmask = create_landmask(lon=ds.lon.values, lat=ds.lat.values)
+    ds["landmask"] = (("latitude_grid", "longitude_grid"), landmask.values)
+
+    #I talked with maria and we can create a "snow mask" by filtering surtep_ERA5 > 2ºC
+
+    # Filter the dataset for land, then select the ascending pass
+    ascds = ds.where(ds.landmask == 0).sel(swath_sector=0)
+
+    # select data only where era5 surtep is avobe 2ºC
+    ascds = ascds.where(ascds.surtep_ERA5 >(273.15 + 2))
+
+    # Select only desired variables
+    variables = ["time","tbtoa", "surtep_ERA5"]
+    ascds = ascds[variables]
+
+    # Split tbtoa and time into polarization and frequency
+    ascds["tbtoa_18Ghz_V"] = ascds.tbtoa.sel(polarization=0,frequency_band=0)
+    ascds["tbtoa_18Ghz_H"] = ascds.tbtoa.sel(polarization=1,frequency_band=0)
+    ascds["tbtoa_37Ghz_V"] = ascds.tbtoa.sel(polarization=0,frequency_band=1)
+    ascds["tbtoa_37Ghz_H"] = ascds.tbtoa.sel(polarization=1,frequency_band=1)
+
+    ascds["time_18Ghz"] = ascds.time.sel(frequency_band=0)
+    ascds["time_37Ghz"] = ascds.time.sel(frequency_band=1)
+
+    # Drop the original dvars
+    ascds = ascds.drop_vars(names=["tbtoa","time"])
+
+    # Lat and lon should be dvars instead
+    ascds = ascds.reset_coords(names = ["lat","lon"])
+
+    # Add longitude_grid and latitude_grid as indeces 
+    ascds = ascds.assign_coords(latitude_grid=range(720), longitude_grid=range(1440))
+    ascds = ascds.set_index(latitude_grid='latitude_grid', longitude_grid='longitude_grid')
+
+    return ascds
