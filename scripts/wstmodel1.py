@@ -90,8 +90,7 @@ if __name__ == "__main__":
         restore_best_weights = True
     )
     checkpoints = ModelCheckpoint(
-        filepath = os.path.join(output_folder, "checkpoint.weights.h5"),
-        save_weights_only = True,
+        filepath = os.path.join(output_folder, "checkpoint.keras"),
         verbose = 1
     )
 
@@ -104,14 +103,8 @@ if __name__ == "__main__":
         verbose = 2
     )
 
-    # Save model weights and history data.
+    # Save the model.
     now = datetime.now().strftime(r"%Y_%m_%dT%H%M%S")
-
-    weights_path = os.path.join(output_folder,f"{now}.weights.h5")
-    model.save_weights(weights_path)
-
-    history_path = os.path.join(output_folder,f"{now}_history.json")
-    with open(history_path, "wb") as file:
-        pickle.dump(history, file)
-
+    weights_path = os.path.join(output_folder, f"{now}.keras")
+    model.save_model(weights_path)
 
