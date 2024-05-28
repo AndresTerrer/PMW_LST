@@ -9,12 +9,24 @@ from sklearn.model_selection import train_test_split
 from datetime import datetime
 
 import matplotlib.pyplot as plt
-import xarray as xr
 import pandas as pd
 import numpy as np
 
 
 def transform_batch(batch: pd.DataFrame):
+    """ 
+    Numerical transformations applied to the variables in the training dataframe.
+
+    Time == time of observation (seconds since 2000-01-01T00:00:00) transformed 
+    into "day fraction" [0-1] since midnight, then wrapped into a periodic function 
+    (both 0 and 1 represent midnight)
+
+    Longitude (degrees) turned into the sin of the angle instead for the same periodic reason
+    Latitude also transformed with sin(x) for consistency but it could be normalised instead
+    [-90, 90] -> [-1, 1]
+
+    Day number (Day of the Year) normalized by 366 and also periodic
+    """
 
     # Transform the variables time, lon and day
     global_bias = (datetime(2017, 1, 1, 0, 0, 0) - datetime(2000, 1, 1, 0, 0)).total_seconds()
@@ -41,9 +53,10 @@ def transform_batch(batch: pd.DataFrame):
     return batch
 
 
-def xy_split(batch:pd.DataFrame):
-    y_column = "surtep_ERA5"
-
+def xy_split(batch:pd.DataFrame, y_column: str = "surtep_ERA5"):
+    """ 
+    Split the training dataset into variables for prediction and true value to predict
+    """
     X = batch[[col for col in batch.columns if col != y_column]]
     y = batch[y_column]
 
@@ -52,6 +65,7 @@ def xy_split(batch:pd.DataFrame):
 # TODO: move this into its own thing. Random search of the architecture
 def default_model() -> Sequential:
     """ 
+    UNUSED at the moment.
     Create a keras.model object with this architecture
     """
     n_vars = 9
@@ -73,23 +87,23 @@ def default_model() -> Sequential:
 
     return model
 
-def plot_history(history: History):
+def plot_history(history: dict):
     """ 
     Standard plot of training and validation loss
     """
 
     fig, ax = plt.subplots(1,2, figsize = (24,10))
 
-    ax[0].plot(history.history["loss"], alpha=0.8, label = "training")
-    ax[0].plot(history.history["val_loss"],  alpha=0.8, label = "validation")
+    ax[0].plot(history["loss"], alpha=0.8, label = "training")
+    ax[0].plot(history["val_loss"],  alpha=0.8, label = "validation")
     ax[0].legend()
     ax[0].set_ylabel("mse [K]")
     ax[0].set_xlabel("Epoch")
     ax[0].grid(axis="y")
 
-    last_epochs = len(history.history["loss"])//3
-    ax[1].plot(history.history["loss"][-last_epochs:], alpha=0.8, label = "training")
-    ax[1].plot(history.history["val_loss"][-last_epochs:],  alpha=0.8, label = "validation")
+    last_epochs = len(history.history["loss"])//2
+    ax[1].plot(history["loss"][-last_epochs:], alpha=0.8, label = "training")
+    ax[1].plot(history["val_loss"][-last_epochs:],  alpha=0.8, label = "validation")
     ax[1].legend()
     ax[1].set_ylabel("mse [K]")
     ax[1].set_xlabel("Epoch")

@@ -13,9 +13,9 @@ from tensorflow.keras.layers import Dense, Input, BatchNormalization
 from tensorflow.keras import Sequential
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.models import save_model
 
 import sys
-sys.path.append("../")
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from src.processing import windsat_datacube, model_preprocess
@@ -103,8 +103,17 @@ if __name__ == "__main__":
         verbose = 2
     )
 
-    # Save the model.
     now = datetime.now().strftime(r"%Y_%m_%dT%H%M%S")
-    weights_path = os.path.join(output_folder, f"{now}.keras")
-    model.save_model(weights_path)
+    # Save the model.
+    model_path = os.path.join(output_folder, f"{now}.keras")
+    save_model(model, model_path)
+    print(f"Training done, model saved as {model_path} ")
+
+    # Save the training history:
+    history_path = os.path.join(output_folder,f"{now}_history")
+    with open(history_path,"wb") as hfile:
+        pickle.dump(history.history, hfile)
+
+    print(f"Training done, model saved as {history_path} ")
+
 
