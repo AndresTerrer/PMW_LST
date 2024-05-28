@@ -102,7 +102,7 @@ def plot_history(history: dict):
     ax[0].set_xlabel("Epoch")
     ax[0].grid(axis="y")
 
-    last_epochs = len(history.history["loss"])//2
+    last_epochs = len(history["loss"])//2
     ax[1].plot(history["loss"][-last_epochs:], alpha=0.8, label = "training")
     ax[1].plot(history["val_loss"][-last_epochs:],  alpha=0.8, label = "validation")
     ax[1].legend()
