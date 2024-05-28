@@ -13,7 +13,8 @@ import pandas as pd
 import numpy as np
 
 
-def transform_batch(batch: pd.DataFrame):
+#TODO: Rename this function, since we can use it with the whole dataset
+def transform_batch(df: pd.DataFrame):
     """ 
     Numerical transformations applied to the variables in the training dataframe.
 
@@ -27,7 +28,7 @@ def transform_batch(batch: pd.DataFrame):
 
     Day number (Day of the Year) normalized by 366 and also periodic
     """
-
+    batch = df.copy()
     # Transform the variables time, lon and day
     global_bias = (datetime(2017, 1, 1, 0, 0, 0) - datetime(2000, 1, 1, 0, 0)).total_seconds()
     batch["time_18Ghz"] += - global_bias - (batch["day_number"] - 1)* 24 * 60 * 60
