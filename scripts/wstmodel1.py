@@ -87,7 +87,7 @@ if __name__ == "__main__":
     # Callbacks
     callback = EarlyStopping(
         monitor = "loss",
-        patience = 2,
+        patience = 5,
         min_delta = 0.05,
         verbose=2,
         restore_best_weights = True
@@ -100,7 +100,7 @@ if __name__ == "__main__":
     history = model.fit(
         x_train,
         y_train,
-        epochs=20,
+        epochs=100,
         batch_size = 512,
         validation_data=(x_test,y_test),
         callbacks=[callback, checkpoints],
