@@ -175,3 +175,5 @@ models/*
 
 # DS_Store file (MacOS)
 .DS_Store
+
+carla/*
