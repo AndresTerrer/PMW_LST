@@ -75,9 +75,18 @@ if __name__ == "__main__":
     ascds_df.drop(columns=["longitude_grid","latitude_grid"], inplace=True)
     ascds_df = transform_batch(ascds_df)
 
-    # # Remove the time of observation TEMPORARY, FOR TESTING
-    # ascds_df = ascds_df[[col for col in ascds_df.columns if col not in ["time_18Ghz","time_37Ghz"]]]
-
+    # Remove the time of observation TEMPORARY, FOR TESTING
+    ascds_df = ascds_df[
+        [
+            col for col in ascds_df.columns if col not in 
+            ["time_18Ghz","time_37Ghz","day_number"]
+        ]
+    ]
+    print(f"Training variables:")
+    message = " -> "
+    for col in ascds_df.columns:
+        message += col + "  "
+    print(message)
     model = build_model(info=True)
 
     # Pick the columns for training and test
