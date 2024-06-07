@@ -98,9 +98,10 @@ def plot_history(history: dict):
     ax[0].plot(history["loss"], alpha=0.8, label = "training")
     ax[0].plot(history["val_loss"],  alpha=0.8, label = "validation")
     ax[0].legend()
-    ax[0].set_ylabel("mse [K]")
+    ax[0].set_ylabel("log(mse [K])")
     ax[0].set_xlabel("Epoch")
     ax[0].grid(axis="y")
+    ax[0].set_yscale("log")
 
     last_epochs = len(history["loss"])//2
     ax[1].plot(history["loss"][-last_epochs:], alpha=0.8, label = "training")
