@@ -312,7 +312,7 @@ def windsat_datacube(folder_path: str) -> xr.Dataset:
 
     # Add a day_number coordinate
     ds["day_number"] = day_numbers
-    ds["day_number"].attrs = {f"Description": "Int, day of the year {dates[0].year}"}
+    ds["day_number"].attrs = {f"Description": f"Int, day of the year {dates[0].year}"}
 
     return ds
 
