@@ -8,6 +8,7 @@ import pickle
 import os
 import xarray as xr
 import pandas as pd
+import numpy as np
 
 from argparse import ArgumentParser
 from datetime import datetime
@@ -69,7 +70,7 @@ if __name__ == "__main__":
     telsem_folder = args.telsem_folder
 
     # Load the Emissivity dataset 
-
+    print("Loading TELSEM atlas")
     names = os.listdir(telsem_folder)
 
     paths = [os.path.join(telsem_folder,name) for name in names]
@@ -115,7 +116,6 @@ if __name__ == "__main__":
         to_add = [i +1] * n
         day_mapping.extend(to_add)
 
-
     print("--- Windsat datacube model training --- ")
 
     #Load the dataset from the folder
@@ -148,6 +148,10 @@ if __name__ == "__main__":
 
     # Drop the month column
     combined_df = combined_df.drop(columns="month")
+
+    # Transform lat and lon to be periodic functions
+    combined_df["lon"] = combined_df["lon"].apply(lambda x: np.sin(np.deg2rad(x)))
+    combined_df["lat"] = combined_df["lat"].apply(lambda x: np.sin(np.deg2rad(x)))
 
     print(f"Training variables:")
     message = " -> "
