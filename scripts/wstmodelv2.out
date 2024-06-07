@@ -1,0 +1,8 @@
+2024-06-07 10:19:09.221412: I external/local_tsl/tsl/cuda/cudart_stub.cc:32] Could not find cuda drivers on your machine, GPU will not be used.
+2024-06-07 10:19:10.761244: I external/local_tsl/tsl/cuda/cudart_stub.cc:32] Could not find cuda drivers on your machine, GPU will not be used.
+2024-06-07 10:19:12.400242: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-06-07 10:19:21.941343: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+usage: wstmodel1.py [-h] [--source_folder SOURCE_FOLDER]
+                    [--output_folder OUTPUT_FOLDER]
+wstmodel1.py: error: unrecognized arguments: --telsem_folder /data/databases/Windsat/NetcdfTELSEM/
