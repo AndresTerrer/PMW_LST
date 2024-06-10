@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=16
-#SBATCH --job-name=wstmodelv2_2
-#SBATCH --output=wstmodelv2_2.out
+#SBATCH --job-name=wstmodelv2_3
+#SBATCH --output=wstmodelv2_3.out
 #SBATCH --exclude=nodo17
  
 module load Anaconda3
