@@ -182,7 +182,7 @@ if __name__ == "__main__":
         x_train,
         y_train,
         epochs=1000,
-        batch_size = 4096,
+        batch_size = 512,
         validation_data=(x_test,y_test),
         callbacks=[callback, checkpoints],
         verbose = 2
