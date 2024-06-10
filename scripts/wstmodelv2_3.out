@@ -1,0 +1,62 @@
+2024-06-10 08:51:17.093435: I external/local_tsl/tsl/cuda/cudart_stub.cc:32] Could not find cuda drivers on your machine, GPU will not be used.
+2024-06-10 08:51:18.614225: I external/local_tsl/tsl/cuda/cudart_stub.cc:32] Could not find cuda drivers on your machine, GPU will not be used.
+2024-06-10 08:51:20.194202: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2024-06-10 08:51:24.003534: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+Loading TELSEM atlas
+--- Windsat datacube model training --- 
+Loading windsat Datacube from /data/databases/Windsat/Daily_TBToA
+Processing data ...
+Training variables:
+ -> surtep_ERA5 | lat | lon | tbtoa_18Ghz_V | tbtoa_18Ghz_H | tbtoa_37Ghz_V | tbtoa_37Ghz_H | Emis19V | Emis19H | Emis37V | Emis37H | 
+Model: "sequential"
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
+┃ Layer (type)                    ┃ Output Shape           ┃       Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ batch_normalization             │ (None, 10)             │            40 │
+│ (BatchNormalization)            │                        │               │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ hiddenLayer1 (Dense)            │ (None, 30)             │           330 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ hiddenLayer2 (Dense)            │ (None, 20)             │           620 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ hiddenLayer3 (Dense)            │ (None, 10)             │           210 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ outputLayer (Dense)             │ (None, 1)              │            11 │
+└─────────────────────────────────┴────────────────────────┴───────────────┘
+ Total params: 1,211 (4.73 KB)
+ Trainable params: 1,191 (4.65 KB)
+ Non-trainable params: 20 (80.00 B)
+Epoch 1/1000
+
+Epoch 1: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+5785/5785 - 16s - 3ms/step - loss: 5254.1284 - mse: 5254.1284 - val_loss: 21.2502 - val_mse: 21.2502
+Epoch 2/1000
+
+Epoch 2: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+5785/5785 - 14s - 2ms/step - loss: 18.2739 - mse: 18.2739 - val_loss: 16.7139 - val_mse: 16.7139
+Epoch 3/1000
+
+Epoch 3: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+5785/5785 - 14s - 2ms/step - loss: 16.2249 - mse: 16.2249 - val_loss: 15.4186 - val_mse: 15.4186
+Epoch 4/1000
+
+Epoch 4: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+5785/5785 - 14s - 2ms/step - loss: 15.2570 - mse: 15.2570 - val_loss: 14.4990 - val_mse: 14.4990
+Epoch 5/1000
+
+Epoch 5: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+5785/5785 - 14s - 2ms/step - loss: 13.5461 - mse: 13.5461 - val_loss: 12.2354 - val_mse: 12.2354
+Epoch 6/1000
+
+Epoch 6: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+5785/5785 - 14s - 2ms/step - loss: 12.1288 - mse: 12.1288 - val_loss: 11.6940 - val_mse: 11.6940
+Epoch 7/1000
+
+Epoch 7: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+5785/5785 - 14s - 2ms/step - loss: 11.7659 - mse: 11.7659 - val_loss: 11.3311 - val_mse: 11.3311
+Epoch 8/1000
+
+Epoch 8: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+5785/5785 - 14s - 2ms/step - loss: 11.5181 - mse: 11.5181 - val_loss: 11.1856 - val_mse: 11.1856
+Epoch 9/1000
