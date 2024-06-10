@@ -414,3 +414,78 @@ def model_preprocess(ds: xr.Dataset) -> xr.Dataset:
     ascds = ascds.set_index(latitude_grid='latitude_grid', longitude_grid='longitude_grid')
 
     return ascds
+
+
+def recover_months(filenames: list[str]) -> list[int]:
+    """ 
+    Read the name files and recover the month using regex.
+    "" ssmi_mean_emis_climato_MM_cov_interpol_M2.nc "" 
+    """
+    regex_pattern = r"ssmi_mean_emis_climato_(\d{2})_cov_interpol_M2.nc"
+
+    months = [
+        int(re.findall(regex_pattern, fn)[0]) for fn in filenames
+    ]
+    return months
+
+
+def telsem_preprocess(telsem_ds: xr.Dataset) -> xr.Dataset:
+    """ 
+    Select datavars, roll longitude, add landmask, keep land, reset coords
+    """
+    d_vars = [
+        "Emis19V",
+        "Emis19H",
+        "Emis37V",
+        "Emis37H",
+    ]
+
+    telsem_ds = telsem_ds[d_vars]
+
+    #roll the longitude to align the data
+    telsem_ds = telsem_ds.roll(
+        {
+            "longitude_grid" : 4 * 180
+        }
+    )
+
+    landmask = create_landmask(lat = telsem_ds.lat.values, lon= telsem_ds.lon.values)
+    telsem_ds["landmask"] = (("latitude_grid","longitude_grid"),landmask.values)
+
+    telsem_ds = telsem_ds.where(telsem_ds.landmask == 0)
+    telsem_ds = telsem_ds.drop_vars("landmask")
+    telsem_ds = telsem_ds.reset_coords()
+
+    return telsem_ds
+
+_telsem_preprocess = partial(telsem_preprocess)
+
+
+def telsem_datacube(folder_path: str) -> xr.Dataset:
+    """ 
+    Same idea as windsat_datasube, preprocess the files in the folder, add the month
+    as a dimention, roll the longitude grid, etc.
+    """
+    filenames = [
+        fn for fn in os.listdir(folder_path)
+        if fn.endswith(".nc")
+    ]
+    months = recover_months(filenames)
+
+
+    telsem_ds = xr.open_mfdataset(
+        paths= [
+            os.path.join(folder_path, fn) for fn in filenames
+        ],
+        preprocess= _telsem_preprocess,
+        concat_dim= "month",
+        combine="nested"
+    )
+
+    telsem_ds["month"] = months
+    telsem_ds["month"].attrs = {
+        "Description" : "Month of the year"
+    }
+
+
+    return telsem_ds
