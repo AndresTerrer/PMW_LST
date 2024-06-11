@@ -377,7 +377,15 @@ def create_landmask(lat: np.array, lon: np.array) -> xr.DataArray:
 
     return landmask
 
-def model_preprocess(ds: xr.Dataset) -> xr.Dataset:
+def model_preprocess(ds: xr.Dataset, swath_sector: int=0) -> xr.Dataset:
+    """ 
+        Pre-process windsat dataset to add landmask, selecct a swath and
+        transform the various polarizations and frequency slices of tbtoa into
+        separated dvars.
+
+        param swath_sector: 0 for Ascending pass, 1 for Descending pass
+
+    """
     # Preprocess and select the dataset
     landmask = create_landmask(lon=ds.lon.values, lat=ds.lat.values)
     ds["landmask"] = (("latitude_grid", "longitude_grid"), landmask.values)
@@ -385,7 +393,7 @@ def model_preprocess(ds: xr.Dataset) -> xr.Dataset:
     #I talked with maria and we can create a "snow mask" by filtering surtep_ERA5 > 2ºC
 
     # Filter the dataset for land, then select the ascending pass
-    ascds = ds.where(ds.landmask == 0).sel(swath_sector=0)
+    ascds = ds.where(ds.landmask == 0).sel(swath_sector=swath_sector)
 
     # select data only where era5 surtep is avobe 2ºC
     ascds = ascds.where(ascds.surtep_ERA5 >(273.15 + 2))
@@ -463,7 +471,7 @@ _telsem_preprocess = partial(telsem_preprocess)
 
 def telsem_datacube(folder_path: str) -> xr.Dataset:
     """ 
-    Same idea as windsat_datasube, preprocess the files in the folder, add the month
+    Same idea as windsat_datacube, preprocess the files in the folder, add the month
     as a dimention, roll the longitude grid, etc.
     """
     filenames = [

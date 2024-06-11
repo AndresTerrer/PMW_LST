@@ -1,10 +1,9 @@
-2024-06-10 08:51:17.093435: I external/local_tsl/tsl/cuda/cudart_stub.cc:32] Could not find cuda drivers on your machine, GPU will not be used.
-2024-06-10 08:51:18.614225: I external/local_tsl/tsl/cuda/cudart_stub.cc:32] Could not find cuda drivers on your machine, GPU will not be used.
-2024-06-10 08:51:20.194202: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+2024-06-11 11:59:02.306974: I external/local_tsl/tsl/cuda/cudart_stub.cc:32] Could not find cuda drivers on your machine, GPU will not be used.
+2024-06-11 11:59:03.827273: I external/local_tsl/tsl/cuda/cudart_stub.cc:32] Could not find cuda drivers on your machine, GPU will not be used.
+2024-06-11 11:59:05.416402: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
 To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
-2024-06-10 08:51:24.003534: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
-Loading TELSEM atlas
---- Windsat datacube model training --- 
+2024-06-11 11:59:09.074993: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+Loading TELSEM atlas from /data/databases/Windsat/NetcdfTELSEM/
 Loading windsat Datacube from /data/databases/Windsat/Daily_TBToA
 Processing data ...
 Training variables:
@@ -30,33 +29,1013 @@ Model: "sequential"
 Epoch 1/1000
 
 Epoch 1: saving model to /home/antego/PMW_LST/models/checkpoint.keras
-5785/5785 - 16s - 3ms/step - loss: 5254.1284 - mse: 5254.1284 - val_loss: 21.2502 - val_mse: 21.2502
+12683/12683 - 28s - 2ms/step - loss: 2880.2002 - mse: 2880.2002 - val_loss: 16.0461 - val_mse: 16.0461
 Epoch 2/1000
 
 Epoch 2: saving model to /home/antego/PMW_LST/models/checkpoint.keras
-5785/5785 - 14s - 2ms/step - loss: 18.2739 - mse: 18.2739 - val_loss: 16.7139 - val_mse: 16.7139
+12683/12683 - 27s - 2ms/step - loss: 13.8294 - mse: 13.8294 - val_loss: 12.2063 - val_mse: 12.2063
 Epoch 3/1000
 
 Epoch 3: saving model to /home/antego/PMW_LST/models/checkpoint.keras
-5785/5785 - 14s - 2ms/step - loss: 16.2249 - mse: 16.2249 - val_loss: 15.4186 - val_mse: 15.4186
+12683/12683 - 24s - 2ms/step - loss: 11.6175 - mse: 11.6175 - val_loss: 10.8911 - val_mse: 10.8911
 Epoch 4/1000
 
 Epoch 4: saving model to /home/antego/PMW_LST/models/checkpoint.keras
-5785/5785 - 14s - 2ms/step - loss: 15.2570 - mse: 15.2570 - val_loss: 14.4990 - val_mse: 14.4990
+12683/12683 - 25s - 2ms/step - loss: 11.3223 - mse: 11.3223 - val_loss: 10.9399 - val_mse: 10.9399
 Epoch 5/1000
 
 Epoch 5: saving model to /home/antego/PMW_LST/models/checkpoint.keras
-5785/5785 - 14s - 2ms/step - loss: 13.5461 - mse: 13.5461 - val_loss: 12.2354 - val_mse: 12.2354
+12683/12683 - 27s - 2ms/step - loss: 11.2306 - mse: 11.2306 - val_loss: 10.6930 - val_mse: 10.6930
 Epoch 6/1000
 
 Epoch 6: saving model to /home/antego/PMW_LST/models/checkpoint.keras
-5785/5785 - 14s - 2ms/step - loss: 12.1288 - mse: 12.1288 - val_loss: 11.6940 - val_mse: 11.6940
+12683/12683 - 24s - 2ms/step - loss: 11.1819 - mse: 11.1819 - val_loss: 10.6700 - val_mse: 10.6700
 Epoch 7/1000
 
 Epoch 7: saving model to /home/antego/PMW_LST/models/checkpoint.keras
-5785/5785 - 14s - 2ms/step - loss: 11.7659 - mse: 11.7659 - val_loss: 11.3311 - val_mse: 11.3311
+12683/12683 - 26s - 2ms/step - loss: 11.1248 - mse: 11.1248 - val_loss: 10.9324 - val_mse: 10.9324
 Epoch 8/1000
 
 Epoch 8: saving model to /home/antego/PMW_LST/models/checkpoint.keras
-5785/5785 - 14s - 2ms/step - loss: 11.5181 - mse: 11.5181 - val_loss: 11.1856 - val_mse: 11.1856
+12683/12683 - 25s - 2ms/step - loss: 11.0677 - mse: 11.0677 - val_loss: 10.7568 - val_mse: 10.7568
 Epoch 9/1000
+
+Epoch 9: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 24s - 2ms/step - loss: 11.0014 - mse: 11.0014 - val_loss: 10.6470 - val_mse: 10.6470
+Epoch 10/1000
+
+Epoch 10: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 10.9690 - mse: 10.9690 - val_loss: 10.5870 - val_mse: 10.5870
+Epoch 11/1000
+
+Epoch 11: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 25s - 2ms/step - loss: 10.9205 - mse: 10.9205 - val_loss: 10.5083 - val_mse: 10.5083
+Epoch 12/1000
+
+Epoch 12: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 26s - 2ms/step - loss: 10.8580 - mse: 10.8580 - val_loss: 10.6244 - val_mse: 10.6244
+Epoch 13/1000
+
+Epoch 13: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 25s - 2ms/step - loss: 10.6770 - mse: 10.6770 - val_loss: 10.2864 - val_mse: 10.2864
+Epoch 14/1000
+
+Epoch 14: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 24s - 2ms/step - loss: 10.4310 - mse: 10.4310 - val_loss: 9.9722 - val_mse: 9.9722
+Epoch 15/1000
+
+Epoch 15: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 26s - 2ms/step - loss: 10.3777 - mse: 10.3777 - val_loss: 10.0770 - val_mse: 10.0770
+Epoch 16/1000
+
+Epoch 16: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 26s - 2ms/step - loss: 10.3322 - mse: 10.3322 - val_loss: 10.0942 - val_mse: 10.0942
+Epoch 17/1000
+
+Epoch 17: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 25s - 2ms/step - loss: 10.2984 - mse: 10.2984 - val_loss: 9.8470 - val_mse: 9.8470
+Epoch 18/1000
+
+Epoch 18: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 10.2603 - mse: 10.2603 - val_loss: 9.7305 - val_mse: 9.7305
+Epoch 19/1000
+
+Epoch 19: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 30s - 2ms/step - loss: 10.2178 - mse: 10.2178 - val_loss: 9.8560 - val_mse: 9.8560
+Epoch 20/1000
+
+Epoch 20: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 10.1892 - mse: 10.1892 - val_loss: 9.6764 - val_mse: 9.6764
+Epoch 21/1000
+
+Epoch 21: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 10.1508 - mse: 10.1508 - val_loss: 9.8667 - val_mse: 9.8667
+Epoch 22/1000
+
+Epoch 22: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 10.1300 - mse: 10.1300 - val_loss: 10.0302 - val_mse: 10.0302
+Epoch 23/1000
+
+Epoch 23: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 10.0981 - mse: 10.0981 - val_loss: 9.7150 - val_mse: 9.7150
+Epoch 24/1000
+
+Epoch 24: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 10.0722 - mse: 10.0722 - val_loss: 10.2561 - val_mse: 10.2561
+Epoch 25/1000
+
+Epoch 25: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 10.0547 - mse: 10.0547 - val_loss: 9.6720 - val_mse: 9.6720
+Epoch 26/1000
+
+Epoch 26: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 10.0264 - mse: 10.0264 - val_loss: 9.9842 - val_mse: 9.9842
+Epoch 27/1000
+
+Epoch 27: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.9995 - mse: 9.9995 - val_loss: 10.2800 - val_mse: 10.2800
+Epoch 28/1000
+
+Epoch 28: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.9490 - mse: 9.9490 - val_loss: 9.5041 - val_mse: 9.5041
+Epoch 29/1000
+
+Epoch 29: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.9392 - mse: 9.9392 - val_loss: 9.4348 - val_mse: 9.4348
+Epoch 30/1000
+
+Epoch 30: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.9370 - mse: 9.9370 - val_loss: 9.8987 - val_mse: 9.8987
+Epoch 31/1000
+
+Epoch 31: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.9168 - mse: 9.9168 - val_loss: 9.4622 - val_mse: 9.4622
+Epoch 32/1000
+
+Epoch 32: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.9027 - mse: 9.9027 - val_loss: 9.4863 - val_mse: 9.4863
+Epoch 33/1000
+
+Epoch 33: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.9048 - mse: 9.9048 - val_loss: 9.5598 - val_mse: 9.5598
+Epoch 34/1000
+
+Epoch 34: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.9070 - mse: 9.9070 - val_loss: 9.9091 - val_mse: 9.9091
+Epoch 35/1000
+
+Epoch 35: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.8797 - mse: 9.8797 - val_loss: 10.0813 - val_mse: 10.0813
+Epoch 36/1000
+
+Epoch 36: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 26s - 2ms/step - loss: 9.8925 - mse: 9.8925 - val_loss: 9.6926 - val_mse: 9.6926
+Epoch 37/1000
+
+Epoch 37: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.8904 - mse: 9.8904 - val_loss: 9.4994 - val_mse: 9.4994
+Epoch 38/1000
+
+Epoch 38: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.8775 - mse: 9.8775 - val_loss: 9.5208 - val_mse: 9.5208
+Epoch 39/1000
+
+Epoch 39: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.8761 - mse: 9.8761 - val_loss: 9.5660 - val_mse: 9.5660
+Epoch 40/1000
+
+Epoch 40: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.8821 - mse: 9.8821 - val_loss: 9.6214 - val_mse: 9.6214
+Epoch 41/1000
+
+Epoch 41: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.8771 - mse: 9.8771 - val_loss: 9.5363 - val_mse: 9.5363
+Epoch 42/1000
+
+Epoch 42: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.8797 - mse: 9.8797 - val_loss: 9.9063 - val_mse: 9.9063
+Epoch 43/1000
+
+Epoch 43: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.8772 - mse: 9.8772 - val_loss: 9.5012 - val_mse: 9.5012
+Epoch 44/1000
+
+Epoch 44: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 30s - 2ms/step - loss: 9.8790 - mse: 9.8790 - val_loss: 10.3792 - val_mse: 10.3792
+Epoch 45/1000
+
+Epoch 45: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.8703 - mse: 9.8703 - val_loss: 9.7912 - val_mse: 9.7912
+Epoch 46/1000
+
+Epoch 46: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.8799 - mse: 9.8799 - val_loss: 9.3982 - val_mse: 9.3982
+Epoch 47/1000
+
+Epoch 47: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.8771 - mse: 9.8771 - val_loss: 9.3924 - val_mse: 9.3924
+Epoch 48/1000
+
+Epoch 48: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.8792 - mse: 9.8792 - val_loss: 9.6706 - val_mse: 9.6706
+Epoch 49/1000
+
+Epoch 49: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.8720 - mse: 9.8720 - val_loss: 9.5262 - val_mse: 9.5262
+Epoch 50/1000
+
+Epoch 50: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.8647 - mse: 9.8647 - val_loss: 9.5689 - val_mse: 9.5689
+Epoch 51/1000
+
+Epoch 51: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.8680 - mse: 9.8680 - val_loss: 9.4901 - val_mse: 9.4901
+Epoch 52/1000
+
+Epoch 52: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.8589 - mse: 9.8589 - val_loss: 9.4438 - val_mse: 9.4438
+Epoch 53/1000
+
+Epoch 53: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.8623 - mse: 9.8623 - val_loss: 9.3859 - val_mse: 9.3859
+Epoch 54/1000
+
+Epoch 54: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.8679 - mse: 9.8679 - val_loss: 10.0403 - val_mse: 10.0403
+Epoch 55/1000
+
+Epoch 55: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.8720 - mse: 9.8720 - val_loss: 9.5140 - val_mse: 9.5140
+Epoch 56/1000
+
+Epoch 56: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.8664 - mse: 9.8664 - val_loss: 9.9848 - val_mse: 9.9848
+Epoch 57/1000
+
+Epoch 57: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.8372 - mse: 9.8372 - val_loss: 9.6385 - val_mse: 9.6385
+Epoch 58/1000
+
+Epoch 58: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.7857 - mse: 9.7857 - val_loss: 9.3230 - val_mse: 9.3230
+Epoch 59/1000
+
+Epoch 59: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.7734 - mse: 9.7734 - val_loss: 9.3300 - val_mse: 9.3300
+Epoch 60/1000
+
+Epoch 60: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.7644 - mse: 9.7644 - val_loss: 9.5392 - val_mse: 9.5392
+Epoch 61/1000
+
+Epoch 61: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.7476 - mse: 9.7476 - val_loss: 9.2799 - val_mse: 9.2799
+Epoch 62/1000
+
+Epoch 62: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.7051 - mse: 9.7051 - val_loss: 9.1910 - val_mse: 9.1910
+Epoch 63/1000
+
+Epoch 63: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.6490 - mse: 9.6490 - val_loss: 9.1779 - val_mse: 9.1779
+Epoch 64/1000
+
+Epoch 64: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.6148 - mse: 9.6148 - val_loss: 9.2483 - val_mse: 9.2483
+Epoch 65/1000
+
+Epoch 65: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.6011 - mse: 9.6011 - val_loss: 9.1640 - val_mse: 9.1640
+Epoch 66/1000
+
+Epoch 66: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.5625 - mse: 9.5625 - val_loss: 9.0853 - val_mse: 9.0853
+Epoch 67/1000
+
+Epoch 67: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.5561 - mse: 9.5561 - val_loss: 9.0827 - val_mse: 9.0827
+Epoch 68/1000
+
+Epoch 68: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.5580 - mse: 9.5580 - val_loss: 9.1976 - val_mse: 9.1976
+Epoch 69/1000
+
+Epoch 69: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.5559 - mse: 9.5559 - val_loss: 9.0538 - val_mse: 9.0538
+Epoch 70/1000
+
+Epoch 70: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.5445 - mse: 9.5445 - val_loss: 9.0875 - val_mse: 9.0875
+Epoch 71/1000
+
+Epoch 71: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.5461 - mse: 9.5461 - val_loss: 9.3196 - val_mse: 9.3196
+Epoch 72/1000
+
+Epoch 72: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.5312 - mse: 9.5312 - val_loss: 9.1654 - val_mse: 9.1654
+Epoch 73/1000
+
+Epoch 73: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.5399 - mse: 9.5399 - val_loss: 9.2498 - val_mse: 9.2498
+Epoch 74/1000
+
+Epoch 74: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.5438 - mse: 9.5438 - val_loss: 9.1223 - val_mse: 9.1223
+Epoch 75/1000
+
+Epoch 75: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.5349 - mse: 9.5349 - val_loss: 9.6260 - val_mse: 9.6260
+Epoch 76/1000
+
+Epoch 76: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 30s - 2ms/step - loss: 9.5355 - mse: 9.5355 - val_loss: 9.1074 - val_mse: 9.1074
+Epoch 77/1000
+
+Epoch 77: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.5327 - mse: 9.5327 - val_loss: 9.1552 - val_mse: 9.1552
+Epoch 78/1000
+
+Epoch 78: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.5317 - mse: 9.5317 - val_loss: 9.0604 - val_mse: 9.0604
+Epoch 79/1000
+
+Epoch 79: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.5309 - mse: 9.5309 - val_loss: 9.4337 - val_mse: 9.4337
+Epoch 80/1000
+
+Epoch 80: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.5306 - mse: 9.5306 - val_loss: 9.0421 - val_mse: 9.0421
+Epoch 81/1000
+
+Epoch 81: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.5294 - mse: 9.5294 - val_loss: 9.0791 - val_mse: 9.0791
+Epoch 82/1000
+
+Epoch 82: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.5235 - mse: 9.5235 - val_loss: 9.0952 - val_mse: 9.0952
+Epoch 83/1000
+
+Epoch 83: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.5135 - mse: 9.5135 - val_loss: 9.2983 - val_mse: 9.2983
+Epoch 84/1000
+
+Epoch 84: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 30s - 2ms/step - loss: 9.5183 - mse: 9.5183 - val_loss: 9.0622 - val_mse: 9.0622
+Epoch 85/1000
+
+Epoch 85: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.5197 - mse: 9.5197 - val_loss: 9.0681 - val_mse: 9.0681
+Epoch 86/1000
+
+Epoch 86: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.5117 - mse: 9.5117 - val_loss: 9.0933 - val_mse: 9.0933
+Epoch 87/1000
+
+Epoch 87: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.5185 - mse: 9.5185 - val_loss: 9.1254 - val_mse: 9.1254
+Epoch 88/1000
+
+Epoch 88: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.5015 - mse: 9.5015 - val_loss: 9.1078 - val_mse: 9.1078
+Epoch 89/1000
+
+Epoch 89: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.4872 - mse: 9.4872 - val_loss: 9.4646 - val_mse: 9.4646
+Epoch 90/1000
+
+Epoch 90: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.4704 - mse: 9.4704 - val_loss: 9.0388 - val_mse: 9.0388
+Epoch 91/1000
+
+Epoch 91: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.4378 - mse: 9.4378 - val_loss: 9.0457 - val_mse: 9.0457
+Epoch 92/1000
+
+Epoch 92: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.4134 - mse: 9.4134 - val_loss: 9.1018 - val_mse: 9.1018
+Epoch 93/1000
+
+Epoch 93: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.4010 - mse: 9.4010 - val_loss: 8.9360 - val_mse: 8.9360
+Epoch 94/1000
+
+Epoch 94: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.3497 - mse: 9.3497 - val_loss: 8.9075 - val_mse: 8.9075
+Epoch 95/1000
+
+Epoch 95: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.3325 - mse: 9.3325 - val_loss: 9.0233 - val_mse: 9.0233
+Epoch 96/1000
+
+Epoch 96: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.3245 - mse: 9.3245 - val_loss: 8.9649 - val_mse: 8.9649
+Epoch 97/1000
+
+Epoch 97: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.3130 - mse: 9.3130 - val_loss: 9.0063 - val_mse: 9.0063
+Epoch 98/1000
+
+Epoch 98: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.2984 - mse: 9.2984 - val_loss: 8.9250 - val_mse: 8.9250
+Epoch 99/1000
+
+Epoch 99: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 30s - 2ms/step - loss: 9.3090 - mse: 9.3090 - val_loss: 8.8094 - val_mse: 8.8094
+Epoch 100/1000
+
+Epoch 100: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.2792 - mse: 9.2792 - val_loss: 8.8135 - val_mse: 8.8135
+Epoch 101/1000
+
+Epoch 101: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.2763 - mse: 9.2763 - val_loss: 8.8021 - val_mse: 8.8021
+Epoch 102/1000
+
+Epoch 102: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.2688 - mse: 9.2688 - val_loss: 9.0659 - val_mse: 9.0659
+Epoch 103/1000
+
+Epoch 103: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.2591 - mse: 9.2591 - val_loss: 9.0256 - val_mse: 9.0256
+Epoch 104/1000
+
+Epoch 104: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.2612 - mse: 9.2612 - val_loss: 8.8720 - val_mse: 8.8720
+Epoch 105/1000
+
+Epoch 105: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.2702 - mse: 9.2702 - val_loss: 8.8825 - val_mse: 8.8825
+Epoch 106/1000
+
+Epoch 106: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.2568 - mse: 9.2568 - val_loss: 9.4124 - val_mse: 9.4124
+Epoch 107/1000
+
+Epoch 107: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.2484 - mse: 9.2484 - val_loss: 9.0009 - val_mse: 9.0009
+Epoch 108/1000
+
+Epoch 108: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 30s - 2ms/step - loss: 9.2633 - mse: 9.2633 - val_loss: 8.7521 - val_mse: 8.7521
+Epoch 109/1000
+
+Epoch 109: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.2689 - mse: 9.2689 - val_loss: 8.8631 - val_mse: 8.8631
+Epoch 110/1000
+
+Epoch 110: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.2654 - mse: 9.2654 - val_loss: 8.8427 - val_mse: 8.8427
+Epoch 111/1000
+
+Epoch 111: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.2562 - mse: 9.2562 - val_loss: 9.1262 - val_mse: 9.1262
+Epoch 112/1000
+
+Epoch 112: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.2648 - mse: 9.2648 - val_loss: 8.7547 - val_mse: 8.7547
+Epoch 113/1000
+
+Epoch 113: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.2498 - mse: 9.2498 - val_loss: 8.7590 - val_mse: 8.7590
+Epoch 114/1000
+
+Epoch 114: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 30s - 2ms/step - loss: 9.2607 - mse: 9.2607 - val_loss: 9.3071 - val_mse: 9.3071
+Epoch 115/1000
+
+Epoch 115: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.2562 - mse: 9.2562 - val_loss: 8.8193 - val_mse: 8.8193
+Epoch 116/1000
+
+Epoch 116: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 30s - 2ms/step - loss: 9.2556 - mse: 9.2556 - val_loss: 8.7817 - val_mse: 8.7817
+Epoch 117/1000
+
+Epoch 117: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 30s - 2ms/step - loss: 9.2566 - mse: 9.2566 - val_loss: 9.0780 - val_mse: 9.0780
+Epoch 118/1000
+
+Epoch 118: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.2581 - mse: 9.2581 - val_loss: 8.7458 - val_mse: 8.7458
+Epoch 119/1000
+
+Epoch 119: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.2495 - mse: 9.2495 - val_loss: 8.9717 - val_mse: 8.9717
+Epoch 120/1000
+
+Epoch 120: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.2455 - mse: 9.2455 - val_loss: 8.8144 - val_mse: 8.8144
+Epoch 121/1000
+
+Epoch 121: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.2511 - mse: 9.2511 - val_loss: 9.2396 - val_mse: 9.2396
+Epoch 122/1000
+
+Epoch 122: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.2477 - mse: 9.2477 - val_loss: 8.9645 - val_mse: 8.9645
+Epoch 123/1000
+
+Epoch 123: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.2506 - mse: 9.2506 - val_loss: 8.8741 - val_mse: 8.8741
+Epoch 124/1000
+
+Epoch 124: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 30s - 2ms/step - loss: 9.2507 - mse: 9.2507 - val_loss: 8.8038 - val_mse: 8.8038
+Epoch 125/1000
+
+Epoch 125: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.2489 - mse: 9.2489 - val_loss: 9.0024 - val_mse: 9.0024
+Epoch 126/1000
+
+Epoch 126: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.2396 - mse: 9.2396 - val_loss: 8.9528 - val_mse: 8.9528
+Epoch 127/1000
+
+Epoch 127: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.2410 - mse: 9.2410 - val_loss: 8.7508 - val_mse: 8.7508
+Epoch 128/1000
+
+Epoch 128: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.2391 - mse: 9.2391 - val_loss: 8.8205 - val_mse: 8.8205
+Epoch 129/1000
+
+Epoch 129: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.2423 - mse: 9.2423 - val_loss: 8.8549 - val_mse: 8.8549
+Epoch 130/1000
+
+Epoch 130: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.2351 - mse: 9.2351 - val_loss: 8.9555 - val_mse: 8.9555
+Epoch 131/1000
+
+Epoch 131: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.2403 - mse: 9.2403 - val_loss: 8.7532 - val_mse: 8.7532
+Epoch 132/1000
+
+Epoch 132: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.2399 - mse: 9.2399 - val_loss: 9.4066 - val_mse: 9.4066
+Epoch 133/1000
+
+Epoch 133: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 30s - 2ms/step - loss: 9.2279 - mse: 9.2279 - val_loss: 8.8158 - val_mse: 8.8158
+Epoch 134/1000
+
+Epoch 134: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.2296 - mse: 9.2296 - val_loss: 8.8420 - val_mse: 8.8420
+Epoch 135/1000
+
+Epoch 135: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.2208 - mse: 9.2208 - val_loss: 9.1231 - val_mse: 9.1231
+Epoch 136/1000
+
+Epoch 136: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.2298 - mse: 9.2298 - val_loss: 8.9831 - val_mse: 8.9831
+Epoch 137/1000
+
+Epoch 137: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.2323 - mse: 9.2323 - val_loss: 8.8762 - val_mse: 8.8762
+Epoch 138/1000
+
+Epoch 138: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.2228 - mse: 9.2228 - val_loss: 8.8234 - val_mse: 8.8234
+Epoch 139/1000
+
+Epoch 139: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.2213 - mse: 9.2213 - val_loss: 9.6377 - val_mse: 9.6377
+Epoch 140/1000
+
+Epoch 140: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.2205 - mse: 9.2205 - val_loss: 8.7217 - val_mse: 8.7217
+Epoch 141/1000
+
+Epoch 141: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.2265 - mse: 9.2265 - val_loss: 8.9353 - val_mse: 8.9353
+Epoch 142/1000
+
+Epoch 142: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.2191 - mse: 9.2191 - val_loss: 8.7908 - val_mse: 8.7908
+Epoch 143/1000
+
+Epoch 143: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 30s - 2ms/step - loss: 9.2248 - mse: 9.2248 - val_loss: 8.9372 - val_mse: 8.9372
+Epoch 144/1000
+
+Epoch 144: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 30s - 2ms/step - loss: 9.2067 - mse: 9.2067 - val_loss: 8.7411 - val_mse: 8.7411
+Epoch 145/1000
+
+Epoch 145: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.2198 - mse: 9.2198 - val_loss: 9.0287 - val_mse: 9.0287
+Epoch 146/1000
+
+Epoch 146: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.2202 - mse: 9.2202 - val_loss: 8.7404 - val_mse: 8.7404
+Epoch 147/1000
+
+Epoch 147: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.2155 - mse: 9.2155 - val_loss: 9.2636 - val_mse: 9.2636
+Epoch 148/1000
+
+Epoch 148: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.2038 - mse: 9.2038 - val_loss: 9.8621 - val_mse: 9.8621
+Epoch 149/1000
+
+Epoch 149: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.2068 - mse: 9.2068 - val_loss: 8.7736 - val_mse: 8.7736
+Epoch 150/1000
+
+Epoch 150: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.1995 - mse: 9.1995 - val_loss: 8.8343 - val_mse: 8.8343
+Epoch 151/1000
+
+Epoch 151: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 30s - 2ms/step - loss: 9.2047 - mse: 9.2047 - val_loss: 8.7276 - val_mse: 8.7276
+Epoch 152/1000
+
+Epoch 152: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.1960 - mse: 9.1960 - val_loss: 9.2236 - val_mse: 9.2236
+Epoch 153/1000
+
+Epoch 153: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.2121 - mse: 9.2121 - val_loss: 8.8735 - val_mse: 8.8735
+Epoch 154/1000
+
+Epoch 154: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.1957 - mse: 9.1957 - val_loss: 8.7184 - val_mse: 8.7184
+Epoch 155/1000
+
+Epoch 155: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.1955 - mse: 9.1955 - val_loss: 8.8759 - val_mse: 8.8759
+Epoch 156/1000
+
+Epoch 156: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1966 - mse: 9.1966 - val_loss: 8.7219 - val_mse: 8.7219
+Epoch 157/1000
+
+Epoch 157: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.2017 - mse: 9.2017 - val_loss: 8.7443 - val_mse: 8.7443
+Epoch 158/1000
+
+Epoch 158: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.1909 - mse: 9.1909 - val_loss: 8.8338 - val_mse: 8.8338
+Epoch 159/1000
+
+Epoch 159: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1823 - mse: 9.1823 - val_loss: 8.8076 - val_mse: 8.8076
+Epoch 160/1000
+
+Epoch 160: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.1910 - mse: 9.1910 - val_loss: 8.8574 - val_mse: 8.8574
+Epoch 161/1000
+
+Epoch 161: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.1831 - mse: 9.1831 - val_loss: 8.7336 - val_mse: 8.7336
+Epoch 162/1000
+
+Epoch 162: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.1892 - mse: 9.1892 - val_loss: 9.1499 - val_mse: 9.1499
+Epoch 163/1000
+
+Epoch 163: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1868 - mse: 9.1868 - val_loss: 8.8756 - val_mse: 8.8756
+Epoch 164/1000
+
+Epoch 164: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.1864 - mse: 9.1864 - val_loss: 8.9891 - val_mse: 8.9891
+Epoch 165/1000
+
+Epoch 165: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.1811 - mse: 9.1811 - val_loss: 8.6943 - val_mse: 8.6943
+Epoch 166/1000
+
+Epoch 166: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1836 - mse: 9.1836 - val_loss: 8.9014 - val_mse: 8.9014
+Epoch 167/1000
+
+Epoch 167: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1774 - mse: 9.1774 - val_loss: 8.7060 - val_mse: 8.7060
+Epoch 168/1000
+
+Epoch 168: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1743 - mse: 9.1743 - val_loss: 8.7682 - val_mse: 8.7682
+Epoch 169/1000
+
+Epoch 169: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.1771 - mse: 9.1771 - val_loss: 9.1043 - val_mse: 9.1043
+Epoch 170/1000
+
+Epoch 170: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1793 - mse: 9.1793 - val_loss: 9.3648 - val_mse: 9.3648
+Epoch 171/1000
+
+Epoch 171: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 26s - 2ms/step - loss: 9.1717 - mse: 9.1717 - val_loss: 8.7448 - val_mse: 8.7448
+Epoch 172/1000
+
+Epoch 172: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1841 - mse: 9.1841 - val_loss: 8.7505 - val_mse: 8.7505
+Epoch 173/1000
+
+Epoch 173: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1823 - mse: 9.1823 - val_loss: 8.6987 - val_mse: 8.6987
+Epoch 174/1000
+
+Epoch 174: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1782 - mse: 9.1782 - val_loss: 8.7900 - val_mse: 8.7900
+Epoch 175/1000
+
+Epoch 175: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1766 - mse: 9.1766 - val_loss: 8.7818 - val_mse: 8.7818
+Epoch 176/1000
+
+Epoch 176: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1779 - mse: 9.1779 - val_loss: 8.9212 - val_mse: 8.9212
+Epoch 177/1000
+
+Epoch 177: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.1680 - mse: 9.1680 - val_loss: 8.8293 - val_mse: 8.8293
+Epoch 178/1000
+
+Epoch 178: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1803 - mse: 9.1803 - val_loss: 9.1748 - val_mse: 9.1748
+Epoch 179/1000
+
+Epoch 179: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.1805 - mse: 9.1805 - val_loss: 8.7408 - val_mse: 8.7408
+Epoch 180/1000
+
+Epoch 180: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1674 - mse: 9.1674 - val_loss: 8.8386 - val_mse: 8.8386
+Epoch 181/1000
+
+Epoch 181: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1743 - mse: 9.1743 - val_loss: 8.7297 - val_mse: 8.7297
+Epoch 182/1000
+
+Epoch 182: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 26s - 2ms/step - loss: 9.1679 - mse: 9.1679 - val_loss: 8.7075 - val_mse: 8.7075
+Epoch 183/1000
+
+Epoch 183: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1570 - mse: 9.1570 - val_loss: 9.0433 - val_mse: 9.0433
+Epoch 184/1000
+
+Epoch 184: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1795 - mse: 9.1795 - val_loss: 8.7032 - val_mse: 8.7032
+Epoch 185/1000
+
+Epoch 185: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1726 - mse: 9.1726 - val_loss: 10.1678 - val_mse: 10.1678
+Epoch 186/1000
+
+Epoch 186: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 26s - 2ms/step - loss: 9.1654 - mse: 9.1654 - val_loss: 8.6824 - val_mse: 8.6824
+Epoch 187/1000
+
+Epoch 187: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1622 - mse: 9.1622 - val_loss: 8.8976 - val_mse: 8.8976
+Epoch 188/1000
+
+Epoch 188: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1737 - mse: 9.1737 - val_loss: 8.7162 - val_mse: 8.7162
+Epoch 189/1000
+
+Epoch 189: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1658 - mse: 9.1658 - val_loss: 8.7205 - val_mse: 8.7205
+Epoch 190/1000
+
+Epoch 190: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 26s - 2ms/step - loss: 9.1641 - mse: 9.1641 - val_loss: 8.7613 - val_mse: 8.7613
+Epoch 191/1000
+
+Epoch 191: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1640 - mse: 9.1640 - val_loss: 8.7628 - val_mse: 8.7628
+Epoch 192/1000
+
+Epoch 192: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1629 - mse: 9.1629 - val_loss: 8.6906 - val_mse: 8.6906
+Epoch 193/1000
+
+Epoch 193: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.1706 - mse: 9.1706 - val_loss: 8.6785 - val_mse: 8.6785
+Epoch 194/1000
+
+Epoch 194: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1624 - mse: 9.1624 - val_loss: 8.8704 - val_mse: 8.8704
+Epoch 195/1000
+
+Epoch 195: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1610 - mse: 9.1610 - val_loss: 8.6750 - val_mse: 8.6750
+Epoch 196/1000
+
+Epoch 196: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 26s - 2ms/step - loss: 9.1609 - mse: 9.1609 - val_loss: 8.9225 - val_mse: 8.9225
+Epoch 197/1000
+
+Epoch 197: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1631 - mse: 9.1631 - val_loss: 9.1031 - val_mse: 9.1031
+Epoch 198/1000
+
+Epoch 198: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 26s - 2ms/step - loss: 9.1744 - mse: 9.1744 - val_loss: 8.6878 - val_mse: 8.6878
+Epoch 199/1000
+
+Epoch 199: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1615 - mse: 9.1615 - val_loss: 8.6693 - val_mse: 8.6693
+Epoch 200/1000
+
+Epoch 200: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1718 - mse: 9.1718 - val_loss: 8.8255 - val_mse: 8.8255
+Epoch 201/1000
+
+Epoch 201: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1715 - mse: 9.1715 - val_loss: 8.6990 - val_mse: 8.6990
+Epoch 202/1000
+
+Epoch 202: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1676 - mse: 9.1676 - val_loss: 9.1492 - val_mse: 9.1492
+Epoch 203/1000
+
+Epoch 203: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.1701 - mse: 9.1701 - val_loss: 8.7985 - val_mse: 8.7985
+Epoch 204/1000
+
+Epoch 204: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1665 - mse: 9.1665 - val_loss: 8.7882 - val_mse: 8.7882
+Epoch 205/1000
+
+Epoch 205: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1584 - mse: 9.1584 - val_loss: 8.7311 - val_mse: 8.7311
+Epoch 206/1000
+
+Epoch 206: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1589 - mse: 9.1589 - val_loss: 9.0115 - val_mse: 9.0115
+Epoch 207/1000
+
+Epoch 207: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1689 - mse: 9.1689 - val_loss: 8.9387 - val_mse: 8.9387
+Epoch 208/1000
+
+Epoch 208: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1553 - mse: 9.1553 - val_loss: 8.7332 - val_mse: 8.7332
+Epoch 209/1000
+
+Epoch 209: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1532 - mse: 9.1532 - val_loss: 8.6861 - val_mse: 8.6861
+Epoch 210/1000
+
+Epoch 210: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1599 - mse: 9.1599 - val_loss: 8.7534 - val_mse: 8.7534
+Epoch 211/1000
+
+Epoch 211: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1608 - mse: 9.1608 - val_loss: 8.8553 - val_mse: 8.8553
+Epoch 212/1000
+
+Epoch 212: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1550 - mse: 9.1550 - val_loss: 9.3712 - val_mse: 9.3712
+Epoch 213/1000
+
+Epoch 213: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1575 - mse: 9.1575 - val_loss: 8.7416 - val_mse: 8.7416
+Epoch 214/1000
+
+Epoch 214: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1610 - mse: 9.1610 - val_loss: 9.0312 - val_mse: 9.0312
+Epoch 215/1000
+
+Epoch 215: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1692 - mse: 9.1692 - val_loss: 8.9101 - val_mse: 8.9101
+Epoch 216/1000
+
+Epoch 216: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1668 - mse: 9.1668 - val_loss: 8.7674 - val_mse: 8.7674
+Epoch 217/1000
+
+Epoch 217: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1596 - mse: 9.1596 - val_loss: 8.8592 - val_mse: 8.8592
+Epoch 218/1000
+
+Epoch 218: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1537 - mse: 9.1537 - val_loss: 8.8943 - val_mse: 8.8943
+Epoch 219/1000
+
+Epoch 219: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1518 - mse: 9.1518 - val_loss: 8.6940 - val_mse: 8.6940
+Epoch 220/1000
+
+Epoch 220: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1585 - mse: 9.1585 - val_loss: 8.8128 - val_mse: 8.8128
+Epoch 221/1000
+
+Epoch 221: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1552 - mse: 9.1552 - val_loss: 9.0272 - val_mse: 9.0272
+Epoch 222/1000
+
+Epoch 222: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.1576 - mse: 9.1576 - val_loss: 8.7832 - val_mse: 8.7832
+Epoch 223/1000
+
+Epoch 223: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1633 - mse: 9.1633 - val_loss: 8.7475 - val_mse: 8.7475
+Epoch 224/1000
+
+Epoch 224: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1642 - mse: 9.1642 - val_loss: 8.6962 - val_mse: 8.6962
+Epoch 225/1000
+
+Epoch 225: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1567 - mse: 9.1567 - val_loss: 9.1075 - val_mse: 9.1075
+Epoch 226/1000
+
+Epoch 226: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1568 - mse: 9.1568 - val_loss: 8.7263 - val_mse: 8.7263
+Epoch 227/1000
+
+Epoch 227: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1679 - mse: 9.1679 - val_loss: 8.7654 - val_mse: 8.7654
+Epoch 228/1000
+
+Epoch 228: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.1580 - mse: 9.1580 - val_loss: 9.0311 - val_mse: 9.0311
+Epoch 229/1000
+
+Epoch 229: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1607 - mse: 9.1607 - val_loss: 8.8625 - val_mse: 8.8625
+Epoch 230/1000
+
+Epoch 230: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1577 - mse: 9.1577 - val_loss: 8.8430 - val_mse: 8.8430
+Epoch 231/1000
+
+Epoch 231: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1614 - mse: 9.1614 - val_loss: 8.9720 - val_mse: 8.9720
+Epoch 232/1000
+
+Epoch 232: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1490 - mse: 9.1490 - val_loss: 8.8359 - val_mse: 8.8359
+Epoch 233/1000
+
+Epoch 233: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.1542 - mse: 9.1542 - val_loss: 8.7314 - val_mse: 8.7314
+Epoch 234/1000
+
+Epoch 234: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1622 - mse: 9.1622 - val_loss: 9.0834 - val_mse: 9.0834
+Epoch 235/1000
+
+Epoch 235: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1602 - mse: 9.1602 - val_loss: 8.6997 - val_mse: 8.6997
+Epoch 236/1000
+
+Epoch 236: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1432 - mse: 9.1432 - val_loss: 8.7847 - val_mse: 8.7847
+Epoch 237/1000
+
+Epoch 237: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1556 - mse: 9.1556 - val_loss: 8.7905 - val_mse: 8.7905
+Epoch 238/1000
+
+Epoch 238: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1470 - mse: 9.1470 - val_loss: 8.8714 - val_mse: 8.8714
+Epoch 239/1000
+
+Epoch 239: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1540 - mse: 9.1540 - val_loss: 8.8409 - val_mse: 8.8409
+Epoch 240/1000
+
+Epoch 240: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1492 - mse: 9.1492 - val_loss: 8.6709 - val_mse: 8.6709
+Epoch 241/1000
+
+Epoch 241: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.1486 - mse: 9.1486 - val_loss: 8.7185 - val_mse: 8.7185
+Epoch 242/1000
+
+Epoch 242: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1545 - mse: 9.1545 - val_loss: 9.0266 - val_mse: 9.0266
+Epoch 243/1000
+
+Epoch 243: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1499 - mse: 9.1499 - val_loss: 8.7056 - val_mse: 8.7056
+Epoch 244/1000
+
+Epoch 244: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1604 - mse: 9.1604 - val_loss: 8.7745 - val_mse: 8.7745
+Epoch 245/1000
+
+Epoch 245: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1524 - mse: 9.1524 - val_loss: 8.6642 - val_mse: 8.6642
+Epoch 246/1000
+
+Epoch 246: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1523 - mse: 9.1523 - val_loss: 8.7963 - val_mse: 8.7963
+Epoch 247/1000
+
+Epoch 247: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1393 - mse: 9.1393 - val_loss: 8.6956 - val_mse: 8.6956
+Epoch 248/1000
+
+Epoch 248: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1456 - mse: 9.1456 - val_loss: 8.6841 - val_mse: 8.6841
+Epoch 249/1000
+
+Epoch 249: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1462 - mse: 9.1462 - val_loss: 8.7418 - val_mse: 8.7418
+Epoch 250/1000
+
+Epoch 250: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.1584 - mse: 9.1584 - val_loss: 8.7384 - val_mse: 8.7384
+Epoch 251/1000
+
+Epoch 251: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 28s - 2ms/step - loss: 9.1492 - mse: 9.1492 - val_loss: 8.6848 - val_mse: 8.6848
+Epoch 252/1000
+
+Epoch 252: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 27s - 2ms/step - loss: 9.1496 - mse: 9.1496 - val_loss: 8.8861 - val_mse: 8.8861
+Epoch 253/1000
+
+Epoch 253: saving model to /home/antego/PMW_LST/models/checkpoint.keras
+12683/12683 - 29s - 2ms/step - loss: 9.1484 - mse: 9.1484 - val_loss: 8.8513 - val_mse: 8.8513
+Epoch 254/1000
