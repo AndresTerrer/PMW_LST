@@ -45,9 +45,9 @@ def build_model(n_vars: int, info:bool = False):
     model = Sequential([
         Input((n_vars,)),
         BatchNormalization(),
-        Dense(30,activation="linear", name = "hiddenLayer1"),
-        Dense(20,activation="relu", name = "hiddenLayer2"),
-        Dense(10,activation="relu", name = "hiddenLayer3"),
+        Dense(60,activation="linear", name = "hiddenLayer1"),
+        Dense(30,activation="relu", name = "hiddenLayer2"),
+        Dense(15,activation="relu", name = "hiddenLayer3"),
         Dense(1,activation="relu", name = "outputLayer")
     ])
     model.compile(
@@ -149,7 +149,7 @@ if __name__ == "__main__":
         x_train,
         y_train,
         epochs=1000,
-        batch_size = 1024,
+        batch_size = 2048,
         validation_data=(x_test,y_test),
         callbacks=[callback, checkpoints],
         verbose = 2
