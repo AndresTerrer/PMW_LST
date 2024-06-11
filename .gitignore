@@ -177,3 +177,6 @@ models/*
 .DS_Store
 
 carla/*
+
+# otuput files from ERC server
+scripts/*.out
