@@ -23,7 +23,8 @@ from tensorflow.keras.models import save_model
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from src.processing import windsat_datacube, model_preprocess, create_landmask
+from src.processing import windsat_datacube, model_preprocess, create_landmask, \
+    telsem_datacube
 from src.model import transform_batch, xy_split
 
 # OS Params
@@ -70,40 +71,8 @@ if __name__ == "__main__":
     telsem_folder = args.telsem_folder
 
     # Load the Emissivity dataset 
-    print("Loading TELSEM atlas")
-    names = os.listdir(telsem_folder)
-
-    paths = [os.path.join(telsem_folder,name) for name in names]
-    # Preprocessing of TELSEM atlas:
-    telsem_ds = xr.open_mfdataset(
-        paths = paths,
-        engine="netcdf4",
-        concat_dim="month",
-        combine="nested"
-    )
-
-    # Select only the desired data variables:
-    d_vars = [
-        "Emis19V",
-        "Emis19H",
-        "Emis37V",
-        "Emis37H",
-    ]
-    telsem_ds = telsem_ds[d_vars]
-
-    #roll the longitude to align the data
-    telsem_ds = telsem_ds.roll(
-        {
-            "longitude_grid" : 4 * 180
-        }
-    )
-
-    landmask = create_landmask(lat = telsem_ds.lat.values, lon= telsem_ds.lon.values)
-    telsem_ds["landmask"] = (("latitude_grid","longitude_grid"),landmask.values)
-
-    telsem_ds = telsem_ds.where(telsem_ds.landmask == 0)
-    telsem_ds = telsem_ds.drop_vars("landmask")
-    telsem_ds = telsem_ds.reset_coords()
+    print(f"Loading TELSEM atlas from {telsem_folder}")
+    telsem_ds = telsem_datacube(telsem_folder)
 
     # Create the telsem dataframe
     telsem_df = telsem_ds.to_dataframe().dropna().reset_index("month")
@@ -116,14 +85,12 @@ if __name__ == "__main__":
         to_add = [i +1] * n
         day_mapping.extend(to_add)
 
-    print("--- Windsat datacube model training --- ")
-
     #Load the dataset from the folder
     print(f"Loading windsat Datacube from {folder_path}")
-    ds = windsat_datacube(folder_path)
+    ws_ds = windsat_datacube(folder_path)
 
     print("Processing data ...")
-    ascds = model_preprocess(ds)
+    ascds = model_preprocess(ws_ds)
     d_vars = [
     "surtep_ERA5",
     "lat",
@@ -137,7 +104,7 @@ if __name__ == "__main__":
     ascds = ascds[d_vars]
     ascds_df = ascds.to_dataframe().dropna().reset_index("day_number")
 
-    # Map day to month
+    # Map day to month conversion
     ascds_df["month"] = ascds_df["day_number"].apply(lambda x: day_mapping[x])
 
     # drop the day_number column
@@ -168,7 +135,7 @@ if __name__ == "__main__":
     # Callbacks
     callback = EarlyStopping(
         monitor = "loss",
-        patience = 50,
+        patience = 100,
         min_delta = 0.01,
         verbose=2,
         restore_best_weights = True
@@ -182,7 +149,7 @@ if __name__ == "__main__":
         x_train,
         y_train,
         epochs=1000,
-        batch_size = 512,
+        batch_size = 1024,
         validation_data=(x_test,y_test),
         callbacks=[callback, checkpoints],
         verbose = 2
