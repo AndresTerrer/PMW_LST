@@ -88,9 +88,13 @@ def default_model() -> Sequential:
 
     return model
 
-def plot_history(history: dict):
+def plot_history(history: dict, loss_threshold: float = None):
     """ 
-    Standard plot of training and validation loss
+    Standard plot of training and validation loss.
+
+    param loss_threshold: split the training history so that the 
+    second plot shows every epuch below this threshold. Default shows
+    the last half of the training history.
     """
 
     fig, ax = plt.subplots(1,2, figsize = (24,10))
@@ -103,14 +107,29 @@ def plot_history(history: dict):
     ax[0].grid(axis="y")
     ax[0].set_yscale("log")
 
-    last_epochs = len(history["loss"])//2
-    ax[1].plot(history["loss"][-last_epochs:], alpha=0.8, label = "training")
-    ax[1].plot(history["val_loss"][-last_epochs:],  alpha=0.8, label = "validation")
+    if loss_threshold is not None:
+        for i, loss in enumerate(history["loss"]):
+            if loss < loss_threshold:
+                start_epoch = i
+                break
+            
+            else:
+                start_epoch = len(history["loss"])//2
+
+    else: 
+        start_epoch = len(history["loss"])//2
+
+    ax[1].plot(history["loss"][start_epoch:], alpha=0.8, label = "training")
+    ax[1].plot(history["val_loss"][start_epoch:],  alpha=0.8, label = "validation")
     ax[1].legend()
     ax[1].set_ylabel("mse [K]")
     ax[1].set_xlabel("Epoch")
     ax[1].grid(axis="y")
-    ax[1].set_title(f"Last {last_epochs} epochs")
+    ax[1].set_title(
+        f"Epochs after loss < {loss_threshold}" 
+        if loss_threshold is not None else 
+        f"Last {len(history['loss']) - start_epoch} epochs"
+    )
 
     return fig, ax
 
