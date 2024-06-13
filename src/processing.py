@@ -163,7 +163,7 @@ def recover_dates(
     using the given year-month-day regex pattern.
 
     param folder_path:
-    param ymd_regex: must return year, month and day using caputing groups.
+    param ymd_regex: must return year, month and day using capturing groups.
     Default works for Windsat datafiles "RSS_WINDSAT_DAILY_TBTOA_MAPS_2017_01_01.nc"
     """
 
