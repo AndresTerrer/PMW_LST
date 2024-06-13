@@ -102,7 +102,7 @@ def plot_history(history: dict, loss_threshold: float = None):
     ax[0].plot(history["loss"], alpha=0.8, label = "training")
     ax[0].plot(history["val_loss"],  alpha=0.8, label = "validation")
     ax[0].legend()
-    ax[0].set_ylabel("log(mse [K])")
+    ax[0].set_ylabel("log(mse [K²])")
     ax[0].set_xlabel("Epoch")
     ax[0].grid(axis="y")
     ax[0].set_yscale("log")
@@ -122,7 +122,7 @@ def plot_history(history: dict, loss_threshold: float = None):
     ax[1].plot(history["loss"][start_epoch:], alpha=0.8, label = "training")
     ax[1].plot(history["val_loss"][start_epoch:],  alpha=0.8, label = "validation")
     ax[1].legend()
-    ax[1].set_ylabel("mse [K]")
+    ax[1].set_ylabel("mse [K²]")
     ax[1].set_xlabel("Epoch")
     ax[1].grid(axis="y")
     ax[1].set_title(
