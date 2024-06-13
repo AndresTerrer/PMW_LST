@@ -497,3 +497,36 @@ def telsem_datacube(folder_path: str) -> xr.Dataset:
 
 
     return telsem_ds
+
+
+def doy2month_mapping() -> list[int]:
+    """ 
+    Create the day to month mapping list
+        Given the Day of the year 'DoY', return its corresponding month of the year
+        by index.
+
+        day_mapping[31] = 1 # JAN
+        day_mapping[60] = 2 # FEB
+        [...]
+        day_mapping[366] = 12 # Dec
+    """
+    days_in_month = [
+        31, # JAN
+        29, # FEB (on leep years)
+        31, # MAR
+        30, # APR
+        31, # MAY
+        30, # JUN
+        31, # JUL
+        31, # AUG
+        30, # SEP
+        31, # OCT
+        30, # NOV
+        31, # DEC
+    ]
+    day_mapping = []
+    for i, n in enumerate(days_in_month):
+        add = [i+1] * n
+        day_mapping.extend(add)
+
+    return day_mapping
