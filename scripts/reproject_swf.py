@@ -129,15 +129,15 @@ def reproject_file (file_path: str, output_folder: str = None) -> bool:
 
 if __name__ == "__main__":  
 
-    gdal.DontUseExceptions()
-
     args = params.parse_args()
 
     source_folder = args.source_folder
     output_folder = args.output_folder
 
+    print("START")
+
     # Do not reproject Quality Flag files for now
-    regex = "\d{7}[AD].tif"
+    regex = r"\d{7}[AD].tif"
 
     for file_name in os.listdir(source_folder):
         if re.findall(regex, file_name):
