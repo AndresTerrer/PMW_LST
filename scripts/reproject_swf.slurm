@@ -8,4 +8,4 @@
 module load Anaconda3
 source activate swf_reproject
  
-python -u /home/antego/PMW_LST/scripts/reproject_swf.py --source_folder /data/databases/LPDR_v2_2017 --output_folder /data/databases/LPDR_v2_2017_EASEv2 
+python3 -u /home/antego/PMW_LST/scripts/reproject_swf.py --source_folder /data/databases/LPDR_v2_2017 --output_folder /data/databases/LPDR_v2_2017_EASEv2 
