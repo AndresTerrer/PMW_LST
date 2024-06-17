@@ -41,6 +41,10 @@ params.add_argument(
     "--telsem_folder", default= "./data/processed/WinsatEmiss/", help= "Folder with the TELSEM emissivities in .nc format"
 )
 
+params.add_argument(
+    "--swath_sector", default=0, help = "Ascending = 0, Descending = 1 pass."
+)
+
 def build_model(n_vars: int, info:bool = False):
     model = Sequential([
         Input((n_vars,)),
@@ -69,6 +73,12 @@ if __name__ == "__main__":
     folder_path = args.source_folder
     output_folder = args.output_folder
     telsem_folder = args.telsem_folder
+    swath_sector = args.swath_sector
+
+    swath2char = {
+        0 : "A", # Ascensing pass (6 AM)
+        1 : "D", # Descending pass (6 PM)
+    }
 
     # Load the Emissivity dataset 
     print(f"Loading TELSEM atlas from {telsem_folder}")
@@ -157,12 +167,16 @@ if __name__ == "__main__":
 
     now = datetime.now().strftime(r"%Y_%m_%dT%H%M%S")
     # Save the model.
-    model_path = os.path.join(output_folder, f"WSMv2_{now}.keras")
+    model_path = os.path.join(
+        output_folder, f"WSMv2_{swath2char[swath_sector]}_{now}.keras"
+    )
     save_model(model, model_path)
     print(f"Training done, model saved as {model_path} ")
 
     # Save the training history:
-    history_path = os.path.join(output_folder,f"WSMv2_{now}_history")
+    history_path = os.path.join(
+        output_folder,f"WSMv2_{swath2char[swath_sector]}_{now}_history"
+    )
     with open(history_path,"wb") as hfile:
         pickle.dump(history.history, hfile)
 
