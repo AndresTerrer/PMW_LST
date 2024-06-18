@@ -71,7 +71,7 @@ if __name__ == "__main__":
     folder_path = args.source_folder
     output_folder = args.output_folder
     telsem_folder = args.telsem_folder
-    swath_sector = args.swath_sector
+    swath_sector = int(args.swath_sector)
 
     swath2char = {
         0 : "A", # Ascensing pass (6 AM)
@@ -84,8 +84,6 @@ if __name__ == "__main__":
 
     # Create the telsem dataframe
     telsem_df = telsem_ds.to_dataframe().dropna().reset_index("month")
-
-  
 
     #Load the dataset from the folder
     print(f"Loading windsat Datacube from {folder_path}")
