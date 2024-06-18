@@ -6,7 +6,6 @@ Intended to be ported into the server and run with a full year
 
 import pickle
 import os
-import xarray as xr
 import pandas as pd
 import numpy as np
 
@@ -23,9 +22,8 @@ from tensorflow.keras.models import save_model
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from src.processing import windsat_datacube, model_preprocess, create_landmask, \
-    telsem_datacube
-from src.model import transform_batch, xy_split
+from src.processing import windsat_datacube, model_preprocess, telsem_datacube
+from src.model import xy_split
 
 # OS Params
 params = ArgumentParser()
