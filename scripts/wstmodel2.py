@@ -22,7 +22,7 @@ from tensorflow.keras.models import save_model
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from src.processing import windsat_datacube, model_preprocess, telsem_datacube
+from src.processing import windsat_datacube, model_preprocess, telsem_datacube, doy2month_mapping
 from src.model import xy_split
 
 # OS Params
@@ -85,13 +85,7 @@ if __name__ == "__main__":
     # Create the telsem dataframe
     telsem_df = telsem_ds.to_dataframe().dropna().reset_index("month")
 
-    # Map the day of the year (day_number) into the month:
-    day_mapping = []
-    days_in_months = [31,29,31,30,31,30,31,31,30,31,30,31]
-
-    for i, n in enumerate(days_in_months):
-        to_add = [i +1] * n
-        day_mapping.extend(to_add)
+  
 
     #Load the dataset from the folder
     print(f"Loading windsat Datacube from {folder_path}")
@@ -112,7 +106,8 @@ if __name__ == "__main__":
     swath_ds = swath_ds[d_vars]
     swath_df = swath_ds.to_dataframe().dropna().reset_index("day_number")
 
-    # Map day to month conversion
+    # Map the day of the year (day_number) into the month:
+    day_mapping = doy2month_mapping()    
     swath_df["month"] = swath_df["day_number"].apply(lambda x: day_mapping[x])
 
     # drop the day_number column
@@ -151,7 +146,7 @@ if __name__ == "__main__":
         restore_best_weights = True
     )
     checkpoints = ModelCheckpoint(
-        filepath = os.path.join(output_folder, "checkpoint.keras"),
+        filepath = os.path.join(output_folder, f"checkpoint_{swath2char[swath_sector]}.keras"),
         verbose = 1
     )
 
