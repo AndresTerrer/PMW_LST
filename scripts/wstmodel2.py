@@ -98,7 +98,7 @@ if __name__ == "__main__":
     ws_ds = windsat_datacube(folder_path)
 
     print("Processing data ...")
-    ascds = model_preprocess(ws_ds)
+    swath_ds = model_preprocess(ws_ds, swath_sector=swath_sector)
     d_vars = [
     "surtep_ERA5",
     "lat",
@@ -109,17 +109,17 @@ if __name__ == "__main__":
     "tbtoa_37Ghz_H",
     ]
 
-    ascds = ascds[d_vars]
-    ascds_df = ascds.to_dataframe().dropna().reset_index("day_number")
+    swath_ds = swath_ds[d_vars]
+    swath_df = swath_ds.to_dataframe().dropna().reset_index("day_number")
 
     # Map day to month conversion
-    ascds_df["month"] = ascds_df["day_number"].apply(lambda x: day_mapping[x])
+    swath_df["month"] = swath_df["day_number"].apply(lambda x: day_mapping[x])
 
     # drop the day_number column
-    asc_df = ascds_df.drop(columns="day_number")
+    swath_df = swath_df.drop(columns="day_number")
 
     # Inner join the telsem df and the ascending df
-    combined_df = pd.merge(left=asc_df, right=telsem_df, how="inner")
+    combined_df = pd.merge(left=swath_df, right=telsem_df, how="inner")
 
     # Drop the month column
     combined_df = combined_df.drop(columns="month")
