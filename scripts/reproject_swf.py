@@ -79,8 +79,8 @@ def reproject_file (file_path: str, output_folder: str = None) -> bool:
         dstSRS=target_srs.ExportToWkt(),
         width=output_width,
         height=output_height,
-        resampleAlg=gdal.GRA_Bilinear, # GRA_Bilinear TODO: bilinear warp does not work with Nodata params, there will be values between -999 and the valid range
-        srcNodata = -999.0,
+        resampleAlg= "near", # GRA_Bilinear TODO: bilinear warp does not work with Nodata params, there will be values between -999 and the valid range
+        srcNodata = float(-999.0),
         dstNodata = -999.0
     )
 
