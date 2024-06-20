@@ -5,11 +5,11 @@ import regionmask
 import re
 import os
 import numpy as np
-import matplotlib.pyplot as plt
 from datetime import datetime, date
 from functools import partial
 from tqdm import tqdm
 import warnings
+from scipy.ndimage import distance_transform_edt
 
 
 def holmes(brightness_temp: xr.Dataset) -> xr.Dataset:
@@ -126,33 +126,6 @@ def extract_timeseries(xarray_dataset, lat, lon) -> xr.DataArray:
         timeseries[i] = xarray_dataset[i, lat, lon]
 
     return np.array(timeseries)
-
-
-# TODO: deprecated and renamed
-# def create_landmask(
-#     xarray_dataset, threshold=273, show=False, file_path=None, figure_path=None
-# ) -> xr.DataArray:
-#     """
-#     Creates a mask for latitude and longitude given a threshold and a base array.
-#     Save the resulting xr.DataArray as a file if a path is provided.
-
-#     :param xarray_dataset: xr.DataSet with latitude and longitude dimensions
-#     :param threshold: float
-#     :return: xr.DataArray with latitude and longitude
-#     """
-#     landmask = xarray_dataset.where(xarray_dataset > threshold, other=0)
-#     landmask = landmask.where(landmask == 0, other=1)
-
-#     # Save the mask into a file option
-#     if file_path is not None:
-#         landmask.to_netcdf(file_path)
-#     if show:
-#         landmask.plot(cmap="jet")
-#         # Save an image of the mask option
-#         if figure_path is not None:
-#             plt.savefig(figure_path)
-
-#     return landmask
 
 
 def recover_dates(
@@ -366,14 +339,32 @@ def add_landmask(
     return ds
 
 
-def create_landmask(lat: np.array, lon: np.array) -> xr.DataArray:
+def create_landmask(lat: np.array, lon: np.array, c_dist: float = None) -> xr.DataArray:
     """
-    The same function as add_landmask without the inconvenient naming
+    Return a landmask without pixels that are c_dist or closer to a coast pixel.
+    Default None: Do not remove coastline pixels.
+
     returns a DataArray with the 0 flag for land, NaN for ocean
     """
 
     land = regionmask.defined_regions.natural_earth_v5_1_2.land_10
     landmask = land.mask(lon_or_obj=lon, lat=lat)
+
+    if c_dist:
+        # Since we have all 0 (land) and nan (ocean) values, lets add 1 to the whole array to have land == 1
+        aux_landmask = landmask + 1
+
+        # Then fill the nan values with 0
+        aux_landmask = aux_landmask.fillna(0)
+
+        # Calculate the distance from each point to the closest ocean pixel (from all values > 0 to all values == 0)
+        coastline_dist = distance_transform_edt(aux_landmask.values)
+
+        # New mask, only the pixles c_dist away from the closest ocean pixel.
+        coasline_mask = coastline_dist <= c_dist
+
+        # Remove the coastline from the original landmask
+        landmask = landmask.where(coasline_mask == False)
 
     return landmask
 
