@@ -328,7 +328,7 @@ def create_landmask(lat: np.array, lon: np.array, c_dist: float = None) -> xr.Da
     landmask = land.mask(lon_or_obj=lon, lat=lat)
 
     if c_dist:
-        # Since we have all 0 (land) and nan (ocean) values, lets add 1 to the whole array to have land == 1
+        # Since we have all 0 (land) and nan (ocean) values, let's add 1 to the whole array to have land == 1
         aux_landmask = landmask + 1
 
         # Then fill the nan values with 0
@@ -337,7 +337,7 @@ def create_landmask(lat: np.array, lon: np.array, c_dist: float = None) -> xr.Da
         # Calculate the distance from each point to the closest ocean pixel (from all values > 0 to all values == 0)
         coastline_dist = distance_transform_edt(aux_landmask.values)
 
-        # New mask, only the pixles c_dist away from the closest ocean pixel.
+        # New mask, only the pixels c_dist away from the closest ocean pixel.
         coasline_mask = coastline_dist <= c_dist
 
         # Remove the coastline from the original landmask
