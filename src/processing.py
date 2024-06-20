@@ -318,7 +318,10 @@ def create_landmask(lat: np.array, lon: np.array, c_dist: float = None) -> xr.Da
     Return a landmask without pixels that are c_dist or closer to a coast pixel.
     Default None: Do not remove coastline pixels.
 
-    returns a DataArray with the 0 flag for land, NaN for ocean
+    lon: 1D array with all the longitude values in the array
+    lat: 1D "                "  latitude  "                 "
+
+    returns a 2D DataArray (lat x lon) with the 0 flag for land/included , NaN for ocean/excluded.
     """
 
     land = regionmask.defined_regions.natural_earth_v5_1_2.land_10
