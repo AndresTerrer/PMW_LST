@@ -235,7 +235,7 @@ def select_dims(dataset: xr.Dataset) -> xr.Dataset:
         indexers={
             "polarization": [0, 1],  # [ V, H ]
             "frequency_band": [2, 4],  # [ 18.7 GHz (Ku) , 37.0 GHz (Ka) ]
-            "look_direction": 0,  # Forward
+            # "look_direction": 1,  # After look
         }
     )
     return dataset
@@ -266,10 +266,13 @@ def preporcess_dataset(dataset: xr.Dataset) -> xr.Dataset:
 _preprocess_dataset = partial(preporcess_dataset)
 
 
-def windsat_datacube(folder_path: str) -> xr.Dataset:
+def windsat_datacube(folder_path: str, look: int = 0) -> xr.Dataset:
     """
     Wrapper for creating a dataset with the combined data inside a folder
     param folder_path: must contain the files in .nc format
+
+    look: look direction to select if needeed (0 -> Fore, 1 -> Aft). If not
+    a valid integer, then do not select it
     """
 
     dates = recover_dates(folder_path)
@@ -286,6 +289,10 @@ def windsat_datacube(folder_path: str) -> xr.Dataset:
     # Add a day_number coordinate
     ds["day_number"] = day_numbers
     ds["day_number"].attrs = {f"Description": f"Int, day of the year {dates[0].year}"}
+
+    # Select look direction if there is
+    if look in [1,0]:
+        ds = ds.sel(look_direction = look)
 
     return ds
 
