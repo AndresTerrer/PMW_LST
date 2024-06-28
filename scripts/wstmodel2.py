@@ -36,7 +36,7 @@ params.add_argument(
 )
 
 params.add_argument(
-    "--telsem_folder", default= "./data/processed/WinsatEmiss/", help= "Folder with the TELSEM emissivities in .nc format"
+    "--telsem_folder", default= "./data/processed/WindsatEmiss/", help= "Folder with the TELSEM emissivities in .nc format"
 )
 
 params.add_argument(
@@ -87,7 +87,7 @@ if __name__ == "__main__":
 
     #Load the dataset from the folder
     print(f"Loading windsat Datacube from {folder_path}")
-    ws_ds = windsat_datacube(folder_path)
+    ws_ds = windsat_datacube(folder_path, look=None)
 
     print("Processing data ...")
     swath_ds = model_preprocess(ws_ds, swath_sector=swath_sector)
