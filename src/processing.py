@@ -281,7 +281,7 @@ def impute_look_data(ds:xr.Dataset, add_flag: bool = True) -> xr.Dataset:
     a = 1.0011
     b = -0.4279
 
-    if "look_direction" in ds.dims.keys():
+    if "look_direction" in ds.sizes.keys():
 
         fore = ds.sel(look_direction = 0)
         aft = ds.sel(look_direction = 1)
