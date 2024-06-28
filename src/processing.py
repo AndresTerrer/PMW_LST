@@ -265,14 +265,50 @@ def preporcess_dataset(dataset: xr.Dataset) -> xr.Dataset:
 # Partial function definition
 _preprocess_dataset = partial(preporcess_dataset)
 
+def impute_look_data(ds:xr.Dataset, add_flag: bool = True) -> xr.Dataset:
+    """ 
+    Linear regreesion Tb(look = 0) = a·Tb(look=1) + b
+    with pre-computed coefficients with a sample of the full dataset
 
-def windsat_datacube(folder_path: str, look: int = 0) -> xr.Dataset:
+    ds: Dataset with look_direction dimention
+    param add_flag: Default True. Add an aditional mask to flag imputed data.
+
+    returns: ds without look_direction, tbtoa missing data in look = 0 is
+    imputed with LinReg(tbtoa-look=1). 
+    """
+    # TODO: this should be elsewhere
+    # use linear regression to correct aft look tbs
+    a = 1.0011
+    b = -0.4279
+
+    if "look_direction" in ds.dims.keys():
+
+        fore = ds.sel(look_direction = 0)
+        aft = ds.sel(look_direction = 1)
+
+        imputed_tbtoa = aft.tbtoa * a + b
+
+        # Fill missing values in fore data.
+        ds["tbtoa"] = fore.tbtoa.fillna(imputed_tbtoa)
+
+        if add_flag:
+            # Flag for
+            can_impute = aft.where(np.isnan(fore.tbtoa)) 
+            ds["imputed_flag"] = ~can_impute.tbtoa.isnull()
+
+    else:
+        Warning("Provided dataset has no look_direction, dataset returned as is.")
+
+    return ds
+
+
+def windsat_datacube(folder_path: str, look = 0, add_flag: bool = True) -> xr.Dataset:
     """
     Wrapper for creating a dataset with the combined data inside a folder
     param folder_path: must contain the files in .nc format
 
-    look: look direction to select if needeed (0 -> Fore, 1 -> Aft). If not
-    a valid integer, then do not select it
+    look: Int or Any. Look direction to select if needeed (0 -> Fore, 1 -> Aft). If not
+    a valid integer, then Impute look = 0 with look = 1 (Linear regression)
     """
 
     dates = recover_dates(folder_path)
@@ -293,6 +329,10 @@ def windsat_datacube(folder_path: str, look: int = 0) -> xr.Dataset:
     # Select look direction if there is
     if look in [1,0]:
         ds = ds.sel(look_direction = look)
+    
+    else:
+        # Impute Look data
+        ds = impute_look_data(ds, add_flag=add_flag)
 
     return ds
 
