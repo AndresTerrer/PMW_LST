@@ -72,6 +72,13 @@ def reproject_file (file_path: str, output_folder: str = None) -> bool:
     output_dataset.SetProjection(target_srs.ExportToWkt())
     output_dataset.SetGeoTransform(target_geotransform)
 
+    # Set the output dataset value to -999.0, instead of 0.
+    for i in range(1,output_dataset.RasterCount, 1):
+        band = output_dataset.GetRasterBand(i)
+        arr = band.ReadAsArray()
+        arr = arr - 999.0
+        band.WriteArray(arr)
+
     # Reproject and resample using gdal.Warp()
     gdal.Warp(
         output_dataset,
