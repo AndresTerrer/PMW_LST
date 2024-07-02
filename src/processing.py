@@ -302,13 +302,13 @@ def impute_look_data(ds:xr.Dataset, add_flag: bool = True) -> xr.Dataset:
     return ds
 
 
-def windsat_datacube(folder_path: str, look = 0, add_flag: bool = True) -> xr.Dataset:
+def windsat_datacube(folder_path: str, look = None, add_flag: bool = True) -> xr.Dataset:
     """
     Wrapper for creating a dataset with the combined data inside a folder
     param folder_path: must contain the files in .nc format
 
-    look: Int or Any. Look direction to select if needeed (0 -> Fore, 1 -> Aft). If not
-    a valid integer, then Impute look = 0 with look = 1 (Linear regression)
+    look: Int or Any. Look direction to select if needeed (0 -> Fore, 1 -> Aft). If None
+    Impute look = 0 with look = 1 (Linear regression). If There is any other value, keep both look directions
     """
 
     dates = recover_dates(folder_path)
@@ -330,10 +330,10 @@ def windsat_datacube(folder_path: str, look = 0, add_flag: bool = True) -> xr.Da
     if look in [1,0]:
         ds = ds.sel(look_direction = look)
     
-    else:
+    elif look is None:
         # Impute Look data
         ds = impute_look_data(ds, add_flag=add_flag)
-
+    
     return ds
 
 
