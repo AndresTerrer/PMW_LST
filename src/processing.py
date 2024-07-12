@@ -10,6 +10,7 @@ from functools import partial
 from tqdm import tqdm
 import warnings
 from scipy.ndimage import distance_transform_edt
+from typing import Any
 
 
 def holmes(brightness_temp: xr.Dataset) -> xr.Dataset:
@@ -265,7 +266,7 @@ def preporcess_dataset(dataset: xr.Dataset) -> xr.Dataset:
 # Partial function definition
 _preprocess_dataset = partial(preporcess_dataset)
 
-def impute_look_data(ds:xr.Dataset, add_flag: bool = True) -> xr.Dataset:
+def impute_look_data(ds:xr.Dataset, add_look_flag: bool = True) -> xr.Dataset:
     """ 
     Linear regreesion Tb(look = 0) = a·Tb(look=1) + b
     with pre-computed coefficients with a sample of the full dataset
@@ -274,41 +275,74 @@ def impute_look_data(ds:xr.Dataset, add_flag: bool = True) -> xr.Dataset:
     param add_flag: Default True. Add an aditional mask to flag imputed data.
 
     returns: ds without look_direction, tbtoa missing data in look = 0 is
-    imputed with LinReg(tbtoa-look=1). 
+    imputed with LinReg(tbtoa_look=1). 
     """
-    # TODO: this should be elsewhere
-    # use linear regression to correct aft look tbs
-    a = 1.0011
-    b = -0.4279
 
-    if "look_direction" in ds.sizes.keys():
+    # TODO: hardcoded coefficients for now
+    # 3D array with dimentions {frequency-polarization-swath}
 
-        fore = ds.sel(look_direction = 0)
-        aft = ds.sel(look_direction = 1)
+    coeffs =[
+        [
+            [(1.00056, -0.589), (0.99922, -0.01)],
+            [(1.00578, -1.68), (1.00278, -1.381)]
+        ],
+        [
+            [(0.98584, 3.756), (0.9823, 5.092)],
+            [(0.98335, 4.519), (0.98662, 3.916)]
+        ]
+    ]
 
-        imputed_tbtoa = aft.tbtoa * a + b
-
-        # Fill missing values in fore data.
-        ds["tbtoa"] = fore.tbtoa.fillna(imputed_tbtoa)
-
-        if add_flag:
-            # Flag for
-            can_impute = aft.where(np.isnan(fore.tbtoa)) 
-            ds["imputed_flag"] = ~can_impute.tbtoa.isnull()
-
-    else:
+    if "look_direction" not in ds.sizes.keys():
         Warning("Provided dataset has no look_direction, dataset returned as is.")
+        return ds
+
+    fore = ds.sel(look_direction = 0)
+    aft = ds.sel(look_direction = 1)
+
+    if add_look_flag:
+        # Flag for all data that can be imputed.
+        can_impute = aft.where(np.isnan(fore.tbtoa)) 
+        ds["imputed_flag"] = ~can_impute.tbtoa.isnull()
+
+    # Iterate over the 8 slices:
+    imputed_data = []
+
+    for p in range(2):
+        for f in range(2):
+            for s in range(2):
+
+                selection = {
+                    "polarization": p,
+                    "frequency_band" : f,
+                    "swath_sector" : s
+                }
+
+                slope, intercept = coeffs[p,f,s]
+
+                selection_fore = fore.sel(**selection)
+                selection_aft = aft.sel(**selection)
+
+                imputed_tbtoa = selection_aft.tbtoa * slope + intercept
+
+                # Fill missing values in fore data and store the result for later merging
+                filled_tbtoa = selection_fore.tbtoa.fillna(imputed_tbtoa)
+                imputed_data.append(filled_tbtoa)
+
+    # Combine all imputed data into a single DataArray
+    imputed_tbtoa = xr.concat(imputed_data, dim='new_dim').drop_vars('new_dim')
+
+    # Override old data with imputed data
+    ds['tbtoa'] = imputed_tbtoa
 
     return ds
 
 
-def windsat_datacube(folder_path: str, look = None, add_flag: bool = True) -> xr.Dataset:
+def windsat_datacube(folder_path: str) -> xr.Dataset:
     """
     Wrapper for creating a dataset with the combined data inside a folder
     param folder_path: must contain the files in .nc format
 
-    look: Int or Any. Look direction to select if needeed (0 -> Fore, 1 -> Aft). If None
-    Impute look = 0 with look = 1 (Linear regression). If There is any other value, keep both look directions
+    Limited to general transformations
     """
 
     dates = recover_dates(folder_path)
@@ -325,14 +359,6 @@ def windsat_datacube(folder_path: str, look = None, add_flag: bool = True) -> xr
     # Add a day_number coordinate
     ds["day_number"] = day_numbers
     ds["day_number"].attrs = {f"Description": f"Int, day of the year {dates[0].year}"}
-
-    # Select look direction if there is
-    if look in [1,0]:
-        ds = ds.sel(look_direction = look)
-    
-    elif look is None:
-        # Impute Look data
-        ds = impute_look_data(ds, add_flag=add_flag)
     
     return ds
 
@@ -392,51 +418,67 @@ def create_landmask(lat: np.array, lon: np.array, c_dist: float = None) -> xr.Da
 
     return landmask
 
-def model_preprocess(ds: xr.Dataset, swath_sector: int=0) -> xr.Dataset:
+def model_preprocess(ds: xr.Dataset, swath_sector: int= 0, look: Any = "impute", add_look_flag: bool=True) -> xr.Dataset:
     """ 
-        Pre-process windsat dataset to add landmask, selecct a swath and
-        transform the various polarizations and frequency slices of tbtoa into
+        Pre-process windsat dataset to: 
+         -add landmask
+         -selecct a swath 
+         -remove ERA5 skin temperature over 2ºC
+         -impute missing look data
+         -transform polarizations and frequency slices of tbtoa into
         separated dvars.
 
         param swath_sector: 0 for Ascending pass, 1 for Descending pass
+        param look: int or Any: select Fore look (0), Aft look (1), Default: "impute" missing
+        Fore data with linear regression models and Aft data.
+        param add_look_flag: add a boolean dvar with wheather or not the data was imputed.
 
     """
     # Preprocess and select the dataset
     landmask = create_landmask(lon=ds.lon.values, lat=ds.lat.values)
     ds["landmask"] = (("latitude_grid", "longitude_grid"), landmask.values)
 
-    #I talked with maria and we can create a "snow mask" by filtering surtep_ERA5 > 2ºC
-
-    # Filter the dataset for land, then select the ascending pass
-    ascds = ds.where(ds.landmask == 0).sel(swath_sector=swath_sector)
+    # Filter the dataset for land
+    ds = ds.where(ds.landmask == 0)
 
     # select data only where era5 surtep is avobe 2ºC
-    ascds = ascds.where(ascds.surtep_ERA5 >(273.15 + 2))
+    ds = ds.where(ds.surtep_ERA5 >(273.15 + 2))
+
+    # Look data handling:
+    if look.isinstance(int):
+        ds = ds.sel(look_direction = look)
+
+    elif look == "impute":
+        ds = impute_look_data(ds, add_look_flag)
+
+    # Select desired swaht
+    ds = ds.sel(swath_sector=swath_sector)
 
     # Select only desired variables
     variables = ["time","tbtoa", "surtep_ERA5"]
-    ascds = ascds[variables]
+    ds = ds[variables]
 
     # Split tbtoa and time into polarization and frequency
-    ascds["tbtoa_18Ghz_V"] = ascds.tbtoa.sel(polarization=0,frequency_band=0)
-    ascds["tbtoa_18Ghz_H"] = ascds.tbtoa.sel(polarization=1,frequency_band=0)
-    ascds["tbtoa_37Ghz_V"] = ascds.tbtoa.sel(polarization=0,frequency_band=1)
-    ascds["tbtoa_37Ghz_H"] = ascds.tbtoa.sel(polarization=1,frequency_band=1)
+    ds["tbtoa_18Ghz_V"] = ds.tbtoa.sel(polarization=0,frequency_band=0)
+    ds["tbtoa_18Ghz_H"] = ds.tbtoa.sel(polarization=1,frequency_band=0)
+    ds["tbtoa_37Ghz_V"] = ds.tbtoa.sel(polarization=0,frequency_band=1)
+    ds["tbtoa_37Ghz_H"] = ds.tbtoa.sel(polarization=1,frequency_band=1)
 
-    ascds["time_18Ghz"] = ascds.time.sel(frequency_band=0)
-    ascds["time_37Ghz"] = ascds.time.sel(frequency_band=1)
+    #We no longer train with obervation time
+    # ds["time_18Ghz"] = ds.time.sel(frequency_band=0)
+    # ds["time_37Ghz"] = ds.time.sel(frequency_band=1)
 
-    # Drop the original dvars
-    ascds = ascds.drop_vars(names=["tbtoa","time"])
+    # Drop the original dvar
+    ds = ds.drop_vars(names=["tbtoa"])
 
     # Lat and lon should be dvars instead
-    ascds = ascds.reset_coords(names = ["lat","lon"])
+    ds = ds.reset_coords(names = ["lat","lon"])
 
     # Add longitude_grid and latitude_grid as indeces 
-    ascds = ascds.assign_coords(latitude_grid=range(720), longitude_grid=range(1440))
-    ascds = ascds.set_index(latitude_grid='latitude_grid', longitude_grid='longitude_grid')
+    ds = ds.assign_coords(latitude_grid=range(720), longitude_grid=range(1440))
+    ds = ds.set_index(latitude_grid='latitude_grid', longitude_grid='longitude_grid')
 
-    return ascds
+    return ds
 
 
 def recover_months(filenames: list[str]) -> list[int]:
