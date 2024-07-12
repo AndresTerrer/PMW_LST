@@ -283,19 +283,20 @@ def impute_look_data(ds:xr.Dataset, add_look_flag: bool = True) -> xr.Dataset:
 
     coeffs =[
         # H Pol
-        [
-            [(0.99922, -0.01), (1.00056, -0.589)], # 37GHz
-            [(1.00278, -1.381), (1.00578, -1.68)]  # 19GHz
-            #   Ascending          Descending
-        ],
-
-        #V Pol
-        [
+         [
             [(0.9823, 5.092), (0.98584, 3.756)],   # 37GHz
             [(0.98662, 3.916), (0.98335, 4.519)]   # 19GHz
             #   Ascending          Descending
 
         ]
+        
+        #V Pol        
+        [
+            [(0.99922, -0.01), (1.00056, -0.589)], # 37GHz
+            [(1.00278, -1.381), (1.00578, -1.68)]  # 19GHz
+            #   Ascending          Descending
+        ],
+       
     ]
 
     if "look_direction" not in ds.sizes.keys():
