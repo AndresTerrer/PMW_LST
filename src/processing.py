@@ -278,24 +278,24 @@ def impute_look_data(ds:xr.Dataset, add_look_flag: bool = True) -> xr.Dataset:
     imputed with LinReg(tbtoa_look=1). 
     """
 
-    # TODO: hardcoded coefficients for now
-    # 3D array of (slope, intercept) tuples, dims are {polarization-frequency-swath}
+    # TODO: hardcoded coefficients for now. Store this in a file elsewere, 
+    # TODO: add fitting in a notebbok/script
 
+    # Array of (slope, intercept) tuples, dims {polarization-frequency-swath}
     coeffs =[
         # H Pol
          [
-            [(0.9823, 5.092), (0.98584, 3.756)],   # 37GHz
+            [(0.9823, 5.092), (0.98584, 3.756) ],  # 37GHz
             [(0.98662, 3.916), (0.98335, 4.519)]   # 19GHz
             #   Ascending          Descending
 
-        ]
-        
+        ],
         #V Pol        
         [
             [(0.99922, -0.01), (1.00056, -0.589)], # 37GHz
             [(1.00278, -1.381), (1.00578, -1.68)]  # 19GHz
             #   Ascending          Descending
-        ],
+        ]
        
     ]
 
@@ -307,7 +307,7 @@ def impute_look_data(ds:xr.Dataset, add_look_flag: bool = True) -> xr.Dataset:
     aft = ds.sel(look_direction = 1)
 
     if add_look_flag:
-        # Flag for all data that can be imputed.
+        # Flag all data that can be imputed.
         can_impute = aft.where(np.isnan(fore.tbtoa)) 
         ds["imputed_flag"] = ~can_impute.tbtoa.isnull()
 
