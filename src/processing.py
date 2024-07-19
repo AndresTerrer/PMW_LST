@@ -318,9 +318,6 @@ def impute_look_data(ds:xr.Dataset, add_look_flag: bool = True) -> xr.Dataset:
     # Replace the original 'tbtoa' DataArray with the filled data
     ds['tbtoa'] = filled_tbtoa
 
-    # Remove the look_direction dimension if desired
-    ds = ds.drop_dims('look_direction')
-
     return ds
 
 
@@ -432,7 +429,7 @@ def model_preprocess(ds: xr.Dataset, swath_sector: int= 0, look: Any = "impute",
     ds = ds.where(ds.surtep_ERA5 >(273.15 + 2))
 
     # Look data handling:
-    if look.isinstance(int):
+    if isinstance(look, int):
         ds = ds.sel(look_direction = look)
 
     elif look == "impute":
@@ -442,7 +439,7 @@ def model_preprocess(ds: xr.Dataset, swath_sector: int= 0, look: Any = "impute",
     ds = ds.sel(swath_sector=swath_sector)
 
     # Select only desired variables
-    variables = ["time","tbtoa", "surtep_ERA5"]
+    variables = ["tbtoa", "surtep_ERA5"]
     ds = ds[variables]
 
     # Split tbtoa and time into polarization and frequency
@@ -450,10 +447,6 @@ def model_preprocess(ds: xr.Dataset, swath_sector: int= 0, look: Any = "impute",
     ds["tbtoa_18Ghz_H"] = ds.tbtoa.sel(polarization=1,frequency_band=0)
     ds["tbtoa_37Ghz_V"] = ds.tbtoa.sel(polarization=0,frequency_band=1)
     ds["tbtoa_37Ghz_H"] = ds.tbtoa.sel(polarization=1,frequency_band=1)
-
-    #We no longer train with obervation time
-    # ds["time_18Ghz"] = ds.time.sel(frequency_band=0)
-    # ds["time_37Ghz"] = ds.time.sel(frequency_band=1)
 
     # Drop the original dvar
     ds = ds.drop_vars(names=["tbtoa"])
@@ -538,7 +531,6 @@ def telsem_datacube(folder_path: str) -> xr.Dataset:
     telsem_ds["month"].attrs = {
         "Description" : "Month of the year"
     }
-
 
     return telsem_ds
 
