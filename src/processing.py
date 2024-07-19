@@ -268,78 +268,58 @@ _preprocess_dataset = partial(preporcess_dataset)
 
 def impute_look_data(ds:xr.Dataset, add_look_flag: bool = True) -> xr.Dataset:
     """ 
-    Linear regreesion Tb(look = 0) = a·Tb(look=1) + b
+    Linear regression Tb(look = 0) = a·Tb(look=1) + b
     with pre-computed coefficients with a sample of the full dataset
 
-    ds: Dataset with look_direction dimention
-    param add_flag: Default True. Add an aditional mask to flag imputed data.
+    ds: Dataset with look_direction dimension
+    param add_flag: Default True. Add an additional mask to flag imputed data.
 
     returns: ds without look_direction, tbtoa missing data in look = 0 is
     imputed with LinReg(tbtoa_look=1). 
     """
 
-    # TODO: hardcoded coefficients for now. Store this in a file elsewere, 
-    # TODO: add fitting in a notebbok/script
-
-    # Array of (slope, intercept) tuples, dims {polarization-frequency-swath}
-    coeffs =[
+    # Pre-computed coefficients for the linear regression
+    coeffs = np.array([
         # H Pol
-         [
-            [(0.9823, 5.092), (0.98584, 3.756) ],  # 37GHz
+        [
+            [(0.9823, 5.092), (0.98584, 3.756)],  # 37GHz
             [(0.98662, 3.916), (0.98335, 4.519)]   # 19GHz
-            #   Ascending          Descending
-
+            # Ascending          Descending
         ],
-        #V Pol        
+        # V Pol        
         [
             [(0.99922, -0.01), (1.00056, -0.589)], # 37GHz
             [(1.00278, -1.381), (1.00578, -1.68)]  # 19GHz
-            #   Ascending          Descending
+            # Ascending          Descending
         ]
-       
-    ]
-
-    if "look_direction" not in ds.sizes.keys():
+    ])
+    
+    if "look_direction" not in ds.dims:
         Warning("Provided dataset has no look_direction, dataset returned as is.")
         return ds
 
-    fore = ds.sel(look_direction = 0)
-    aft = ds.sel(look_direction = 1)
+    fore = ds.sel(look_direction=0)
+    aft = ds.sel(look_direction=1)
 
     if add_look_flag:
         # Flag all data that can be imputed.
         can_impute = aft.where(np.isnan(fore.tbtoa)) 
         ds["imputed_flag"] = ~can_impute.tbtoa.isnull()
 
-    # Iterate over the 8 slices:
-    imputed_data = []
+    # Apply the coefficients to the aft look
+    slopes = xr.DataArray(coeffs[..., 0], dims=["polarization", "frequency_band", "swath_sector"])
+    intercepts = xr.DataArray(coeffs[..., 1], dims=["polarization", "frequency_band", "swath_sector"])
 
-    for p in range(2):
-        for f in range(2):
-            for s in range(2):
+    imputed_tbtoa = aft.tbtoa * slopes + intercepts
 
-                selection = {
-                    "polarization": p,
-                    "frequency_band" : f,
-                    "swath_sector" : s
-                }
+    # Fill missing values in the fore data with the imputed values
+    filled_tbtoa = fore.tbtoa.fillna(imputed_tbtoa)
 
-                slope, intercept = coeffs[p,f,s]
+    # Replace the original 'tbtoa' DataArray with the filled data
+    ds['tbtoa'] = filled_tbtoa
 
-                selection_fore = fore.sel(**selection)
-                selection_aft = aft.sel(**selection)
-
-                imputed_tbtoa = selection_aft.tbtoa * slope + intercept
-
-                # Fill missing values in fore data and store the result for later merging
-                filled_tbtoa = selection_fore.tbtoa.fillna(imputed_tbtoa)
-                imputed_data.append(filled_tbtoa)
-
-    # Combine all imputed data into a single DataArray
-    imputed_tbtoa = xr.concat(imputed_data, dim='new_dim').drop_vars('new_dim')
-
-    # Override old data with imputed data
-    ds['tbtoa'] = imputed_tbtoa
+    # Remove the look_direction dimension if desired
+    ds = ds.drop_dims('look_direction')
 
     return ds
 
