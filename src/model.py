@@ -11,22 +11,18 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
+import xarray as xr
 
 
-#TODO: Rename this function, since we can use it with the whole dataset
+#TODO: Remove this function, replaced by "create_training_df"
 def transform_batch(df: pd.DataFrame):
     """ 
     Numerical transformations applied to the variables in the training dataframe.
-
-    Time == time of observation (seconds since 2000-01-01T00:00:00) transformed 
-    into "day fraction" [0-1] since midnight, then wrapped into a periodic function 
-    (both 0 and 1 represent midnight)
 
     Longitude (degrees) turned into the sin of the angle instead for the same periodic reason
     Latitude also transformed with sin(x) for consistency but it could be normalised instead
     [-90, 90] -> [-1, 1]
 
-    Day number (Day of the Year) normalized by 366 and also periodic
     """
     batch = df.copy()
     # Transform the variables lon and lat
@@ -36,6 +32,31 @@ def transform_batch(df: pd.DataFrame):
     batch["lat"] = batch["lat"].apply(lambda x: np.sin(np.deg2rad(x)))
 
     return batch
+
+def create_training_df(ds: xr.Dataset) -> pd.DataFrame:
+    """ 
+    Do all the necessary manipulations to turn a dataset into a dataframe that
+    can be fed to a keras model for trining.
+
+
+    """
+    # In built xarray method
+    df = ds.to_dataframe()
+    df.reset_index(inplace=True)
+    df.dropna(inplace=True)
+
+    # remove coordinate columns
+    coord_names = list(ds._coord_names)
+
+    df.drop(columns = coord_names, inplace=True)
+
+    # Apply trig transformations to lat and lon 
+
+    df["lon"] = df["lon"].apply(lambda x: np.sin(np.deg2rad(x)))
+    df["lat"] = df["lat"].apply(lambda x: np.sin(np.deg2rad(x)))
+
+
+    return df
 
 
 def xy_split(batch:pd.DataFrame, y_column: str = "surtep_ERA5"):
@@ -48,19 +69,17 @@ def xy_split(batch:pd.DataFrame, y_column: str = "surtep_ERA5"):
     return X ,y
 
 # TODO: move this into its own thing. Random search of the architecture
-def default_model() -> Sequential:
+def default_model(n_vars: int, info: bool = True) -> Sequential:
     """ 
     UNUSED at the moment.
     Create a keras.model object with this architecture
     """
-    n_vars = 9
-
     model = Sequential([
         Input((n_vars,)),
         BatchNormalization(),
-        Dense(30,activation="relu", name = "hiddenLayer1"),
-        Dense(20,activation="relu", name = "hiddenLayer2"),
-        Dense(10,activation="relu", name = "hiddenLayer3"),
+        Dense(60,activation="linear", name = "hiddenLayer1"),
+        Dense(30,activation="relu", name = "hiddenLayer2"),
+        Dense(15,activation="relu", name = "hiddenLayer3"),
         Dense(1,activation="relu", name = "outputLayer")
     ])
 
@@ -69,6 +88,9 @@ def default_model() -> Sequential:
         loss ="mse",
         metrics = ["mse"]
     )
+
+    if info:
+        model.summary()
 
     return model
 
