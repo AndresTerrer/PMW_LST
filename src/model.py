@@ -29,27 +29,11 @@ def transform_batch(df: pd.DataFrame):
     Day number (Day of the Year) normalized by 366 and also periodic
     """
     batch = df.copy()
-    # Transform the variables time, lon and day
-    global_bias = (datetime(2017, 1, 1, 0, 0, 0) - datetime(2000, 1, 1, 0, 0)).total_seconds()
-    batch["time_18Ghz"] += - global_bias - (batch["day_number"] - 1)* 24 * 60 * 60
+    # Transform the variables lon and lat
 
-    batch["time_18Ghz"] = batch["time_18Ghz"].apply(
-        lambda x: np.sin(2 * np.pi * x / (24 * 60 * 60))
-    )
-
-    global_bias = (datetime(2017, 1, 1, 0, 0, 0) - datetime(2000, 1, 1, 0, 0)).total_seconds()
-    batch["time_37Ghz"] += - global_bias - (batch["day_number"] - 1)* 24 * 60 * 60
-
-    batch["time_37Ghz"] = batch["time_37Ghz"].apply(
-        lambda x: np.sin(2 * np.pi * x / (24 * 60 * 60))
-    )
-    
     # Lon and lat transformations, to have a number between -1 and 1
     batch["lon"] = batch["lon"].apply(lambda x: np.sin(np.deg2rad(x)))
     batch["lat"] = batch["lat"].apply(lambda x: np.sin(np.deg2rad(x)))
-
-    # Day of the year is also a periodic qualifyer
-    batch["day_number"] = batch["day_number"].apply(lambda x: np.sin(2 * np.pi * x / 366))
 
     return batch
 
