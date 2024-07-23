@@ -28,7 +28,7 @@ from src.model import xy_split
 # OS Params
 params = ArgumentParser()
 params.add_argument(
-    "--source_folder", default="./data/raw/Daily_Windsat/", help= "Folder with Windsat dataset."
+    "--source_folder", default="./data/raw/daily_Windsat/", help= "Folder with Windsat dataset."
 )
 
 params.add_argument(
@@ -40,7 +40,7 @@ params.add_argument(
 )
 
 params.add_argument(
-    "--swath_sector", default=0, help = "Ascending = 0, Descending = 1 pass."
+    "--swath_sector", default=0, help = "Ascending pass = 0, Descending pass = 1."
 )
 
 def build_model(n_vars: int, info:bool = False):
@@ -87,10 +87,10 @@ if __name__ == "__main__":
 
     #Load the dataset from the folder
     print(f"Loading windsat Datacube from {folder_path}")
-    ws_ds = windsat_datacube(folder_path, look=None)
+    ws_ds = windsat_datacube(folder_path)
 
     print("Processing data ...")
-    swath_ds = model_preprocess(ws_ds, swath_sector=swath_sector)
+    swath_ds = model_preprocess(ws_ds, swath_sector=swath_sector, look="impute", add_look_flag=False)
     d_vars = [
     "surtep_ERA5",
     "lat",
