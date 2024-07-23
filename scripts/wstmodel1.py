@@ -126,7 +126,9 @@ if __name__ == "__main__":
 
     now = datetime.now().strftime(r"%Y_%m_%dT%H%M%S")
     # Save the model.
-    model_path = os.path.join(output_folder, f"{now}.keras")
+    model_path = os.path.join(
+        output_folder, f"WSMv1_{swath2char[swath_sector]}_{now}.keras"
+    )
     save_model(model, model_path)
     print(f"Training done, model saved as {model_path} ")
 
