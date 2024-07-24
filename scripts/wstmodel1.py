@@ -133,7 +133,7 @@ if __name__ == "__main__":
     print(f"Training done, model saved as {model_path} ")
 
     # Save the training history:
-    history_path = os.path.join(output_folder,f"{now}_history")
+    history_path = os.path.join(output_folder,f"WSMv1_{swath2char[swath_sector]}_{now}_history")
     with open(history_path,"wb") as hfile:
         pickle.dump(history.history, hfile)
 
