@@ -3,28 +3,7 @@ import numpy as np
 import xarray as xr
 
 
-def show_map(image: np.array, title=None, save_path=None):
-    """
-    This function will show a map of the image
-    :param save_path:
-    :param title:
-    :param image:
-    """
-    # Fix the orientation issue by using coordinates
-    image = np.flip(image, axis=0)
-
-    plt.figure(figsize=(15, 15))
-    plt.imshow(image, cmap="jet")
-    cbar = plt.colorbar()
-    cbar.set_label("Average Surface Temperature (K)")
-    plt.axis("off")
-    if title is not None:
-        plt.title(title)
-    if save_path is not None:
-        plt.savefig(save_path)
-    plt.show()
-
-
+# NOTE: Unused, good idea
 def histogram_matrix(h5file, save_path=None):
     """
     This function will show an image with the histograms of the different fields of the hdf5 file
@@ -49,7 +28,7 @@ def histogram_matrix(h5file, save_path=None):
             plt.savefig(f"{save_path}.png")
     plt.show()
 
-
+# NOTE: Unused
 def column_plot(xarray_dataset, save_path=None):
     """
     Creates the subplots for each of the passes in the whole dataset
@@ -73,7 +52,7 @@ def column_plot(xarray_dataset, save_path=None):
         plt.savefig(save_path)
 
 
-# Custom function for windsat data
+# Custom function for windsat_data_exploration.ipynb
 def dimensional_plot(
     ds: xr.DataArray, save_path: str = None, cbar_label: str = None
 ) -> None:
