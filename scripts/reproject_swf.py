@@ -1,4 +1,7 @@
 """ 
+
+NOT FOR THE MASTERS' THESIS
+
 Reproject the whole folder containign GeoTIF files (LPDR2)
 
 Needs to be run using conda (gdal api). python >= 3.9

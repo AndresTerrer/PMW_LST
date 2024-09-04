@@ -12,20 +12,18 @@ import warnings
 from scipy.ndimage import distance_transform_edt
 from typing import Any
 
-
+# TODO: use this instead of hardcodin the values.
 def holmes(brightness_temp: xr.Dataset) -> xr.Dataset:
     """
     Calculates the surface temperature from the brightness temperature using Holmes formula
     only valid for Tb (V) and avobe 259.8 K (Brightness Temperature)
-    :param brightness_temp:
-    :return:
     """
     a = 1.11
     b = -15.2
 
     return a * brightness_temp + b
 
-
+# NOTE: used only in the dataset for SWF
 def apply_scaling(ds: xr.Dataset) -> xr.Dataset:
     """
     Apply scaling factors to data variables in an Xarray Dataset based on the "SCALE FACTOR" attribute.
@@ -43,7 +41,7 @@ def apply_scaling(ds: xr.Dataset) -> xr.Dataset:
 
     return ds
 
-
+# TODO: use multi-folder loading from xarray instead.
 def load_zip(path) -> xr.Dataset:
     """
     Creates a Xarray Dataset form a zip file, located in the given path string.
@@ -110,7 +108,7 @@ def load_zip(path) -> xr.Dataset:
 
     return xarray_dataset
 
-
+# Currently unused, but a good idea I gess
 def extract_timeseries(xarray_dataset, lat, lon) -> xr.DataArray:
     """
     Extract the timeseries from a pixel in the map for all instances of time
@@ -346,28 +344,28 @@ def windsat_datacube(folder_path: str) -> xr.Dataset:
     
     return ds
 
+# NOTE: Unused, too generic
+# def read_coordinates(ds: xr.Dataset) -> tuple[np.array, np.array]:
+#     """
+#     helper
 
-def read_coordinates(ds: xr.Dataset) -> tuple[np.array, np.array]:
-    """
-    helper
+#     Check for latitude and longitude amongst common data variable and dimension names
+#     returns latitude and longitude values for the array.
+#     """
 
-    Check for latitude and longitude amongst common data variable and dimension names
-    returns latitude and longitude values for the array.
-    """
+#     latnames = ["lat", "latidude"]
+#     lonnames = ["lon", "longidude"]
+#     for latn in latnames:
+#         if latn in ds.data_vars.keys() or latn in ds.coords.keys():
+#             lat = ds[latn].values
+#             break
 
-    latnames = ["lat", "latidude"]
-    lonnames = ["lon", "longidude"]
-    for latn in latnames:
-        if latn in ds.data_vars.keys() or latn in ds.coords.keys():
-            lat = ds[latn].values
-            break
+#     for lonn in lonnames:
+#         if lonn in ds.data_vars.keys() or lonn in ds.coords.keys():
+#             lon = ds[lonn].values
+#             break
 
-    for lonn in lonnames:
-        if lonn in ds.data_vars.keys() or lonn in ds.coords.keys():
-            lon = ds[lonn].values
-            break
-
-    return lat, lon
+#     return lat, lon
 
 
 def create_landmask(lat: np.array, lon: np.array, c_dist: float = None) -> xr.DataArray:

@@ -176,7 +176,7 @@ models/*
 # DS_Store file (MacOS)
 .DS_Store
 
-carla/*
+carla
 
 # otuput files from ERC server
 scripts/*.out
