@@ -1,5 +1,10 @@
 """ 
     Automatically download hourly ERA5-land data between two dates.
+    OUTDATED; 
+
+    In the masters' thesis we use ERA5 land in daily Windsat, 
+
+    
     https://cds.climate.copernicus.eu/cdsapp#!/dataset/reanalysis-era5-land?tab=overview
 
     Data is available from 1950 to "present" (atm. April 2024)

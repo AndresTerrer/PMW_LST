@@ -68,7 +68,6 @@ def xy_split(batch:pd.DataFrame, y_column: str = "surtep_ERA5"):
 
     return X ,y
 
-# TODO: move this into its own thing. Random search of the architecture
 def default_model(n_vars: int, info: bool = True) -> Sequential:
     """ 
     UNUSED at the moment.
@@ -138,37 +137,3 @@ def plot_history(history: dict, loss_threshold: float = None):
     )
 
     return fig, ax
-
-#TODO: implement this in a smarter way so I dont need to pass the model.
-def training_step(model: Sequential, training_batch: pd.DataFrame, history: History=None, ) -> History :
-    """ 
-    UNUSED
-    Single training step with a dataframe 2000 samples long. returned expanded history
-    """
-    X, y = xy_split(training_batch)
-    x_train, x_test, y_train, y_test = train_test_split(X,y, test_size = 0.1, random_state = 13)
-    batch_history = model.fit(x_train, y_train, epochs=100, validation_data=(x_test,y_test))
-
-    # Manage the history of each training run
-    if history is None:
-        history = batch_history
-    else:
-        for key in history.history.keys():
-            history.history[key].extend(batch_history.history[key])
-
-    return history
-
-
-def append_training_history(full_history: History, new_history:History) -> History:
-    """ 
-    UNUSED
-    Extend all the keys in a model training history object.
-    """
-    if full_history is None:
-        full_history = new_history
-    else:
-        for key in full_history.history.keys():
-            full_history.history[key].extend(new_history.history[key])
-
-    return full_history
-

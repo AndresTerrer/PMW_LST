@@ -2,7 +2,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=16
 #SBATCH --job-name=wstmodel1_Descending
-#SBATCH --output=wstmodel1_Ddescending.out
+#SBATCH --output=wstmodel1_Descending.out
 #SBATCH --exclude=nodo17
  
 module load Anaconda3
