@@ -14,7 +14,7 @@ import numpy as np
 import xarray as xr
 
 
-#TODO: Remove this function, replaced by "create_training_df"
+#TODO: Remove this function, replaced by "create_training_df", some outdated notebooks use this function instead
 def transform_batch(df: pd.DataFrame):
     """ 
     Numerical transformations applied to the variables in the training dataframe.
@@ -37,7 +37,6 @@ def create_training_df(ds: xr.Dataset) -> pd.DataFrame:
     """ 
     Do all the necessary manipulations to turn a dataset into a dataframe that
     can be fed to a keras model for trining.
-
 
     """
     # In built xarray method
