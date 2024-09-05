@@ -277,6 +277,7 @@ def impute_look_data(ds:xr.Dataset, add_look_flag: bool = True) -> xr.Dataset:
     """
 
     # Pre-computed coefficients for the linear regression
+    # TODO: Script to fit this coefficients from data, save them into a file and use them here.
     coeffs = np.array([
         # H Pol
         [
@@ -343,29 +344,6 @@ def windsat_datacube(folder_path: str) -> xr.Dataset:
     ds["day_number"].attrs = {f"Description": f"Int, day of the year {dates[0].year}"}
     
     return ds
-
-# NOTE: Unused, too generic
-# def read_coordinates(ds: xr.Dataset) -> tuple[np.array, np.array]:
-#     """
-#     helper
-
-#     Check for latitude and longitude amongst common data variable and dimension names
-#     returns latitude and longitude values for the array.
-#     """
-
-#     latnames = ["lat", "latidude"]
-#     lonnames = ["lon", "longidude"]
-#     for latn in latnames:
-#         if latn in ds.data_vars.keys() or latn in ds.coords.keys():
-#             lat = ds[latn].values
-#             break
-
-#     for lonn in lonnames:
-#         if lonn in ds.data_vars.keys() or lonn in ds.coords.keys():
-#             lon = ds[lonn].values
-#             break
-
-#     return lat, lon
 
 
 def create_landmask(lat: np.array, lon: np.array, c_dist: float = None) -> xr.DataArray:
