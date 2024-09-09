@@ -28,8 +28,4 @@ Polarization:
 5 -- R (Circular Right)
 
 
-
-
-
-
 https://images.remss.com/~RSS-TB/intercalibration/windsat_TB_maps_daily_025deg/RSS_WINDSAT_DAILY_TBTOA_MAPS_2017_01_01.nc
