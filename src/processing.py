@@ -12,21 +12,25 @@ import warnings
 from scipy.ndimage import distance_transform_edt
 from typing import Any
 
+
 # TODO: use this instead of hardcodin the values.
 def holmes(brightness_temp: xr.Dataset) -> xr.Dataset:
     """
-    Calculates the surface temperature from the brightness temperature using Holmes formula
-    only valid for Tb (V) and avobe 259.8 K (Brightness Temperature)
+    Calculates the surface temperature from the brightness
+    temperature using Holmes formula.
+    Only valid for Tb (V) and avobe 259.8 K (Brightness Temperature)
     """
     a = 1.11
     b = -15.2
 
     return a * brightness_temp + b
 
+
 # NOTE: used only in the dataset for SWF
 def apply_scaling(ds: xr.Dataset) -> xr.Dataset:
     """
-    Apply scaling factors to data variables in an Xarray Dataset based on the "SCALE FACTOR" attribute.
+    Apply scaling factors to data variables in an
+    Xarray Dataset based on the "SCALE FACTOR" attribute.
 
     :param xarray_dataset: The input Xarray Dataset.
     :return: A new Xarray Dataset with scaled variables.
@@ -40,6 +44,7 @@ def apply_scaling(ds: xr.Dataset) -> xr.Dataset:
                 ds[dvar].attrs["SCALE FACTOR"] = 1  # Update the attribute
 
     return ds
+
 
 # TODO: use multi-folder loading from xarray instead.
 def load_zip(path) -> xr.Dataset:
@@ -87,12 +92,14 @@ def load_zip(path) -> xr.Dataset:
                     except ValueError:
                         # If an invalid date is found, use the default date
                         date = default_date
-                        # We eliminate the two first days, since they are not valid.
+                        # We eliminate the two first days,
+                        # since they are not valid.
                         continue
 
                     # Determine the class from the file name (EQMA or EQMD)
-                    file_class = "Ascending" if "EQMA" in file_name else "Descending"
-
+                    file_class = (
+                        "Ascending" if "EQMA" in file_name else "Descending"
+                    )
                     # Add the 'time' and 'class' coordinates to the dataset
                     h5_xarray["time"] = date
                     h5_xarray["Pass"] = file_class
@@ -103,10 +110,12 @@ def load_zip(path) -> xr.Dataset:
         # Concatenate the list of datasets
         xarray_dataset = xr.concat(xarray_datasets, dim="time")
 
-    # Now, xarray_dataset contains all data with 'time' and 'class' coordinates to distinguish between EQMA and EQMD
+    # Now, xarray_dataset contains all data with 'time' and 'class'
+    # coordinates to distinguish between EQMA and EQMD
     xarray_dataset = xarray_dataset.set_coords("Pass")
 
     return xarray_dataset
+
 
 # Currently unused, but a good idea I gess
 def extract_timeseries(xarray_dataset, lat, lon) -> xr.DataArray:
@@ -118,7 +127,9 @@ def extract_timeseries(xarray_dataset, lat, lon) -> xr.DataArray:
     :param lon: float
     :return: np.array 1D
     """
-    warnings.warn("DEPRECATED: Please use xarray.sel(lat=lat, lon=lon) instead. ")
+    warnings.warn(
+        "DEPRECATED: Please use xarray.sel(lat=lat, lon=lon) instead."
+    )
     timeseries = np.zeros(shape=(len(xarray_dataset.time),))
 
     for i in range(len(xarray_dataset.time)):
@@ -136,7 +147,8 @@ def recover_dates(
 
     param folder_path:
     param ymd_regex: must return year, month and day using capturing groups.
-    Default works for Windsat datafiles "RSS_WINDSAT_DAILY_TBTOA_MAPS_2017_01_01.nc"
+    Default works for Windsat datafiles:
+    "RSS_WINDSAT_DAILY_TBTOA_MAPS_2017_01_01.nc"
     """
 
     dates = []
@@ -174,7 +186,7 @@ def select_datavars(dataset: xr.Dataset) -> xr.Dataset:
         "eia_nominal",  # nominal Earth indidence angle of each band
         "time",  # Time of observation (lat, lon) seconds since 01 JAN 2000 00Z
         "eaa",  # boresight Earth azimuth angle. range: [0o, 360o].
-        "eia",  #  boresight Earth incidence angle. range: [0o, 90o]
+        "eia",  # boresight Earth incidence angle. range: [0o, 90o]
         "tbtoa",  # Brightness temperature
         "quality_flag",  # 32-bit quality control flag
         # "sss_HYCOM", # HYCOM sea surface salinity
@@ -192,8 +204,8 @@ def select_datavars(dataset: xr.Dataset) -> xr.Dataset:
         # "winspd_CCMP", # Wind speed
         # "windir_CCMP", # Cross-Calibrated Multi-Platform Wind direction
         # # ERA 5 products
-        "surtep_ERA5", # skin temperature
-        "airtep_ERA5", # Air temperature at 2m above surface
+        "surtep_ERA5",  # skin temperature
+        "airtep_ERA5",  # Air temperature at 2m above surface
         # "colvap_ERA5", # Columnar liquid cloud water
         # "colcld_ERA5", # atmosphere_mass_content_of_cloud_liquid_water
         # "winspd_ERA5", # 10-m NS wind speed
@@ -201,8 +213,10 @@ def select_datavars(dataset: xr.Dataset) -> xr.Dataset:
         # "surtep_CMC", # CMC Sea surface temperature
         # "rain_IMERG", # IMERG V6 surface rain rate
         # # RSS 2022 absorption model
-        # "tran", # Total atmospheric transmittance computed from ERA atmospheric profiles and WSAT columnar vapor and cloud water
-        # "tbdw", # Atmospheric downwelling brightness temperature computed from ERA atmospheric profiles and WSAT columnar vapor and cloud water
+        # "tran", # Total atmospheric transmittance computed from ERA
+        # atmospheric profiles and WSAT columnar vapor and cloud water
+        # "tbdw", # Atmospheric downwelling brightness temperature computed
+        # from ERA atmospheric profiles and WSAT columnar vapor and cloud water
     ]
 
     return dataset[selected_dvars]
@@ -248,7 +262,9 @@ def transform_dataset(dataset: xr.Dataset) -> xr.Dataset:
     dataset = dataset.roll(shifts={"longitude_grid": 4 * 180})
 
     # Extract latitude and longitude grid dimensions
-    dataset = dataset.assign_coords(lat=dataset.latitude, lon=dataset.longitude)
+    dataset = dataset.assign_coords(
+        lat=dataset.latitude, lon=dataset.longitude
+    )
 
     return dataset
 
@@ -264,8 +280,9 @@ def preporcess_dataset(dataset: xr.Dataset) -> xr.Dataset:
 # Partial function definition
 _preprocess_dataset = partial(preporcess_dataset)
 
-def impute_look_data(ds:xr.Dataset, add_look_flag: bool = True) -> xr.Dataset:
-    """ 
+
+def impute_look_data(ds: xr.Dataset, add_look_flag: bool = True) -> xr.Dataset:
+    """
     Linear regression Tb(look = 0) = a·Tb(look=1) + b
     with pre-computed coefficients with a sample of the full dataset
 
@@ -273,11 +290,12 @@ def impute_look_data(ds:xr.Dataset, add_look_flag: bool = True) -> xr.Dataset:
     param add_flag: Default True. Add an additional mask to flag imputed data.
 
     returns: ds without look_direction, tbtoa missing data in look = 0 is
-    imputed with LinReg(tbtoa_look=1). 
+    imputed with LinReg(tbtoa_look=1).
     """
 
     # Pre-computed coefficients for the linear regression
-    # TODO: Script to fit this coefficients from data, save them into a file and use them here.
+    # TODO: Script to fit this coefficients from data,
+    # save them into a file and use them here.
     coeffs = np.array([
         # H Pol
         [
@@ -285,16 +303,18 @@ def impute_look_data(ds:xr.Dataset, add_look_flag: bool = True) -> xr.Dataset:
             [(0.98662, 3.916), (0.98335, 4.519)]   # 19GHz
             # Ascending          Descending
         ],
-        # V Pol        
+        # V Pol
         [
-            [(0.99922, -0.01), (1.00056, -0.589)], # 37GHz
+            [(0.99922, -0.01), (1.00056, -0.589)],  # 37GHz
             [(1.00278, -1.381), (1.00578, -1.68)]  # 19GHz
             # Ascending          Descending
         ]
     ])
-    
+
     if "look_direction" not in ds.dims:
-        Warning("Provided dataset has no look_direction, dataset returned as is.")
+        Warning(
+            "Provided dataset has no look_direction, dataset returned as is."
+        )
         return ds
 
     fore = ds.sel(look_direction=0)
@@ -302,12 +322,18 @@ def impute_look_data(ds:xr.Dataset, add_look_flag: bool = True) -> xr.Dataset:
 
     if add_look_flag:
         # Flag all data that can be imputed.
-        can_impute = aft.where(np.isnan(fore.tbtoa)) 
+        can_impute = aft.where(np.isnan(fore.tbtoa))
         ds["imputed_flag"] = ~can_impute.tbtoa.isnull()
 
     # Apply the coefficients to the aft look
-    slopes = xr.DataArray(coeffs[..., 0], dims=["polarization", "frequency_band", "swath_sector"])
-    intercepts = xr.DataArray(coeffs[..., 1], dims=["polarization", "frequency_band", "swath_sector"])
+    slopes = xr.DataArray(
+        coeffs[..., 0],
+        dims=["polarization", "frequency_band", "swath_sector"]
+    )
+    intercepts = xr.DataArray(
+        coeffs[..., 1],
+        dims=["polarization", "frequency_band", "swath_sector"]
+    )
 
     imputed_tbtoa = aft.tbtoa * slopes + intercepts
 
@@ -334,64 +360,81 @@ def windsat_datacube(folder_path: str) -> xr.Dataset:
     ds = xr.open_mfdataset(
         paths=os.path.join(folder_path + "/*.nc"),
         preprocess=_preprocess_dataset,
-        decode_times=False,  # "time" is a datavar (time of observation for each pixel)
+        decode_times=False,
+        # "time" is a datavar (time of observation for each pixel)
         concat_dim="day_number",
         combine="nested",
     )
 
     # Add a day_number coordinate
     ds["day_number"] = day_numbers
-    ds["day_number"].attrs = {f"Description": f"Int, day of the year {dates[0].year}"}
-    
+    ds["day_number"].attrs = {
+        "Description": f"Int, day of the year {dates[0].year}"
+    }
+
     return ds
 
 
-def create_landmask(lat: np.array, lon: np.array, c_dist: float = None) -> xr.DataArray:
+def create_landmask(
+        lat: np.array,
+        lon: np.array,
+        c_dist: float = None) -> xr.DataArray:
     """
-    Return a landmask without pixels that are c_dist or closer to a coast pixel.
+    Return a landmask without pixels that are c_dist
+    or closer to a coast pixel.
     Default None: Do not remove coastline pixels.
 
     lon: 1D array with all the longitude values in the array
     lat: 1D "                "  latitude  "                 "
 
-    returns a 2D DataArray (lat x lon) with the 0 flag for land/included , NaN for ocean/excluded.
+    returns a 2D DataArray (lat x lon) with the 0 flag for land/included
+    NaN for ocean/excluded.
     """
 
     land = regionmask.defined_regions.natural_earth_v5_1_2.land_10
     landmask = land.mask(lon_or_obj=lon, lat=lat)
 
     if c_dist:
-        # Since we have all 0 (land) and nan (ocean) values, let's add 1 to the whole array to have land == 1
+        # 0 (land) and nan (ocean) values, add 1 to the array so land == 1
         aux_landmask = landmask + 1
 
         # Then fill the nan values with 0
         aux_landmask = aux_landmask.fillna(0)
 
-        # Calculate the distance from each point to the closest ocean pixel (from all values > 0 to all values == 0)
+        # Distance from each point to the closest ocean pixel
+        # (from all values > 0 to all values == 0)
         coastline_dist = distance_transform_edt(aux_landmask.values)
 
         # New mask, only the pixels c_dist away from the closest ocean pixel.
         coasline_mask = coastline_dist <= c_dist
 
         # Remove the coastline from the original landmask
-        landmask = landmask.where(coasline_mask == False)
+        landmask = landmask.where(~coasline_mask)
 
     return landmask
 
-def model_preprocess(ds: xr.Dataset, swath_sector: int= 0, look: Any = "impute", add_look_flag: bool=True) -> xr.Dataset:
-    """ 
-        Pre-process windsat dataset to: 
+
+def model_preprocess(
+        ds: xr.Dataset,
+        swath_sector: int = 0,
+        look: Any = "impute",
+        add_look_flag: bool = True
+        ) -> xr.Dataset:
+    """
+        Pre-process windsat dataset to:
          -add landmask
-         -selecct a swath 
+         -selecct a swath
          -remove ERA5 skin temperature over 2ºC
          -impute missing look data
          -transform polarizations and frequency slices of tbtoa into
         separated dvars.
 
         param swath_sector: 0 for Ascending pass, 1 for Descending pass
-        param look: int or Any: select Fore look (0), Aft look (1), Default: "impute" missing
+        param look: int or Any: select Fore look (0), Aft look (1),
+        Default: "impute" missing
         Fore data with linear regression models and Aft data.
-        param add_look_flag: add a boolean dvar with wheather or not the data was imputed.
+        param add_look_flag: add a boolean dvar with wheather
+        or not the data was imputed.
 
     """
     # Preprocess and select the dataset
@@ -402,11 +445,11 @@ def model_preprocess(ds: xr.Dataset, swath_sector: int= 0, look: Any = "impute",
     ds = ds.where(ds.landmask == 0)
 
     # select data only where era5 surtep is avobe 2ºC
-    ds = ds.where(ds.surtep_ERA5 >(273.15 + 2))
+    ds = ds.where(ds.surtep_ERA5 > (273.15 + 2))
 
     # Look data handling:
     if isinstance(look, int):
-        ds = ds.sel(look_direction = look)
+        ds = ds.sel(look_direction=look)
 
     elif look == "impute":
         ds = impute_look_data(ds, add_look_flag)
@@ -419,28 +462,31 @@ def model_preprocess(ds: xr.Dataset, swath_sector: int= 0, look: Any = "impute",
     ds = ds[variables]
 
     # Split tbtoa and time into polarization and frequency
-    ds["tbtoa_18Ghz_V"] = ds.tbtoa.sel(polarization=0,frequency_band=0)
-    ds["tbtoa_18Ghz_H"] = ds.tbtoa.sel(polarization=1,frequency_band=0)
-    ds["tbtoa_37Ghz_V"] = ds.tbtoa.sel(polarization=0,frequency_band=1)
-    ds["tbtoa_37Ghz_H"] = ds.tbtoa.sel(polarization=1,frequency_band=1)
+    ds["tbtoa_18Ghz_V"] = ds.tbtoa.sel(polarization=0, frequency_band=0)
+    ds["tbtoa_18Ghz_H"] = ds.tbtoa.sel(polarization=1, frequency_band=0)
+    ds["tbtoa_37Ghz_V"] = ds.tbtoa.sel(polarization=0, frequency_band=1)
+    ds["tbtoa_37Ghz_H"] = ds.tbtoa.sel(polarization=1, frequency_band=1)
 
     # Drop the original dvar
     ds = ds.drop_vars(names=["tbtoa"])
 
     # Lat and lon should be dvars instead
-    ds = ds.reset_coords(names = ["lat","lon"])
+    ds = ds.reset_coords(names=["lat", "lon"])
 
-    # Add longitude_grid and latitude_grid as indeces 
+    # Add longitude_grid and latitude_grid as indeces
     ds = ds.assign_coords(latitude_grid=range(720), longitude_grid=range(1440))
-    ds = ds.set_index(latitude_grid='latitude_grid', longitude_grid='longitude_grid')
+    ds = ds.set_index(
+        latitude_grid='latitude_grid',
+        longitude_grid='longitude_grid'
+    )
 
     return ds
 
 
 def recover_months(filenames: list[str]) -> list[int]:
-    """ 
+    """
     Read the name files and recover the month using regex.
-    "" ssmi_mean_emis_climato_MM_cov_interpol_M2.nc "" 
+    "" ssmi_mean_emis_climato_MM_cov_interpol_M2.nc ""
     """
     regex_pattern = r"ssmi_mean_emis_climato_(\d{2})_cov_interpol_M2.nc"
 
@@ -451,7 +497,7 @@ def recover_months(filenames: list[str]) -> list[int]:
 
 
 def telsem_preprocess(telsem_ds: xr.Dataset) -> xr.Dataset:
-    """ 
+    """
     Select datavars, roll longitude, add landmask, keep land, reset coords
     """
     d_vars = [
@@ -463,15 +509,20 @@ def telsem_preprocess(telsem_ds: xr.Dataset) -> xr.Dataset:
 
     telsem_ds = telsem_ds[d_vars]
 
-    #roll the longitude to align the data
+    # Roll the longitude to align the data
     telsem_ds = telsem_ds.roll(
         {
-            "longitude_grid" : 4 * 180
+            "longitude_grid": 4 * 180
         }
     )
 
-    landmask = create_landmask(lat = telsem_ds.lat.values, lon= telsem_ds.lon.values)
-    telsem_ds["landmask"] = (("latitude_grid","longitude_grid"),landmask.values)
+    landmask = create_landmask(
+        lat=telsem_ds.lat.values,
+        lon=telsem_ds.lon.values
+    )
+    telsem_ds["landmask"] = (
+        ("latitude_grid", "longitude_grid"), landmask.values
+    )
 
     telsem_ds = telsem_ds.where(telsem_ds.landmask == 0)
     telsem_ds = telsem_ds.drop_vars("landmask")
@@ -479,13 +530,14 @@ def telsem_preprocess(telsem_ds: xr.Dataset) -> xr.Dataset:
 
     return telsem_ds
 
+
 _telsem_preprocess = partial(telsem_preprocess)
 
 
 def telsem_datacube(folder_path: str) -> xr.Dataset:
-    """ 
-    Same idea as windsat_datacube, preprocess the files in the folder, add the month
-    as a dimention, roll the longitude grid, etc.
+    """
+    Same idea as windsat_datacube, preprocess the files in the folder,
+    add the month as a dimention, roll the longitude grid, etc.
     """
     filenames = [
         fn for fn in os.listdir(folder_path)
@@ -493,29 +545,28 @@ def telsem_datacube(folder_path: str) -> xr.Dataset:
     ]
     months = recover_months(filenames)
 
-
     telsem_ds = xr.open_mfdataset(
-        paths= [
+        paths=[
             os.path.join(folder_path, fn) for fn in filenames
         ],
-        preprocess= _telsem_preprocess,
-        concat_dim= "month",
+        preprocess=_telsem_preprocess,
+        concat_dim="month",
         combine="nested"
     )
 
     telsem_ds["month"] = months
     telsem_ds["month"].attrs = {
-        "Description" : "Month of the year"
+        "Description": "Month of the year"
     }
 
     return telsem_ds
 
 
 def doy2month_mapping() -> list[int]:
-    """ 
+    """
     Create the day to month mapping list
-        Given the Day of the year 'DoY', return its corresponding month of the year
-        by index.
+        Given the Day of the year 'DoY', return its
+        corresponding month of the year by index.
 
         day_mapping[31] = 1 # JAN
         day_mapping[60] = 2 # FEB
@@ -523,18 +574,18 @@ def doy2month_mapping() -> list[int]:
         day_mapping[366] = 12 # Dec
     """
     days_in_month = [
-        31, # JAN
-        29, # FEB (on leep years)
-        31, # MAR
-        30, # APR
-        31, # MAY
-        30, # JUN
-        31, # JUL
-        31, # AUG
-        30, # SEP
-        31, # OCT
-        30, # NOV
-        31, # DEC
+        31,  # JAN
+        29,  # FEB (on leep years)
+        31,  # MAR
+        30,  # APR
+        31,  # MAY
+        30,  # JUN
+        31,  # JUL
+        31,  # AUG
+        30,  # SEP
+        31,  # OCT
+        30,  # NOV
+        31,  # DEC
     ]
     day_mapping = []
     for i, n in enumerate(days_in_month):
