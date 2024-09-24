@@ -278,7 +278,7 @@ class Telsem2AtlasData:
             7 error estimation, one for each of the bands.
             2 surface classification flags for each point.
         """
-        if self.coordinates == None:
+        if self.coordinates is None:
             print("Calculating coordinates as points")
             self.get_all_coordinates()
 
