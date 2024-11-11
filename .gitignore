@@ -169,7 +169,6 @@ data/figures/*
 !data/raw/README.md
 !data/output/README.md
 !data/processed/README.md
-
 !data/figures/README.md
 
 # Model protopypes shoul not be included for now
