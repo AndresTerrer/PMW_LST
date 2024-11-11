@@ -162,11 +162,14 @@ cython_debug/
 
 # data is too heavy for git
 data/raw/*
+data/output/*
 data/processed/*
 data/figures/*
 
 !data/raw/README.md
+!data/output/README.md
 !data/processed/README.md
+
 !data/figures/README.md
 
 # Model protopypes shoul not be included for now
